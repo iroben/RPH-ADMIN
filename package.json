@@ -1,5 +1,5 @@
 {
-  "name": "Public Rental Housing",
+  "name": "PublicRentalHousing",
   "version": "1.0.0",
   "description": "共租房管理系统-后台",
   "main": "index.js",
