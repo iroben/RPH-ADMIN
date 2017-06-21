@@ -1,5 +1,5 @@
 # PublicRentalHousing-admin (公租房管理系统-2017)
-> Static asset revisioning by appending content hash to filenames
+> 请预先安装Node.js, npm, webpack
 
 ## 技术选型
 * vueJs2.0 (前端基础框架)
