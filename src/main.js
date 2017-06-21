@@ -3,28 +3,24 @@ import iView from 'iview';
 import VueRouter from 'vue-router';
 import Routers from './router';
 import Vuex from 'vuex';
-import Util from './libs/util';
 import App from './app.vue';
+import store from './store/index';
 import 'iview/dist/styles/iview.css';
 
-
+// use Model
 Vue.use(VueRouter);
 Vue.use(Vuex);
-
 Vue.use(iView);
 
-
-
 // 路由配置
-const RouterConfig = {
+const router = new VueRouter({
     mode: 'history',
     routes: Routers
-};
-const router = new VueRouter(RouterConfig);
+});
 
+// 路由进入与退出
 router.beforeEach((to, from, next) => {
     iView.LoadingBar.start();
-    Util.title(to.meta.title);
     next();
 });
 
@@ -33,26 +29,10 @@ router.afterEach(() => {
     window.scrollTo(0, 0);
 });
 
-
-const store = new Vuex.Store({
-    state: {
-
-    },
-    getters: {
-
-    },
-    mutations: {
-
-    },
-    actions: {
-
-    }
-});
-
-
+// App实例
 new Vue({
     el: '#app',
-    router: router,
-    store: store,
+    router,
+    store,
     render: h => h(App)
 });
