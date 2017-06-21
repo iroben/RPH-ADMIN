@@ -18,3 +18,24 @@ $ npm run dev
 ```
 $ npm run build
 ```
+
+### Response数据约定
+```
+$ response
+{
+	code: 1, // 1: 数据正常, -1: 未登录, 其他: 系统弹出全局错误提示
+	data: {
+		data: [{ // 具体数据
+			name: apple,
+			price: $1
+		},{
+			name: banana,
+			price: $2
+		}]
+		page: { // 分页
+
+		}
+	},
+	msg: '添加成功'
+}
+```

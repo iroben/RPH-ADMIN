@@ -100,7 +100,6 @@ for (let i in apiurl) {
         }).catch((result) => {
             LoadTip.close();
             if (result.code == 401 && !parmas.noLogin) { // 未登录
-                window.loginFromUrl = location.href;
                 location.href = '/#/login';
             } else if (result.code == 450) { // 未验证
                 // console.log('未认证');
