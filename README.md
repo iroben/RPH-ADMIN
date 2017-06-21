@@ -23,7 +23,7 @@ $ npm run build
 ```
 $ response
 {
-	code: 1, // 1: 数据正常, -1: 未登录, 其他: 系统弹出全局错误提示
+	code: 1, // 1: 数据正常, 401: 未登录, 其他: 系统弹出全局错误提示
 	data: {
 		data: [{ // 具体数据
 			name: apple,
