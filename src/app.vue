@@ -2,9 +2,9 @@
   <div class="layout">
     <Row type="flex" style="height:100%">
       <i-col span="3" class="layout-menu-left">
-        <Menu theme="dark" width="auto" :active-name="$route.name" :open-names="openNames" @on-select="selectMenu" accordion ref="mainManu">
-          <div class="layout-logo-left">PRHousing</div>
-          <Affix>
+        <div class="layout-logo-left">PRHousing</div>
+        <Affix>
+          <Menu theme="dark" width="auto" :active-name="$route.name" :open-names="openNames" @on-select="selectMenu" accordion ref="mainManu">
             <Menu-item name="housing.resource">
               <Icon type="ios-home"></Icon>
               房源管理
@@ -35,8 +35,8 @@
               <Menu-item name="system.msg">消息管理</Menu-item>
               <Menu-item name="system.lock">门锁管理</Menu-item>
             </Submenu>
-          </Affix>
-        </Menu>
+          </Menu>
+        </Affix>
       </i-col>
       <i-col span="21">
         <div class="layout-header">
