@@ -23,8 +23,8 @@ $ npm run build
 ```
 $ response
 {
-	code: 1, // 1: 数据正常, 401: 未登录, 其他: 系统弹出全局错误提示
-	data: {
+  code: 1, // 1: 数据正常, 401: 未登录, 其他: 系统弹出全局错误提示
+  data: {
 		data: [{ // 具体数据
 			name: apple,
 			price: $1
@@ -33,8 +33,11 @@ $ response
 			price: $2
 		}]
 		page: { // 分页
-
-		}
+      total: 100, // 总条100条
+      page: 1, // 当前第一页
+      pagesize: 10, // 每页显示10条
+      pages: 10 // 共10页
+    }
 	},
 	msg: '添加成功'
 }
