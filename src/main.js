@@ -20,6 +20,7 @@ const router = new VueRouter({
 
 // 路由进入与退出
 router.beforeEach((to, from, next) => {
+    document.title = 'PRH-' + to.meta.title || 'PRHousing';
     iView.LoadingBar.start();
     next();
 });

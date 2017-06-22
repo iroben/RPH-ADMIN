@@ -1,11 +1,10 @@
 <template>
-    <div>首页
-    </div>
+    <div>退房审批</div>
 </template>
 <script>
     export default {
         mounted (){
-            this.$store.dispatch('testApi');
+            
         },
         methods: {
         }
