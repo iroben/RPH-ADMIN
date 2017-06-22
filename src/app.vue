@@ -185,7 +185,6 @@ export default {
   padding: 15px;
 }
 
-
 .layout-logo-left {
   width: 90%;
   height: 30px;
