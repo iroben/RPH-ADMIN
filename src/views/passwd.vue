@@ -67,14 +67,14 @@ export default {
           }],
           newpass: [{
             required: true,
-            message: '请输入旧密码'
+            message: '请输入新密码'
           }, {
             validator: validatePass,
             trigger: 'blur'
           }],
           passwdCheck: [{
             required: true,
-            message: '请输入旧密码'
+            message: '请输入新密码'
           }, {
             validator: validatePassCheck,
             trigger: 'blur'
