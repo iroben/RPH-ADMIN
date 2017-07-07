@@ -41,32 +41,33 @@ $ npm run build
 this.$apis['funcName']
 ```
 ```
-Vue.use(rules);
+验证模块: Vue.use(rules);
 this.$rules['funcName']
 ```
 ```
-Vue.use(lodash);
-this.$lodash['funcName'] 访问自定义方法, 以及lodash模块方法方法
+lodash模块: Vue.use(lodash); 全局自定义方法methods.js, 以及lodash模块方法方法
+this.$lodash['funcName'];
 ```
 Lodash文档: https://lodash.com/docs
 
 ```
-Vue.use(VueRouter);
+路由模块: Vue.use(VueRouter);
 router实例: this.$router,  获取路由参数: this.$route
 ```
 文档: http://router.vuejs.org/zh-cn/essentials/getting-started.html
 
 ```
-Vue.use(iView);
+iview模块: Vue.use(iView);
 iview框架提供的相关方法如: this.$Message.error(config);
 ```
 文档: https://www.iviewui.com/
 
 ```
-Vue.use(VueCookie);
-```
+cookie模块: Vue.use(VueCookie);
 this.$cookie
+```
 文档: https://github.com/alfhen/vue-cookie
+
 ```
 vuex模块: Vue.use(Vuex); 存储全局变量, 或其他需要全局存取的数据
 GET: this.$store.getters, SET: this.$store.commit(), Fetch: this.$store.dispatch()
