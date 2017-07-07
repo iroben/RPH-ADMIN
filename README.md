@@ -1,4 +1,4 @@
-# UCORG (优课在线机构后台)
+# PRH-ADMIN (公租房项目)
 > 请预先安装Node.js, npm, webpack
 
 ## 前端框架
