@@ -101,7 +101,7 @@ const router = new VueRouter({
 
 // 路由进入与退出
 router.beforeEach((to, from, next) => {
-  document.title = 'ORG-' + to.meta.title || 'UCORG';
+  document.title = 'PRH-' + to.meta.title || 'PRH';
   iView.LoadingBar.start();
   next();
 });

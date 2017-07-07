@@ -5,7 +5,7 @@
     </div>
     <Row type="flex" v-if="routeName != 'login'">
       <i-col span="3" class="layout-menu-left">
-        <div class="layout-logo-left">UCORG</div>
+        <div class="layout-logo-left">PRH</div>
         <Menu theme="dark" width="auto" :active-name="$route.name" :open-names="openNames" @on-select="goRouter" accordion ref="mainManu">
           <template v-for="menu in menuList">
             <Submenu :name="menu.name" v-if="menu.sublist && menu.sublist.length">
