@@ -30,8 +30,9 @@ $ npm run build
 * store/index.js 全局状态数据;
 * store/apis.js axios全局配置;
 ```
-> 本地开发与线上开发接口URL: const ajaxUrl = env === 'development' ? 'http://api.uooc.online:8088' : env === 'production' ? 'https://www.url.com' : 'https://debug.url.com';
-
+```
+本地开发与线上开发接口URL: const ajaxUrl = env === 'development' ? 'http://api.uooc.online:8088' : env === 'production' ? 'https://www.url.com' : 'https://debug.url.com';
+```
 
 
 ### 已注入的模块, 模块内通过this访问相关
