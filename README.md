@@ -54,25 +54,25 @@ Lodash文档: https://lodash.com/docs
 路由模块: Vue.use(VueRouter);
 router实例: this.$router,  获取路由参数: this.$route
 ```
-文档: http://router.vuejs.org/zh-cn/essentials/getting-started.html
+http://router.vuejs.org/zh-cn/essentials/getting-started.html
 
 ```
 iview模块: Vue.use(iView);
 iview框架提供的相关方法如: this.$Message.error(config);
 ```
-文档: https://www.iviewui.com/
+https://www.iviewui.com/
 
 ```
 cookie模块: Vue.use(VueCookie);
 this.$cookie
 ```
-文档: https://github.com/alfhen/vue-cookie
+https://github.com/alfhen/vue-cookie
 
 ```
 vuex模块: Vue.use(Vuex); 存储全局变量, 或其他需要全局存取的数据
 GET: this.$store.getters, SET: this.$store.commit(), Fetch: this.$store.dispatch()
 ```
-文档: https://vuex.vuejs.org/zh-cn/
+https://vuex.vuejs.org/zh-cn/
 
 ### Response数据约定
 ```
