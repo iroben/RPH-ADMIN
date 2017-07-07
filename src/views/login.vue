@@ -2,7 +2,7 @@
   <div>
     <Modal class="login-modal" v-model="showLogin" width="360" :closable="false" :mask-closable="false">
       <p slot="header" class="login-header">
-        <span>优课在线后台管理系统</span>
+        <span>公租房管理系统</span>
       </p>
       <div style="text-align:center">
         <Form ref="formData" :model="formData" :rules="ruleValidate">
