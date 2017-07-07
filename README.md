@@ -23,7 +23,7 @@ $ npm run build
 ### SRC主要文件说明
 ```
 * main.js 项目入口, 配置依赖, 注入相关公共模块;
-* munus.js 菜单配置;
+* menus.js 菜单配置;
 * methods.js 项目通用方法;
 * validateRules.js  自定义表单验证;
 * store/apiurl.js 接口配置;
