@@ -35,43 +35,40 @@ $ npm run build
 
 
 ### 已注入的模块, 模块内通过this访问相关
-
-接口模块: Vue.use(apis);
 ```
+接口模块: Vue.use(apis);
 this.$apis['funcName']
 ```
-
-Vue.use(rules);
 ```
+Vue.use(rules);
 this.$rules['funcName']
 ```
-
-Vue.use(lodash);
 ```
+Vue.use(lodash);
 this.$lodash['funcName'] 访问自定义方法, 以及lodash模块方法方法
 ```
 Lodash文档: https://lodash.com/docs
 
-
-Vue.use(VueRouter);
 ```
+Vue.use(VueRouter);
 router实例: this.$router,  获取路由参数: this.$route
 ```
 文档: http://router.vuejs.org/zh-cn/essentials/getting-started.html
 
-
-Vue.use(iView);
 ```
+Vue.use(iView);
 iview框架提供的相关方法如: this.$Message.error(config);
 ```
 文档: https://www.iviewui.com/
 
-
+```
 Vue.use(VueCookie);
+```
+this.$cookie
 文档: https://github.com/alfhen/vue-cookie
-
+```
 vuex模块: Vue.use(Vuex); 存储全局变量, 或其他需要全局存取的数据
-```GET: this.$store.getters, SET: this.$store.commit(), Fetch: this.$store.dispatch()
+GET: this.$store.getters, SET: this.$store.commit(), Fetch: this.$store.dispatch()
 ```
 文档: https://vuex.vuejs.org/zh-cn/
 
