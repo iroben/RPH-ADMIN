@@ -35,7 +35,7 @@ $ npm run build
 ```
 
 
-### 已注入的模块, 模块内通过this访问相关
+### 已注入的模块, 组件内通过this访问相关
 ```
 接口模块: Vue.use(apis);
 this.$apis['funcName']
