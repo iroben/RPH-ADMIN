@@ -3,11 +3,11 @@
     <Row :gutter="20" style="margin-top: 10px;">
       <Col span="6">
       <div class="card-info card-info-primary">
-        <div class="card-info-mask">
+        <a href="#/resource" class="card-info-mask">
           <div class="inner">
             <Icon type="eye" size="30"></Icon>
           </div>
-        </div>
+        </a>
         <Card class="homecard" :bordered="false">
           <h3>房源数</h3>
           <p>9,380</p>
@@ -16,11 +16,11 @@
       </Col>
       <Col span="6">
       <div class="card-info card-info-success">
-        <div class="card-info-mask">
+        <a href="#/resource"class="card-info-mask">
           <div class="inner">
             <Icon type="eye" size="30"></Icon>
           </div>
-        </div>
+        </a>
         <Card class="homecard" :bordered="false">
           <h3>空置房源数</h3>
           <p>2,211</p>
@@ -29,11 +29,11 @@
       </Col>
       <Col span="6">
       <div class="card-info card-info-warning">
-        <div class="card-info-mask">
+        <a href="#/members" class="card-info-mask">
           <div class="inner">
             <Icon type="eye" size="30"></Icon>
           </div>
-        </div>
+        </a>
         <Card class="homecard" :bordered="false">
           <h3>住户总数</h3>
           <p>18,210</p>
@@ -42,11 +42,11 @@
       </Col>
       <Col span="6">
       <div class="card-info card-info-error">
-        <div class="card-info-mask">
+        <a href="#/members" class="card-info-mask">
           <div class="inner">
             <Icon type="eye" size="30"></Icon>
           </div>
-        </div>
+        </a>
         <Card class="homecard" :bordered="false">
           <h3>住户总数</h3>
           <p>9,380</p>
@@ -81,7 +81,7 @@
       </Tabs>
       </Col>
       <Col span="6">
-      <Affix :offset-top="80">
+      <Affix :offset-top="20">
         <Card>
           <div slot="title">
             <Icon type="android-search"></Icon>
