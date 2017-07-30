@@ -54,7 +54,7 @@ export default {
     });
 
     // 如果cookie 不存在UserEmail, 则跳转到登录
-    const uemail_ = this.$cookie.get('uemail') || '';
+    const uemail_ = this.$cookie.get('uemail') || '' || 'testEami@qq.com';
     this.$store.commit('userEmail', uemail_);
     if (this.userEmail) {
       this.$store.dispatch('menus').catch(res => {
@@ -240,7 +240,9 @@ export default {
 .vertical-center-modal .ivu-modal {
   top: 0;
 }
-
+.clear{
+  clear: both;
+}
 .header-line{
   width: 100%;
   clear: both;

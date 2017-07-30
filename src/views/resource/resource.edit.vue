@@ -13,15 +13,11 @@
         <Form-item label="房源名称">
           <Input v-model="formData.name" placeholder="请输入"></Input>
         </Form-item>
-        <Form-item label="房源编号">
-          <Input v-model="formData.name" placeholder="请输入"></Input>
-        </Form-item>
-        <Form-item label="配套" prop="email">
-          <Select v-model="formData.peitao" multiple placeholder="请选择">
-            <Option value="binxiang">冰箱</Option>
-            <Option value="xiyiji">洗衣机</Option>
-            <Option value="taideng">台灯</Option>
-            <Option value="kongtiao">空调</Option>
+        <Form-item label="选择项目">
+          <Select v-model="formData.resource" placeholder="请选择">
+            <Option value="beijing">半山家园</Option>
+            <Option value="shanghai">青年公寓</Option>
+            <Option value="shenzhen">四海新城</Option>
           </Select>
         </Form-item>
         <Form-item label="楼栋编号">
@@ -36,6 +32,7 @@
         </Form-item>
         </Col>
         <Col span="12">
+
         <Form-item label="房源面积" prop="email">
           <Input v-model="formData.org" placeholder="请输入"></Input>
         </Form-item>
@@ -43,6 +40,14 @@
           <Select v-model="formData.resource" placeholder="请选择">
             <Option value="beijing">2室1厅</Option>
             <Option value="shanghai">1室1厅</Option>
+          </Select>
+        </Form-item>
+        <Form-item label="配套" prop="email">
+          <Select v-model="formData.peitao" multiple placeholder="请选择">
+            <Option value="binxiang">冰箱</Option>
+            <Option value="xiyiji">洗衣机</Option>
+            <Option value="taideng">台灯</Option>
+            <Option value="kongtiao">空调</Option>
           </Select>
         </Form-item>
         <Form-item label="房源状态" prop="email">
