@@ -18,6 +18,13 @@ const resource = [{
     title: '房源管理',
 }];
 
+const doorlock = [{
+    icon: 'lock-combination',
+    name: 'resource',
+    title: '门锁管理',
+}];
+
+
 // System
 const system = [{
     icon: 'android-settings',
@@ -36,5 +43,5 @@ const system = [{
 }];
 
 
-const menus = lodash.concat(basic, members, resource, system);
+const menus = lodash.concat(basic, members, resource, doorlock, system);
 export default menus;

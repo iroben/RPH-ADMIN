@@ -130,7 +130,7 @@ export default {
 }
 
 .layout-nav {
-    width: 520px;
+    width: 600px;
     margin: 0 auto;
 }
 
