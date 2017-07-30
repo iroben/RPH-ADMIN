@@ -46,6 +46,7 @@
       </Col>
       <Col span="20">
       <Tabs v-model="tabActive" :animated="false" style="margin-top: 10px;">
+      <Button v-show="tabActive == 'projectInfo'" icon="edit" slot="extra" type="ghost" size="small" @click="isEditInfo = !isEditInfo">编辑</Button>
         <Tab-pane name="resource" label="房源信息" icon="navicon-round">
           <div class="tableTools" style="border: 0; padding-top: 0; ">
             <Row class="tableTools-inner">
@@ -81,9 +82,6 @@
           </div>
         </Tab-pane>
         <Tab-pane name="projectInfo" label="项目基本信息" icon="clipboard">
-          <div style="text-align: right;">
-            <Button icon="edit" type="ghost" size="small" @click="isEditInfo = !isEditInfo">编辑</Button>
-          </div>
           <div v-if="!isEditInfo">
             <div class="intro-title">项目名称</div>
             <div class="intro-info">半山家园公寓</div>
