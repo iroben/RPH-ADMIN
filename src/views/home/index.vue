@@ -393,6 +393,7 @@ export default {
 }
 
 .card-info-mask .ivu-icon {
+  color: #fff;
   display: table-cell;
   vertical-align: middle;
 }
