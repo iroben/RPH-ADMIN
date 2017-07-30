@@ -34,6 +34,8 @@ import 'iview/dist/styles/iview.css';
  ------------------------*/
 import AvaterView from './components/avater.perview';
 import TxtView from './components/txt.perview';
+import TableScoller from './components/table.scoller';
+Vue.component('TableScoller', TableScoller);
 Vue.component('AvaterView', AvaterView);
 Vue.component('TxtView', TxtView);
 Vue.component('VueCoreImageUpload', VueCoreImageUpload);

@@ -40,7 +40,44 @@ const members = [{
   component: (resolve) => require(['./views/members/members.edit.vue'], resolve)
 }];
 
+const resource = [{
+  path: '/resource',
+  name: 'resource.index',
+  meta: { title: '房源管理' },
+  component: (resolve) => require(['./views/resource/index.vue'], resolve)
+}, {
+  path: '/resource/edit/:id',
+  name: 'resource.edit',
+  meta: { title: '编辑房源' },
+  component: (resolve) => require(['./views/resource/resource.edit.vue'], resolve)
+}, {
+  path: '/resource/add',
+  name: 'resource.add',
+  meta: { title: '新增房源' },
+  component: (resolve) => require(['./views/resource/resource.edit.vue'], resolve)
+}, {
+  path: '/project/add',
+  name: 'project.add',
+  meta: { title: '新增项目' },
+  component: (resolve) => require(['./views/resource/project.edit.vue'], resolve)
+}, {
+  path: '/project/edit/:id',
+  name: 'project.edit',
+  meta: { title: '编辑项目' },
+  component: (resolve) => require(['./views/resource/project.edit.vue'], resolve)
+}, {
+  path: '/floor/add',
+  name: 'floor.add',
+  meta: { title: '新增楼栋' },
+  component: (resolve) => require(['./views/resource/floor.edit.vue'], resolve)
+},{
+  path: '/floor/edit/:id',
+  name: 'floor.edit',
+  meta: { title: '编辑楼栋' },
+  component: (resolve) => require(['./views/resource/floor.edit.vue'], resolve)
+}];
 
 
-const routers = lodash.concat(basic, members);
+
+const routers = lodash.concat(basic, members, resource);
 export default routers;

@@ -261,4 +261,26 @@ export default {
 .color-info {
   color: #2d8cf0;
 }
+
+.stable table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.stable th {
+  background-color: #f8f8f9;
+}
+
+.stable th,
+.stable td {
+  padding: 0 10px;
+  border: 1px solid #e9eaec;
+  min-width: 0;
+  height: 48px;
+  box-sizing: border-box;
+  text-align: left;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+  border-bottom: 1px solid #e9eaec;
+}
 </style>
