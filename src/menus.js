@@ -20,7 +20,7 @@ const resource = [{
 
 const doorlock = [{
     icon: 'lock-combination',
-    name: 'resource',
+    name: 'doorlock',
     title: '门锁管理',
 }];
 
