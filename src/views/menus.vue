@@ -1,8 +1,9 @@
 <template>
     <Menu :mode="mode" :theme="theme" width="auto" :active-name="$route.name" :open-names="openNames" @on-select="goRouter" accordion :ref="name">
-        <div class="layout-logo">
+        <a href="#/" class="layout-logo">
             <img src="../../logo.png">
-        </div>
+            <span>公租房管理系统</span>
+        </a>
         <div class="layout-nav">
             <template v-for="menu in menuList">
                 <Submenu :name="menu.name" v-if="menu.children && menu.children.length">
@@ -18,14 +19,18 @@
                 </Menu-item>
             </template>
         </div>
-        <Dropdown class="layer-account" placement="bottom-end" @on-click="dropDownClick">
-            <Alert style="float:left" type="success" show-icon>用户: {{userEmail}}</Alert>
+        
+        <Dropdown class="layer-account layer-account-set" placement="bottom-end" @on-click="dropDownClick">
+            <div class="layer-account-set-icon">
+                <Icon type="ios-cog" size="24"></Icon>
+            </div>
             <Dropdown-menu slot="list">
                 <Dropdown-item name="home">首页</Dropdown-item>
                 <Dropdown-item name="modify.passwd">修改密码</Dropdown-item>
                 <Dropdown-item name="logout">退出系统</Dropdown-item>
             </Dropdown-menu>
         </Dropdown>
+        <Alert class="layer-account" type="success" show-icon>用户: {{userEmail}}</Alert>
     </Menu>
 </template>
 <script>
@@ -104,7 +109,7 @@ export default {
 </script>
 <style>
 .layout-logo {
-    width: 100px;
+    vertical-align: middle;
     height: 30px;
     border-radius: 3px;
     float: left;
@@ -117,6 +122,12 @@ export default {
 .layout-logo img {
     height: 100%;
 }
+.layout-logo span{
+    color: #dadee6;
+    position: relative;
+    top: -8px;
+    font-size: 18px;
+}
 
 .layout-nav {
     width: 520px;
@@ -124,9 +135,36 @@ export default {
 }
 
 .layer-account{
+    color: #dadee6;
   float: right;
   position: relative;
   top: 12px;
-  right: 10px;
+  margin-right: 15px;
+}
+.layer-account-set{
+    cursor: pointer;
+}
+.layer-account-set-icon{
+    background-color: #495165;
+    width: 34px;
+    height: 34px;
+    line-height: 40px;
+    text-align: center;
+    border-radius: 4px;
+}
+
+.layer-account-set-icon:hover{
+    color: #fff;
+    background-color: #19be6b;
+}
+.ucorg-admin .ivu-menu-dark{
+    background-color: #333b50;
+}
+
+.layer-account.ivu-alert-success{
+    border-radius: 3px;
+    border: 1px solid #495165;
+    background-color: #495165;
+    color: #fff;
 }
 </style>
