@@ -27,18 +27,18 @@ const members = [{
   path: '/members',
   name: 'members.index',
   meta: { title: '人员管理' },
-  component: (resolve) => require(['./views/error.vue'], resolve)
+  component: (resolve) => require(['./views/members/index.vue'], resolve)
 }, {
   path: '/members/edit/:id',
   name: 'members.edit',
   meta: { title: '编辑人员' },
-  component: (resolve) => require(['./views/error.vue'], resolve)
+  component: (resolve) => require(['./views/members/members.edit.vue'], resolve)
 }, {
   path: '/members/add',
   name: 'members.add',
   meta: { title: '新增人员' },
-  component: (resolve) => require(['./views/error.vue'], resolve)
-}]
+  component: (resolve) => require(['./views/members/members.edit.vue'], resolve)
+}];
 
 
 

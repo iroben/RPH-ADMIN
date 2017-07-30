@@ -94,7 +94,9 @@ export default {
   overflow: hidden;
   background: #fff;
 }
-
+.layout-title{
+  margin-bottom: 20px;
+}
 .layout-copy {
   text-align: center;
   padding: 10px 0 20px;
@@ -239,7 +241,12 @@ export default {
   top: 0;
 }
 
-
+.header-line{
+  width: 100%;
+  clear: both;
+  height: 3px;
+  background-color: #e9eaec;
+}
 /*font*/
 
 .spe-modal-font {
