@@ -81,7 +81,7 @@
       </Tabs>
       </Col>
       <Col span="6">
-      <Affix :offset-top="20">
+      <Affix :offset-top="80">
         <Card>
           <div slot="title">
             <Icon type="android-search"></Icon>
