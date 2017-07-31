@@ -13,7 +13,7 @@ const orgId = VueCookie.get('org_id');
 
 // states
 const state = {
-  siteName: '公租房系统',
+  siteName: '房源管理系统',
   basicUrl: config.basicUrl,
   docUrl: config.docUrl,
   orgId: orgId || 0,
@@ -34,7 +34,7 @@ const getters = {
   userEmail: state => state.userEmail,
   pageSize: state => state.pageSize,
   menus: state => state.menus,
-  error: state => state.error,
+  error: state => state.error
 };
 
 // actions

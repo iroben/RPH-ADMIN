@@ -2,7 +2,7 @@
   <div>
     <Modal class-name="vertical-center-modal" class="login-modal" v-model="showLogin" width="360" :closable="false" :mask-closable="false">
       <p slot="header" class="login-header">
-        <span>优课在线联盟管理系统</span>
+        <span>房源管理系统</span>
       </p>
       <div style="text-align:center">
         <Form ref="formData" :model="formData" :rules="ruleValidate">
@@ -44,7 +44,7 @@ export default {
       orgLoading: false, // 机构搜索中
       orgList: [], // 机构列表
       formData: {
-        org_id: '',
+        org_id: 0,
         account: '',
         password: ''
       },
