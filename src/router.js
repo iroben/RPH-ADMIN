@@ -77,7 +77,14 @@ const resource = [{
   component: (resolve) => require(['./views/resource/floor.edit.vue'], resolve)
 }];
 
+const doorlock = [{
+  path: '/doorlock',
+  name: 'doorlock.index',
+  meta: { title: '门锁管理' },
+  component: (resolve) => require(['./views/doorlock/index.vue'], resolve)
+}];
 
 
-const routers = lodash.concat(basic, members, resource);
+
+const routers = lodash.concat(basic, members, doorlock, resource);
 export default routers;
