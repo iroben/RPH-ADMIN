@@ -84,20 +84,20 @@
     </Row>
     <!-- model -->
     <Modal v-model="modelDoorlock" width="450">
-     <p slot="header" class="del-header">
+      <p slot="header" class="del-header">
         <Icon type="information-circled"></Icon>
         <span>{{isEditDoorlock ? '编辑' : '添加'}}门锁</span>
       </p>
       <div class="del-content del-content-center">
-        <Form ref="formDoorLock" :model="formDoorLock"  :label-width="80">
+        <Form ref="formDoorLock" :model="formDoorLock" :label-width="80">
           <Form-item label="门锁序号" prop="name">
             <Input v-model="formDoorLock.door_number" placeholder="请输入"></Input>
           </Form-item>
           <Form-item label="门锁品牌" prop="user_no">
             <Select v-model="queryParams.status" @on-change="getData(1)" filterable>
-                <Option value="" label="SKT通讯盒"></Option>
-                <Option value="1" label="STLI通讯盒"></Option>
-              </Select>
+              <Option value="" label="SKT通讯盒"></Option>
+              <Option value="1" label="STLI通讯盒"></Option>
+            </Select>
           </Form-item>
           <Form-item label="通讯盒序号" prop="name">
             <Input v-model="formDoorLock.box_number" placeholder="请输入"></Input>
@@ -113,12 +113,12 @@
       </div>
     </Modal>
     <Modal v-model="modelDoorBox" width="450">
-     <p slot="header" class="del-header">
+      <p slot="header" class="del-header">
         <Icon type="information-circled"></Icon>
         <span>{{isEditDoorbox ? '编辑' : '添加'}}盒子</span>
       </p>
       <div class="del-content del-content-center">
-        <Form ref="formDoorbox" :model="formDoorbox"  :label-width="80">
+        <Form ref="formDoorbox" :model="formDoorbox" :label-width="80">
           <Form-item label="盒子序号" prop="name">
             <Input v-model="formDoorbox.box_number" placeholder="请输入"></Input>
           </Form-item>
@@ -157,12 +157,70 @@
         <Button type="error" long :loading="modalLoading" size="large" @click="del">确认</Button>
       </div>
     </Modal>
+    <!-- TimeLine -->
+    <div v-if="modelSlider">
+      <div class="aside">
+        <div class="aisde-header">
+          <Date-picker :value="doorHistoryDate" type="date" placeholder="请选择日期" format="yyyy年MM月dd日" style="width: 100%"></Date-picker>
+        </div>
+        <div class="aisde-container">
+          <Timeline>
+            <Timeline-item color="red">
+              <Icon type="clock" slot="dot"></Icon>
+              <strong style="color: #ed3f14;">box012x-door234开门记录</strong>
+            </Timeline-item>
+            <Timeline-item>
+              <p class="time">2017-08-02 08:09:10</p>
+              <p class="content">
+                <Tag color="blue">张晓明: &emsp;关门</Tag>
+              </p>
+            </Timeline-item>
+            <Timeline-item color="green">
+              <p class="time">2017-08-02 08:09:10</p>
+              <p class="content">
+                <Tag color="green">张晓明: &emsp;秘钥开门</Tag>
+              </p>
+            </Timeline-item>
+            <Timeline-item>
+              <p class="time">2017-08-02 08:09:10</p>
+              <p class="content">
+                <Tag color="blue">张晓明: &emsp;关门</Tag>
+              </p>
+            </Timeline-item>
+            <Timeline-item color="green">
+              <p class="time">2017-08-02 08:09:10</p>
+              <p class="content">
+                <Tag color="green">张晓明: &emsp;指纹开门</Tag>
+              </p>
+            </Timeline-item>
+            <Timeline-item>
+              <p class="time">2017-08-02 08:09:10</p>
+              <p class="content">
+                <Tag color="blue">张晓明: &emsp;关门</Tag>
+              </p>
+            </Timeline-item>
+            <Timeline-item color="green">
+              <p class="time">2017-08-02 08:09:10</p>
+              <p class="content">
+                <Tag color="green">张晓明: &emsp;卡片开门</Tag>
+              </p>
+            </Timeline-item>
+          </Timeline>
+        </div>
+        <div class="aisde-footer">
+          <Button type="primary" long @click="toggleSlider">确定</Button>
+        </div>
+      </div>
+      <div class="aside-shadow" @click="toggleSlider()"></div>
+    </div>
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
+      modelSlider: false,
+      doorHistoryDate: '2016-01-01',
       isEditDoorbox: false,
       modelDoorBox: false,
       formDoorbox: {},
@@ -174,7 +232,7 @@ export default {
       formData: {},
       tabActive: 'resource',
       activeName: 1,
-      
+
       toggleStatus: 1,
       activeParams: null, // 当前操作行数据
       selection: [], // 全选数组
@@ -227,6 +285,11 @@ export default {
               props: {
                 type: 'primary',
                 long: true
+              },
+              on: {
+                click: () => {
+                  this.toggleSlider()
+                }
               }
             }, '开锁记录')
           ]);
@@ -376,24 +439,27 @@ export default {
     }
   },
   methods: {
+    toggleSlider() {
+      this.modelSlider = !this.modelSlider;
+    },
     editBox(params) {
       this.isEditDoorbox = params != 'add';
-      if(params == 'add'){
+      if (params == 'add') {
         this.$lodash.forEach(this.formDoorbox, (value, key, item) => {
           this.formDoorbox[key] = '';
         });
-      }else{
+      } else {
         this.$lodash.assign(this.formDoorbox, params);
       }
       this.modelDoorBox = true;
     },
     editLock(params) {
       this.isEditDoorlock = params != 'add';
-      if(params == 'add'){
+      if (params == 'add') {
         this.$lodash.forEach(this.formDoorLock, (value, key, item) => {
           this.formDoorLock[key] = '';
         });
-      }else{
+      } else {
         this.$lodash.assign(this.formDoorLock, params);
       }
       this.modelDoorlock = true;
@@ -491,20 +557,22 @@ export default {
 }
 </script>
 <style>
-.left-menu{
+.left-menu {
   position: relative;
 }
-.left-menu-line{
+
+.left-menu-line {
   position: absolute;
-  right:0;
-  top:0;
-  bottom:0;
+  right: 0;
+  top: 0;
+  bottom: 0;
   content: '';
   display: block;
   width: 100%;
   height: 40px;
-  border-right:1px solid #ddd;
+  border-right: 1px solid #ddd;
 }
+
 .poptip-list div:before {
   content: '';
   display: inline-block;
@@ -517,5 +585,61 @@ export default {
 
 .txt-blue {
   color: #2d8cf0;
+}
+
+.aside {
+  position: fixed;
+  z-index: 9999999;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 300px;
+  background-color: #fff;
+}
+
+.aside-shadow {
+  position: fixed;
+  z-index: 999999;
+  content: '';
+  display: block;
+  width: 100%;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  background-color: #000;
+  opacity: 0.7;
+}
+
+.aisde-header {
+  height: 72px;
+  padding: 20px;
+}
+
+.aisde-container {
+  overflow-y: auto;
+  position: absolute;
+  width: 100%;
+  top: 72px;
+  bottom: 53px;
+  padding: 10px 20px;
+}
+
+.aisde-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 52px;
+  padding: 10px 20px;
+  border-top: 1px solid #ddd;
+  background-color: #fafafa;
+}
+
+.aside .ivu-icon {
+  margin: 0 5px;
+}
+
+.aisde-container .time {
+  font-weight: 700;
+  padding-bottom: 5px
 }
 </style>
