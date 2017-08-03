@@ -5,6 +5,7 @@
       <Button-group shape="circle">
         <Button type="primary" icon="plus" @click="goAdd()">添加人员</Button>
         <Button icon="refresh" @click="handleReset('queryForm')">重置查询</Button>
+        <Button icon="close">批量删除</Button>
         <Button icon="stats-bars">报表输出</Button>
         <Button :icon="toggleStatus ? 'navicon-round' : 'grid'" @click="changeToggle"></Button>
       </Button-group>
@@ -148,6 +149,10 @@ export default {
         pagesize: 1
       },
       columns: [{
+        type: 'selection',
+        width: 60,
+        align: 'center'
+      }, {
         title: '姓名',
         key: 'name',
         className: 'avatarImg',

@@ -60,7 +60,7 @@
         <Button v-if="tabName == 'todo'" shape="circle" size="small" slot="extra" icon="android-done-all">标记完成</Button>
         <Button v-if="tabName == 'news'" shape="circle" size="small" slot="extra" icon="eye">标记为已读</Button>
         <Button v-if="tabName == 'files'" shape="circle" size="small" slot="extra" icon="android-upload">上传文档</Button>
-        <Tab-pane label="代办事项" name="todo" icon="android-checkmark-circle">
+        <Tab-pane label="待办事项" name="todo" icon="android-checkmark-circle">
           <Table ref="todoTable" :columns="todoColumns" :data="todoTableData" stripe></Table>
           <div class="pagination">
             <Page :total="page.total" :current="page.cur" :page-size="page.pagesize" show-elevator show-total></Page>
@@ -126,7 +126,7 @@ export default {
       },
       newsLabel: (h) => {
         return h('span', [
-          h('span', '最新动态'),
+          h('span', '消息通知'),
           h('Badge', {
             props: {
               count: 3

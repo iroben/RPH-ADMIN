@@ -5,6 +5,7 @@
       <Button-group shape="circle">
         <Button type="primary" icon="plus" @click="editBox('add')">添加通讯盒</Button>
         <Button icon="plus" @click="editLock('add')">添加门锁</Button>
+        <Button icon="close">批量删除</Button>
         <Button icon="stats-bars">报表输出</Button>
       </Button-group>
     </div>
@@ -255,6 +256,10 @@ export default {
         pagesize: 1
       },
       columns: [{
+        type: 'selection',
+        width: 60,
+        align: 'center'
+      }, {
         title: '门锁编号', // 门锁序号, 房源编号, 房源名称, 通讯盒序号, 绑定时间, 撤换时间, 有效日期
         key: 'id',
         render: (h, params) => {

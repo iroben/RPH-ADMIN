@@ -6,6 +6,7 @@
         <Button type="primary" icon="plus-circled" @click="goAdd">
           <span>添加账号</span>
         </Button>
+        <Button icon="close">批量删除</Button>
       </Button-group>
     </div>
     <!-- tableTools -->
@@ -54,6 +55,10 @@ export default {
       tableData: [],
       page: {},
       columns: [{
+        type: 'selection',
+        width: 60,
+        align: 'center'
+      }, {
         title: '用户ID',
         key: 'id',
         width: 120
@@ -68,20 +73,40 @@ export default {
       }, {
         title: '用户角色',
         key: 'role',
-        width: 195,
+        align: 'center',
+        width: 150,
+        render: (h, params) => {
+          return h('Tag', {
+            props: {
+              type: 'border',
+              color: 'red'
+            }
+          }, params.row.role)
+        }
+      }, {
+        title: '状态',
+        key: 'status',
+        width: 120,
+        align: 'center',
         render: (h, params) => {
           const row = params.row;
-          if (row.email) {
-            return h('Tooltip', {
-              props: {
-                placement: 'right',
-                content: row.email
+          const isForzen = row.status != 1; // 已冻结
+          return h('i-switch', {
+            props: {
+              size: 'large',
+              value: !isForzen,
+            },
+            on: {
+              'on-change': (switchStatus) => {
+                this.selectedGroup = [row];
+                this.studentFrozen(!switchStatus);
               }
-            }, row.email.length > 20 ? row.email.substr(0, 20) + '...' : row.email);
-          } else {
-            return '-'
-          }
-
+            }
+          }, [h('span', {
+            slot: 'open'
+          }, '激活'), h('span', {
+            slot: 'close'
+          }, '冻结')])
         }
       }, {
         title: '最后登录时间',
@@ -165,6 +190,7 @@ export default {
         id: '123123213',
         name: '张晓明',
         phone: '18664354871',
+        status: 1,
         role: '超级管理员',
         last_login_time: '2017-08-02',
         last_ip: '192.78.23'
