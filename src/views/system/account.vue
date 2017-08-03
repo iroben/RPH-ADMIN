@@ -4,7 +4,7 @@
     <div class="tableFuncs">
       <Button-group shape="circle">
         <Button type="primary" icon="plus-circled" @click="goAdd">
-          <span>添加管理员</span>
+          <span>添加账号</span>
         </Button>
       </Button-group>
     </div>
@@ -54,20 +54,20 @@ export default {
       tableData: [],
       page: {},
       columns: [{
-        width: 60,
-        align: 'center',
-        render: (h, params) => {
-          const curPage = this.page.cur || 1;
-          return this.pageSize * (curPage - 1) + (params.index + 1);
-        }
+        title: '用户ID',
+        key: 'id',
+        width: 120
       }, {
-        title: '姓名',
+        title: '用户名称',
         key: 'name',
-        className: 'avatarImg',
-        width: 180
+        width: 140
       }, {
-        title: '登录邮箱',
-        key: 'email',
+        title: '手机号码',
+        key: 'phone',
+        width: 195
+      }, {
+        title: '用户角色',
+        key: 'role',
         width: 195,
         render: (h, params) => {
           const row = params.row;
@@ -84,49 +84,6 @@ export default {
 
         }
       }, {
-        title: '状态',
-        key: 'status',
-        sortable: true,
-        width: 88,
-        align: 'center',
-        render: (h, params) => {
-          const row = params.row;
-          const isForzen = row.status != 1; // 已冻结
-          const color = isForzen ? 'red' : 'green';
-          return h('span', {
-            on: {
-              click: () => {
-                this.selectedGroup = [row];
-                this.studentFrozen(!isForzen);
-              }
-            }
-          }, [
-            h('Tag', {
-              props: {
-                type: 'border',
-                color: color
-              },
-            }, row.status_)
-          ])
-        }
-      }, {
-        title: '超级管理员',
-        key: 'super',
-        sortable: true,
-        width: 120,
-        align: 'center',
-        render: (h, params) => {
-          const row = params.row;
-          const isSuper = row.super == 1;
-          const color = isSuper ? 'red' : 'green';
-          return h('Tag', {
-            props: {
-              type: 'border',
-              color: color
-            },
-          }, isSuper ? '是' : '否')
-        }
-      }, {
         title: '最后登录时间',
         key: 'last_login_time',
         render: (h, params) => {
@@ -136,7 +93,6 @@ export default {
       }, {
         title: '最后登录IP',
         key: 'last_ip',
-        width: 150,
         render: (h, params) => {
           const row = params.row;
           return h('span', row.last_ip || '-');
@@ -193,18 +149,27 @@ export default {
   methods: {
     goAdd() {
       this.$router.push({
-        'name': 'system.admin.add'
+        'name': 'system.account.add'
       });
     },
     goEdit(id) {
       this.$router.push({
-        'name': 'system.admin.edit',
+        'name': 'system.account.edit',
         'params': {
-          adminId: id
+          id
         }
       });
     },
     getData(page) {
+      this.tableData = this.$lodash.testData({
+        id: '123123213',
+        name: '张晓明',
+        phone: '18664354871',
+        role: '超级管理员',
+        last_login_time: '2017-08-02',
+        last_ip: '192.78.23'
+      })
+      return false;
       let params_ = {
         page: page || this.page.cur + 1,
         pagesize: this.pageSize
@@ -270,5 +235,4 @@ export default {
     }
   }
 }
-
 </script>

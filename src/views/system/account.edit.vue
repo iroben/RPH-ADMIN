@@ -7,21 +7,31 @@
         </Button>
       </Button-group>
     </div>
-    <Form ref="formData" :model="formData" :rules="ruleValidate" label-position="left" :label-width="80">
+    <Form ref="editForm" :model="formData" :rules="ruleValidate" label-position="right" :label-width="80">
       <Row :gutter="16">
         <Col span="16">
-        <Form-item v-if="!isEdit" label="Email" prop="email">
-          <Input v-model="formData.email" placeholder="请输入"></Input>
+        <Form-item v-if="!isEdit" label="用户名" prop="uname">
+          <Input v-model="formData.uname" placeholder="用户名"></Input>
         </Form-item>
-        <Form-item v-if="isEdit && adminUser" label="管理员">
-          <Alert type="info" style="float:left;">
-            <Icon type="person" style="margin-right: 15px; color: #2d8cf0;"></Icon>{{adminUser}}</Alert>
-          <Alert v-if="isSuper" type="warning" show-icon style="float:left; clear: both; width: 300px;">当前为超级管理员用户, 拥有所有权限.</Alert>
+        <Form-item v-if="isEdit" label="用户名" prop="uname">
+          <Alert type="info" style="float:left; margin: 0;">
+            <Icon type="person" style="margin-right: 15px; color: #2d8cf0;"></Icon>{{formData.uname}}
+          </Alert>
         </Form-item>
-        <Form-item label="权限配置" prop="title">
-          <Tree class="adminTree" :data="formData.tree" ref="tree" show-checkbox></Tree>
+        <Form-item label="密码" prop="passwd">
+          <Input v-model="formData.passwd" placeholder="请输入"></Input>
         </Form-item>
-        <Form-item label="显示/隐藏" prop="status">
+        <Form-item label="手机号" prop="phone">
+          <Input v-model="formData.phone" placeholder="请输入"></Input>
+        </Form-item>
+        <Form-item label="角色分配" prop="role">
+          <Select v-model="formData.role">
+            <Option :value="1" :key="1" label="超级管理员"></Option>
+            <Option :value="2" :key="2" label="一般管理员"></Option>
+            <Option :value="3" :key="3" label="物业管理员"></Option>
+          </Select>
+        </Form-item>
+        <Form-item label="冻结" prop="status">
           <i-switch size="large" v-model="toggleStatus" @on-change="changeStatus">
             <span slot="open">激活</span>
             <span slot="close">冻结</span>
@@ -30,6 +40,16 @@
         <Form-item>
           <Button :type="isEdit ? 'error' : 'primary'" icon="checkmark-circled" @click="handleSubmit('formData')">提交</Button>
           <Button type="ghost" icon="refresh" @click="handleReset('formData')" style="margin-left: 8px">重置</Button>
+        </Form-item>
+        </Col>
+        <Col span="8">
+        <Form-item label="头像" prop="avatar">
+          <div class="img-long" v-if="formData.avatar">
+            <img :src="formData.avatar">
+          </div>
+          <vue-core-image-upload text="上传头像" cropRatio="25:19" @uploaded="imageuploaded">
+          </vue-core-image-upload>
+          <Input v-model="formData.avatar" disabled placeholder="请选择图片" style="display: none"></Input>
         </Form-item>
         </Col>
       </Row>
@@ -45,16 +65,32 @@ export default {
       toggleStatus: true,
       isSuper: false,
       formData: {
-        tree: [],
-        email: '',
+        uname: '',
+        passwd: '',
+        phone: '',
+        role: '',
+        avatar: '',
       },
       ruleValidate: {
-        email: [{
+        uname: [{
           required: true,
-          message: '请输入Email'
+          message: '请输入用户名'
+        }],
+        passwd: [{
+          required: true,
+          message: '请输入旧密码'
         }, {
-          type: 'email',
-          message: '请输入合法的Email'
+          validator: this.$rules.validatePass
+        }],
+        phone: [{
+          required: true,
+          message: '请输入手机号'
+        }, {
+          validator: this.$rules.phone
+        }],
+        role: [{
+          required: true,
+          message: '请分配角色'
         }]
       },
       treeData: []
@@ -62,13 +98,23 @@ export default {
   },
   computed: {
     isEdit() {
-      return this.$route.name == 'system.admin.edit';
+      return this.$route.name == 'system.account.edit';
     },
     adminId() {
       return this.$route.params.adminId;
     }
   },
   mounted() {
+    if (this.isEdit) {
+      this.$lodash.assignIn(this.formData, {
+        uname: '张晓明测试数据',
+        passwd: 'qq321321321321',
+        phone: '18664357412',
+        role: 1,
+        avatar: '',
+      })
+    }
+    return false;
     this.$apis.adminInfo({
       id: this.adminId || 0
     }).then(res => {
@@ -137,56 +183,12 @@ export default {
         }
       })
     },
-    handleReset(name) {
-      this.$router.go(0)
+    handleReset() {
+      this.$refs['editForm'].resetFields();
     }
   }
 }
-
 </script>
 <style>
-.adminTree .ivu-tree-children li {
-  padding: 10px 20px;
-  border: 1px solid #dddee1;
-  color: #fff;
-  margin-bottom: 10px;
-  background: #f8f8f9;
-}
-
-.adminTree .ivu-tree-children li span {
-  font-size: 16px;
-  font-weight: 700;
-  color: #2d8cf0;
-}
-
-.adminTree .ivu-tree-children .ivu-tree-children {
-  border: none;
-  margin: 0;
-  padding-left: 0;
-}
-
-.adminTree .ivu-tree-children .ivu-tree-children li {
-  padding: 5px 20px;
-  border: none;
-  background: #fff;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
-}
-
-.adminTree .ivu-tree-children .ivu-tree-children li span {
-  font-size: 14px;
-  font-weight: normal;
-  color: #495060;
-}
-
-.adminTree .ivu-tree-arrow {
-  display: none;
-  margin: 0 10px;
-}
-
-.adminTree .ivu-tree-title-selected,
-.adminTree .ivu-tree-title:hover,
-.adminTree .ivu-tree-title-selected:hover {
-  background: none;
-}
 
 </style>
