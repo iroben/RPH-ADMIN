@@ -14,6 +14,8 @@
     <Row :gutter="20">
       <Col span="4">
       <Menu theme="light" active-name="1-2" :open-names="['1']" width="auto" :accordion="true">
+        <div style="padding:10px 24px; font-size:16px; color: #2d8cf0">
+          <Icon type="ios-navigate" style="margin-right: 10px;"></Icon><strong>宝安区</strong></div>
         <Submenu name="1">
           <template slot="title">
             <Icon type="flag"></Icon>

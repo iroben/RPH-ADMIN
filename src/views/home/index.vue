@@ -318,17 +318,17 @@ export default {
     this.$Notice.warning({
       title: '修改部分意见',
       desc: '1.移除首页动态与待办事项重复<br>2.首页添加消息通知<br>3.人员&房源管理添加复选框与批量删除操作',
-      duration: 3
+      duration: 0
     });
     this.$Notice.success({
       title: '新增',
       desc: '1.门锁管理模块<br>2.角色管理模块<br>3.账号管理模块<br>4.代码管理模块',
-      duration: 4
+      duration: 0
     });
     this.$Notice.info({
       title: '下一步实现',
-      desc: '1.表格组件添加双击操作<br>2.高级查询与自定义查找<br>3.添加全局Breadcrumb导航组件',
-      duration: 5
+      desc: '1.**业务办理模块<br>2.表格组件添加双击操作<br>3.高级查询与自定义查找<br>4.添加全局Breadcrumb导航组件',
+      duration: 0
     });
     this.todoTableData = this.$lodash.testData({
       title: '半山公寓人员信息审核',
