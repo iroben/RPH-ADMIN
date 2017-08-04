@@ -12,7 +12,7 @@
         </div>
       </div>
       <div class="layout-copy">
-        粤ICP备16050337号-1 Copyright 2015-2025 公租房系统
+        <a href="http://www.miitbeian.gov.cn/" target="_blank">粤ICP备17092891号-1 Copyright 2017-2027 房源管理系统</a>
       </div>
       <Back-top ref="goTop"></Back-top>
     </div>
@@ -54,7 +54,7 @@ export default {
     });
 
     // 如果cookie 不存在UserEmail, 则跳转到登录
-    const uemail_ = this.$cookie.get('uemail') || '' || 'testEami@qq.com';
+    const uemail_ = this.$cookie.get('uemail') || '';// || 'testEami@qq.com';
     this.$store.commit('userEmail', uemail_);
     if (this.userEmail) {
       this.$store.dispatch('menus').catch(res => {
@@ -69,6 +69,11 @@ export default {
   methods: {
     changeAffix(status) {
       this.affixMenu = status;
+    },
+    goRouter(path){
+      this.$router.push({
+        name: path
+      });
     }
   }
 }
