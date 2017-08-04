@@ -344,7 +344,6 @@ export default {
         render: (h, params) => {
           const row = params.row;
           const isopen = row.open_status == 1;
-          console.log(row.open_status)
           return h('Tag', {
             props: {
               type: 'border',
