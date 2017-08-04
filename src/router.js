@@ -109,6 +109,11 @@ const system = [{
   name: 'system.account.edit',
   meta: { title: '账户管理' },
   component: (resolve) => require(['./views/system/account.edit.vue'], resolve)
+}, {
+  path: '/system/code',
+  name: 'system.code',
+  meta: { title: '代码管理' },
+  component: (resolve) => require(['./views/system/code.vue'], resolve)
 }];
 
 
