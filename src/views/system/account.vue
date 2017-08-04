@@ -4,8 +4,9 @@
     <div class="tableFuncs">
       <Button-group shape="circle">
         <Button type="primary" icon="plus-circled" @click="goAdd">
-          <span>添加管理员</span>
+          <span>添加账号</span>
         </Button>
+        <Button icon="close">批量删除</Button>
       </Button-group>
     </div>
     <!-- tableTools -->
@@ -54,77 +55,58 @@ export default {
       tableData: [],
       page: {},
       columns: [{
+        type: 'selection',
         width: 60,
-        align: 'center',
-        render: (h, params) => {
-          const curPage = this.page.cur || 1;
-          return this.pageSize * (curPage - 1) + (params.index + 1);
-        }
+        align: 'center'
       }, {
-        title: '姓名',
+        title: '用户ID',
+        key: 'id',
+        width: 120
+      }, {
+        title: '用户名称',
         key: 'name',
-        className: 'avatarImg',
-        width: 180
+        width: 140
       }, {
-        title: '登录邮箱',
-        key: 'email',
-        width: 195,
+        title: '手机号码',
+        key: 'phone',
+        width: 195
+      }, {
+        title: '用户角色',
+        key: 'role',
+        align: 'center',
+        width: 150,
         render: (h, params) => {
-          const row = params.row;
-          if (row.email) {
-            return h('Tooltip', {
-              props: {
-                placement: 'right',
-                content: row.email
-              }
-            }, row.email.length > 20 ? row.email.substr(0, 20) + '...' : row.email);
-          } else {
-            return '-'
-          }
-
+          return h('Tag', {
+            props: {
+              type: 'border',
+              color: 'red'
+            }
+          }, params.row.role)
         }
       }, {
         title: '状态',
         key: 'status',
-        sortable: true,
-        width: 88,
-        align: 'center',
-        render: (h, params) => {
-          const row = params.row;
-          const isForzen = row.status != 1; // 已冻结
-          const color = isForzen ? 'red' : 'green';
-          return h('span', {
-            on: {
-              click: () => {
-                this.selectedGroup = [row];
-                this.studentFrozen(!isForzen);
-              }
-            }
-          }, [
-            h('Tag', {
-              props: {
-                type: 'border',
-                color: color
-              },
-            }, row.status_)
-          ])
-        }
-      }, {
-        title: '超级管理员',
-        key: 'super',
-        sortable: true,
         width: 120,
         align: 'center',
         render: (h, params) => {
           const row = params.row;
-          const isSuper = row.super == 1;
-          const color = isSuper ? 'red' : 'green';
-          return h('Tag', {
+          const isForzen = row.status != 1; // 已冻结
+          return h('i-switch', {
             props: {
-              type: 'border',
-              color: color
+              size: 'large',
+              value: !isForzen,
             },
-          }, isSuper ? '是' : '否')
+            on: {
+              'on-change': (switchStatus) => {
+                this.selectedGroup = [row];
+                this.studentFrozen(!switchStatus);
+              }
+            }
+          }, [h('span', {
+            slot: 'open'
+          }, '激活'), h('span', {
+            slot: 'close'
+          }, '冻结')])
         }
       }, {
         title: '最后登录时间',
@@ -136,7 +118,6 @@ export default {
       }, {
         title: '最后登录IP',
         key: 'last_ip',
-        width: 150,
         render: (h, params) => {
           const row = params.row;
           return h('span', row.last_ip || '-');
@@ -193,18 +174,28 @@ export default {
   methods: {
     goAdd() {
       this.$router.push({
-        'name': 'system.admin.add'
+        'name': 'system.account.add'
       });
     },
     goEdit(id) {
       this.$router.push({
-        'name': 'system.admin.edit',
+        'name': 'system.account.edit',
         'params': {
-          adminId: id
+          id
         }
       });
     },
     getData(page) {
+      this.tableData = this.$lodash.testData({
+        id: '123123213',
+        name: '张晓明',
+        phone: '18664354871',
+        status: 1,
+        role: '超级管理员',
+        last_login_time: '2017-08-02',
+        last_ip: '192.78.23'
+      })
+      return false;
       let params_ = {
         page: page || this.page.cur + 1,
         pagesize: this.pageSize
@@ -270,5 +261,4 @@ export default {
     }
   }
 }
-
 </script>

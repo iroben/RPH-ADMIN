@@ -16,7 +16,7 @@
       </Col>
       <Col span="6">
       <div class="card-info card-info-success">
-        <a href="#/resource"class="card-info-mask">
+        <a href="#/resource" class="card-info-mask">
           <div class="inner">
             <Icon type="eye" size="30"></Icon>
           </div>
@@ -60,7 +60,7 @@
         <Button v-if="tabName == 'todo'" shape="circle" size="small" slot="extra" icon="android-done-all">标记完成</Button>
         <Button v-if="tabName == 'news'" shape="circle" size="small" slot="extra" icon="eye">标记为已读</Button>
         <Button v-if="tabName == 'files'" shape="circle" size="small" slot="extra" icon="android-upload">上传文档</Button>
-        <Tab-pane label="代办事项" name="todo" icon="android-checkmark-circle">
+        <Tab-pane label="待办事项" name="todo" icon="android-checkmark-circle">
           <Table ref="todoTable" :columns="todoColumns" :data="todoTableData" stripe></Table>
           <div class="pagination">
             <Page :total="page.total" :current="page.cur" :page-size="page.pagesize" show-elevator show-total></Page>
@@ -126,7 +126,7 @@ export default {
       },
       newsLabel: (h) => {
         return h('span', [
-          h('span', '最新动态'),
+          h('span', '消息通知'),
           h('Badge', {
             props: {
               count: 3
@@ -315,6 +315,21 @@ export default {
     }
   },
   mounted() {
+    this.$Notice.warning({
+      title: '修改部分意见',
+      desc: '1.移除首页动态与待办事项重复<br>2.首页添加消息通知<br>3.人员&房源管理添加复选框与批量删除操作',
+      duration: 0
+    });
+    this.$Notice.success({
+      title: '新增',
+      desc: '1.门锁管理模块<br>2.角色管理模块<br>3.账号管理模块<br>4.代码管理模块',
+      duration: 0
+    });
+    this.$Notice.info({
+      title: '下一步实现',
+      desc: '1.**业务办理模块<br>2.表格组件添加双击操作<br>3.高级查询与自定义查找<br>4.添加全局Breadcrumb导航组件',
+      duration: 0
+    });
     this.todoTableData = this.$lodash.testData({
       title: '半山公寓人员信息审核',
       type: '人员管理',
@@ -397,6 +412,7 @@ export default {
   display: table-cell;
   vertical-align: middle;
 }
+
 
 
 

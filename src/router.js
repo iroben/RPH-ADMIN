@@ -1,4 +1,5 @@
 import lodash from './methods';
+
 // Basic
 const basic = [{
   path: '/error',
@@ -23,6 +24,7 @@ const basic = [{
   component: (resolve) => require(['./views/home/index.vue'], resolve)
 }];
 
+// 人员管理
 const members = [{
   path: '/members',
   name: 'members.index',
@@ -40,6 +42,7 @@ const members = [{
   component: (resolve) => require(['./views/members/members.edit.vue'], resolve)
 }];
 
+// 房源管理
 const resource = [{
   path: '/resource',
   name: 'resource.index',
@@ -70,14 +73,50 @@ const resource = [{
   name: 'floor.add',
   meta: { title: '新增楼栋' },
   component: (resolve) => require(['./views/resource/floor.edit.vue'], resolve)
-},{
+}, {
   path: '/floor/edit/:id',
   name: 'floor.edit',
   meta: { title: '编辑楼栋' },
   component: (resolve) => require(['./views/resource/floor.edit.vue'], resolve)
 }];
 
+// 门锁管理
+const doorlock = [{
+  path: '/doorlock',
+  name: 'doorlock.index',
+  meta: { title: '门锁管理' },
+  component: (resolve) => require(['./views/doorlock/index.vue'], resolve)
+}];
+
+// 系统管理
+const system = [{
+  path: '/system/role',
+  name: 'system.role',
+  meta: { title: '角色管理' },
+  component: (resolve) => require(['./views/system/role.vue'], resolve)
+}, {
+  path: '/system/account',
+  name: 'system.account',
+  meta: { title: '账户管理' },
+  component: (resolve) => require(['./views/system/account.vue'], resolve)
+}, {
+  path: '/system/account/add',
+  name: 'system.account.add',
+  meta: { title: '添加账户' },
+  component: (resolve) => require(['./views/system/account.edit.vue'], resolve)
+}, {
+  path: '/system/account/edit/:id',
+  name: 'system.account.edit',
+  meta: { title: '账户管理' },
+  component: (resolve) => require(['./views/system/account.edit.vue'], resolve)
+}, {
+  path: '/system/code',
+  name: 'system.code',
+  meta: { title: '代码管理' },
+  component: (resolve) => require(['./views/system/code.vue'], resolve)
+}];
 
 
-const routers = lodash.concat(basic, members, resource);
+
+const routers = lodash.concat(basic, members, resource, doorlock, system);
 export default routers;

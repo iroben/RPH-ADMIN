@@ -6,6 +6,7 @@
         <Button type="primary" icon="plus" @click="goAdd('project.add')">新增项目</Button>
         <Button icon="plus" @click="goAdd('floor.add')">新增楼栋</Button>
         <Button icon="plus" @click="goAdd('resource.add')">新增房源</Button>
+        <Button icon="close">批量删除</Button>
         <Button icon="stats-bars">报表输出</Button>
       </Button-group>
     </div>
@@ -13,6 +14,8 @@
     <Row :gutter="20">
       <Col span="4">
       <Menu theme="light" :active-name="activeName" :open-names="['1']" width="auto" :accordion="true" @on-select="selectMenu">
+        <div style="padding:10px 24px; font-size:16px; color: #2d8cf0">
+          <Icon type="ios-navigate" style="margin-right: 10px;"></Icon><strong>宝安区</strong></div>
         <Submenu name="project-1">
           <template slot="title">
             <span @click="selectMenu('project-1')">
@@ -46,7 +49,7 @@
       </Col>
       <Col span="20">
       <Tabs v-model="tabActive" :animated="false" style="margin-top: 10px;">
-      <Button v-show="tabActive == 'projectInfo'" icon="edit" slot="extra" type="ghost" size="small" @click="isEditInfo = !isEditInfo">编辑</Button>
+        <Button v-show="tabActive == 'projectInfo'" icon="edit" slot="extra" type="ghost" size="small" @click="isEditInfo = !isEditInfo">编辑</Button>
         <Tab-pane name="resource" label="房源信息" icon="navicon-round">
           <div class="tableTools" style="border: 0; padding-top: 0; ">
             <Row class="tableTools-inner">
@@ -221,6 +224,10 @@ export default {
         pagesize: 1
       },
       columns: [{
+        type: 'selection',
+        width: 60,
+        align: 'center'
+      }, {
         title: '项目',
         key: 'project',
         width: 140
@@ -403,7 +410,7 @@ export default {
         return;
       }
 
-      
+
       // this.selectedGroupNames = this.$lodash.map(this.selectedGroup, 'project').join(',');
       this.selectedGroupNames = this.selectedGroup[0].project + '-' + this.selectedGroup[0].floor + '-' + this.selectedGroup[0].door_number;
       this.modelDel = true;
