@@ -78,7 +78,7 @@
         </Row>
       </div>
       <TableScoller>
-        <Table ref="table" :columns="columns" :data="tableData" @on-selection-change="selectionChange" stripe border></Table>
+        <Table ref="table" :columns="columns" :data="tableData" @on-row-dblclick="dbclick" @on-selection-change="selectionChange" stripe border></Table>
       </TableScoller>
       <div class="pagination">
         <Page :total="page.total" :current="page.cur" @on-change="getData" :page-size="pageSize" show-elevator show-total></Page>
@@ -469,6 +469,9 @@ export default {
         this.$lodash.assign(this.formDoorLock, params);
       }
       this.modelDoorlock = true;
+    },
+    dbclick(row){
+      this.editLock(row);
     },
     handleReset(name) {
       this.$refs[name].resetFields();

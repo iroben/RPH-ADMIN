@@ -74,7 +74,7 @@
         </Row>
       </div>
       <template v-if="toggleStatus">
-        <Table ref="studentTable" :columns="columns" :data="tableData" @on-selection-change="selectionChange" stripe border></Table>
+        <Table ref="studentTable" :columns="columns" :data="tableData" @on-row-dblclick="dbclick" @on-selection-change="selectionChange" stripe border></Table>
         <div class="pagination">
           <Page :total="page.total" :current="page.cur" @on-change="getData" :page-size="pageSize" show-elevator show-total></Page>
         </div>
@@ -267,6 +267,9 @@ export default {
           id
         }
       });
+    },
+    dbclick(row){
+      this.goEdit(row.id);
     },
     handleReset(name) {
       this.$refs[name].resetFields();
