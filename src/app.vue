@@ -145,7 +145,7 @@ export default {
 }
 
 .layout-title {
-    margin-bottom: 20px;
+    margin: 5px 0 14px;
 }
 
 .layout-copy {
