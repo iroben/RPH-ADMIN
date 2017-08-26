@@ -6,7 +6,7 @@
         </div>
         <div class="layout" v-if="!isLogin">
             <div class="layout-content">
-                <Tabs ref="mainTab" v-model="tabActive" type="card" closable :animated="false" @on-tab-remove="handleTabRemove">
+                <Tabs class="mainTab" ref="mainTab" v-model="tabActive" type="card" closable :animated="false" @on-tab-remove="handleTabRemove">
                     <Tab-pane :class="tab.name" :closable="tab.name != 'home.index'" v-if="tab" v-for="tab in tabs" :name="tab.name" :label="tab.title"></Tab-pane>
                 </Tabs>
                 <div class="layout-content-main">
@@ -118,7 +118,7 @@ export default {
     position: relative;
 }
 
-.layout .ivu-tabs-bar {
+.mainTab .ivu-tabs-bar {
     position: relative;
     z-index: 2;
     margin-bottom: 0;

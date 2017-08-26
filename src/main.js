@@ -37,10 +37,12 @@ import AvaterView from './components/avater.perview';
 import TxtView from './components/txt.perview';
 import TableScoller from './components/table.scoller';
 import MchoosePanel from './components/mchoose.panel';
+import OrgMenus from './components/org.menus.vue';
 Vue.component('TableScoller', TableScoller);
 Vue.component('AvaterView', AvaterView);
 Vue.component('TxtView', TxtView);
 Vue.component('MchoosePanel', MchoosePanel);
+Vue.component('OrgMenus', OrgMenus);
 Vue.component('VueCoreImageUpload', VueCoreImageUpload);
 
 /**------------------------
