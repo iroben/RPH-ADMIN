@@ -39,8 +39,8 @@
                   </Select>
                 </Form-item>
                 <Form-item label="" :label-width="1">
-                    <Button type="text" @click="toggleSearch">高级查询<Icon style="margin-left: 5px;" :type="searchVisible ? 'chevron-up' : 'chevron-down'"></Icon></Button>
-                  </Form-item>
+                    <Button shape="circle" @click="toggleSearch">高级查询<Icon style="margin-left: 5px;" :type="searchVisible ? 'chevron-up' : 'chevron-down'"></Icon></Button>
+                </Form-item>
               </Form>
               </Col>
               <Col span="5">

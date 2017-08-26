@@ -13,7 +13,7 @@
         <div class="header-line"></div>
         <Row :gutter="20">
             <Col span="4">
-              <OrgMenus></OrgMenus>
+            <OrgMenus></OrgMenus>
             </Col>
             <Col span="20">
             <div class="tableTools" style="border: 0;">
@@ -37,7 +37,7 @@
               <Date-picker v-model="queryParams.birth" type="daterange" placement="bottom-end" placeholder="选择日期" style="width: 200px"></Date-picker>
             </Form-item> -->
                         <Form-item label="" :label-width="1">
-                            <Button type="text" @click="toggleSearch">高级查询
+                            <Button shape="circle" @click="toggleSearch">高级查询
                                 <Icon style="margin-left: 5px;" :type="searchVisible ? 'chevron-up' : 'chevron-down'"></Icon>
                             </Button>
                         </Form-item>
@@ -396,7 +396,7 @@ export default {
 
 
 
+
 /*.ivu-menu-light.ivu-menu-vertical .ivu-menu-item
 */
-
 </style>
