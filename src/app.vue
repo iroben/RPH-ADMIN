@@ -6,6 +6,9 @@
         </div>
         <div class="layout" v-if="!isLogin">
             <div class="layout-content">
+                <Tabs ref="mainTab" v-model="tabActive" type="card" closable :animated="false" @on-tab-remove="handleTabRemove">
+                    <Tab-pane :class="tab.name" :closable="tab.name != 'home.index'" v-if="tab" v-for="tab in tabs" :name="tab.name" :label="tab.title"></Tab-pane>
+                </Tabs>
                 <div class="layout-content-main">
                     <h2 class="layout-title">#&emsp;{{title}}</h2>
                     <router-view></router-view>
@@ -26,6 +29,11 @@ export default {
     },
     data() {
         return {
+            tabActive: 'home.index',
+            tabs: {
+                "home.index": { "title": "首页", "name": "home.index" }
+            },
+            tabsAr: [],
             affixMenu: false
         }
     },
@@ -46,11 +54,26 @@ export default {
             return this.routeName == 'login';
         }
     },
+    watch: {
+        tabActive(name) {
+            this.$router.push(this.tabs[name])
+        }
+    },
     mounted() {
-        this.$router.afterEach(() => {
+        this.$router.afterEach((to) => {
             if (this.$refs.mainMenu) {
                 this.$refs.mainMenu.uptedeOpend();
             }
+            const rname = to.name;
+            const tab = {
+                title: to.meta.title,
+                name: rname,
+                params: to.params,
+                query: to.query
+            };
+            this.tabs[rname] = tab;
+            this.tabsAr.push(tab);
+            this.tabActive = rname;
         });
 
         // 如果cookie 不存在UserEmail, 则跳转到登录
@@ -67,6 +90,9 @@ export default {
         }
     },
     methods: {
+        handleTabRemove(name, index) {
+            this.tabs[name] = null;
+        },
         changeAffix(status) {
             this.affixMenu = status;
         }
@@ -82,6 +108,9 @@ export default {
     visibility: hidden
 }
 
+
+
+
 /*layout*/
 
 .layout {
@@ -89,18 +118,30 @@ export default {
     position: relative;
 }
 
+.layout .ivu-tabs-bar {
+    position: relative;
+    z-index: 2;
+    margin-bottom: 0;
+}
+
 .layout-content {
     padding: 15px;
 }
 
 .layout-content-main {
+    position: relative;
+    z-index: 1;
     width: 100%;
-    border-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
     position: relative;
     padding: 15px;
     min-height: calc(100vh - 136px);
     overflow: hidden;
     background: #fff;
+    border: 1px solid #dddee1;
+    margin-top: -1px;
 }
 
 .layout-title {
@@ -120,6 +161,9 @@ export default {
 .layout .ivu-col {
     transition: width .2s ease-in-out;
 }
+
+
+
 
 
 
@@ -146,6 +190,9 @@ export default {
 
 
 
+
+
+
 /* tableFuncs */
 
 .tableFuncs {
@@ -153,6 +200,9 @@ export default {
     right: 15px;
     top: 15px;
 }
+
+
+
 
 
 
@@ -191,6 +241,9 @@ export default {
     right: 0;
     top: -45px;
 }
+
+
+
 
 
 
@@ -265,6 +318,9 @@ export default {
     height: 3px;
     background-color: #e9eaec;
 }
+
+
+
 
 
 /*font*/
