@@ -63,8 +63,11 @@
                 <Option value="3" label="三室一厅"></Option>
               </Select>
             </Form-item>
-            <Form-item label="出生日期:" :label-width="70" prop="birth">
+<!--             <Form-item label="出生日期:" :label-width="70" prop="birth">
               <Date-picker v-model="queryParams.birth" type="daterange" placement="bottom-end" placeholder="选择日期" style="width: 200px"></Date-picker>
+            </Form-item> -->
+            <Form-item label="" :label-width="1">
+              <Button type="text" @click="toggleSearch">高级查询<Icon style="margin-left: 5px;" :type="searchVisible ? 'chevron-up' : 'chevron-down'"></Icon></Button>
             </Form-item>
           </Form>
           </Col>
@@ -73,6 +76,7 @@
           </Col>
         </Row>
       </div>
+      <MchoosePanel :visible="searchVisible"></MchoosePanel>
       <template v-if="toggleStatus">
         <Table ref="studentTable" :columns="columns" :data="tableData" @on-row-dblclick="dbclick" @on-selection-change="selectionChange" stripe border></Table>
         <div class="pagination">
@@ -129,6 +133,7 @@
 export default {
   data() {
     return {
+      searchVisible: false,
       toggleStatus: 1,
       activeParams: null, // 当前操作行数据
       selection: [], // 全选数组
@@ -255,6 +260,9 @@ export default {
     this.getData(curPage);
   },
   methods: {
+    toggleSearch(){
+      this.searchVisible = !this.searchVisible;
+    },
     goAdd() {
       this.$router.push({
         'name': 'members.add'

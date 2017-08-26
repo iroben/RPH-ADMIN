@@ -70,6 +70,9 @@
                     <Option value="2" label="已入住"></Option>
                   </Select>
                 </Form-item>
+                <Form-item label="" :label-width="1">
+                    <Button type="text" @click="toggleSearch">高级查询<Icon style="margin-left: 5px;" :type="searchVisible ? 'chevron-up' : 'chevron-down'"></Icon></Button>
+                  </Form-item>
               </Form>
               </Col>
               <Col span="5">
@@ -77,6 +80,7 @@
               </Col>
             </Row>
           </div>
+          <MchoosePanel :visible="searchVisible"></MchoosePanel>
           <TableScoller>
             <Table ref="table" :columns="columns" :data="tableData" @on-row-dblclick="dbclick" @on-selection-change="selectionChange" stripe border></Table>
           </TableScoller>
@@ -197,6 +201,7 @@
 export default {
   data() {
     return {
+      searchVisible: false,
       isEditInfo: false,
       isProject: true,
       formData: {},
@@ -343,6 +348,9 @@ export default {
     }
   },
   methods: {
+    toggleSearch(){
+      this.searchVisible = !this.searchVisible;
+    },
     goAdd(name) {
       this.$router.push({
         'name': name

@@ -15,6 +15,7 @@ import VueCookie from 'vue-cookie';
 import VueCoreImageUpload from './components/avater.upload.vue';
 import rules from './validateRules';
 
+
 // Install Global Module
 Vue.use(VueRouter);
 Vue.use(Vuex);
@@ -35,9 +36,11 @@ import 'iview/dist/styles/iview.css';
 import AvaterView from './components/avater.perview';
 import TxtView from './components/txt.perview';
 import TableScoller from './components/table.scoller';
+import MchoosePanel from './components/mchoose.panel';
 Vue.component('TableScoller', TableScoller);
 Vue.component('AvaterView', AvaterView);
 Vue.component('TxtView', TxtView);
+Vue.component('MchoosePanel', MchoosePanel);
 Vue.component('VueCoreImageUpload', VueCoreImageUpload);
 
 /**------------------------
