@@ -31,6 +31,13 @@
             <Option :value="3" :key="3" label="物业管理员"></Option>
           </Select>
         </Form-item>
+        <Form-item label="角色" prop="role">
+          <Select v-model="formData.role">
+            <Option :value="1" :key="1" label="超级管理员"></Option>
+            <Option :value="2" :key="2" label="一般管理员"></Option>
+            <Option :value="3" :key="3" label="物业管理员"></Option>
+          </Select>
+        </Form-item>
         <Form-item label="冻结" prop="status">
           <i-switch size="large" v-model="toggleStatus" @on-change="changeStatus">
             <span slot="open">激活</span>

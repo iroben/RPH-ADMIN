@@ -7,6 +7,11 @@
         </Button>
       </Button-group>
     </div>
+    <ul>
+      <li>基本信息</li>
+      <li>门锁信息(预览与连接)</li>
+      <li>入住人员(连接到编辑人员)</li>
+    </ul>
     <Form ref="editForm" :model="formData" :rules="ruleValidate" label-position="right" :label-width="90">
       <Row :gutter="16">
         <Col span="12">
@@ -25,7 +30,14 @@
         <Form-item label="项目介绍" prop="email">
           <Input v-model="formData.name" type="textarea" placeholder="请输入" :rows="10"></Input>
         </Form-item>
-
+        <Form-item label="配套" prop="email">
+          <Select v-model="formData.peitao" multiple placeholder="请选择">
+            <Option value="binxiang">冰箱</Option>
+            <Option value="xiyiji">洗衣机</Option>
+            <Option value="taideng">台灯</Option>
+            <Option value="kongtiao">空调</Option>
+          </Select>
+        </Form-item>
         </Col>
         <Col span="12">
         <Form-item label="物业公司" prop="email">

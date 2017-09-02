@@ -48,7 +48,7 @@
           </div>
         </a>
         <Card class="homecard" :bordered="false">
-          <h3>新增住户总数</h3>
+          <h3>新增住户总数(近一个月)</h3>
           <p>9,380</p>
         </Card>
       </div>

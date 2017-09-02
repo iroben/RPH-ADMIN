@@ -71,6 +71,7 @@ export default {
                 params: to.params,
                 query: to.query
             };
+            console.log(rname)
             this.tabs[rname] = tab;
             this.tabsAr.push(tab);
             this.tabActive = rname;

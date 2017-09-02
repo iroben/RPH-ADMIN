@@ -13,11 +13,22 @@
         <Form-item label="楼栋名称">
           <Input v-model="formData.name" placeholder="请输入"></Input>
         </Form-item>
+        <Form-item label="总楼层">
+          <Input v-model="formData.name" placeholder="请输入"></Input>
+        </Form-item>
         <Form-item label="选择项目">
           <Select v-model="formData.resource" placeholder="请选择">
             <Option value="beijing">半山家园</Option>
             <Option value="shanghai">青年公寓</Option>
             <Option value="shenzhen">四海新城</Option>
+          </Select>
+        </Form-item>
+        <Form-item label="配套" prop="email">
+          <Select v-model="formData.peitao" multiple placeholder="请选择">
+            <Option value="binxiang">冰箱</Option>
+            <Option value="xiyiji">洗衣机</Option>
+            <Option value="taideng">台灯</Option>
+            <Option value="kongtiao">空调</Option>
           </Select>
         </Form-item>
         <Form-item label="上传图片" class="avatar-list">
@@ -31,15 +42,6 @@
         </Form-item>
         </Col>
         <Col span="12">
-        <Form-item label="物业公司" prop="email">
-          <Input v-model="formData.org" placeholder="请输入"></Input>
-        </Form-item>
-        <Form-item label="物业负责人" prop="email">
-          <Input v-model="formData.org" placeholder="请输入"></Input>
-        </Form-item>
-        <Form-item label="物业联系方式" prop="email">
-          <Input v-model="formData.org" placeholder="请输入"></Input>
-        </Form-item>
         <Form-item label="地理坐标" prop="phone">
           <Input v-model="formData.phone" placeholder="经纬度请用逗号分隔"></Input>
           <div class="intro-big-pic" style="margin-top:10px;">

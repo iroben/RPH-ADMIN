@@ -20,7 +20,7 @@
             <Option value="shenzhen">四海新城</Option>
           </Select>
         </Form-item>
-        <Form-item label="楼栋编号">
+        <Form-item label="楼栋编号(二级, 楼栋=>楼层)">
           <Select v-model="formData.resource" placeholder="请选择">
             <Option value="beijing">B-311</Option>
             <Option value="shanghai">B-312</Option>
