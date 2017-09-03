@@ -1,11 +1,11 @@
 <template>
   <div>
-    <ul>
+  <!--   <ul>
       <li>门锁编辑, 新开页面</li>
       <li>基本信息</li>
       <li>房源信息, 安装时间与结束时间</li>
       <li>门锁记录</li>
-    </ul> 
+    </ul>  -->
     <!--  tableFuncs -->
     <div class="tableFuncs">
       <Button-group shape="circle">
