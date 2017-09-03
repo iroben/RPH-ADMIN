@@ -2,7 +2,7 @@
     <div v-if="visible">
       <div class="mchoose-head" v-show="chooseAr.length">
         <span class="thead"><Icon type="information-circled" style="margin-right: 5px;"></Icon>已选择:</span>
-          <Tag v-if="item" style="margin-right: 10px;" v-for="(item, index) in chooseAr" @on-close="handleClose(item.class, index)" type="border" closable color="blue">{{item.name}}</Tag>
+          <Tag v-if="item" style="margin-right: 10px;" v-for="(item, index) in chooseAr" :key="item.class" @on-close="handleClose(item.class, index)" type="border" closable color="blue">{{item.name}}</Tag>
       </div>
       <div class="mchoose-Panel">
           <div class="mchoose-row" v-if="!choose[row.class]" v-for="row in data">

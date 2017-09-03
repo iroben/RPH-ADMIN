@@ -39,7 +39,7 @@ const members = [{
   path: '/members/add',
   name: 'members.add',
   meta: { title: '新增人员' },
-  component: (resolve) => require(['./views/members/members.edit.vue'], resolve)
+  component: (resolve) => require(['./views/members/members.add.vue'], resolve)
 }];
 
 // 房源管理

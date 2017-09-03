@@ -6,8 +6,19 @@
                 <Button type="primary" icon="plus" @click="goAdd()">添加人员</Button>
                 <Button icon="refresh" @click="handleReset('queryForm')">重置查询</Button>
                 <Button icon="close">批量删除</Button>
+            </Button-group>
+        </div>
+        <div class="tableFuncs">
+            <Button-group shape="circle">
+                <Button type="primary" icon="plus-circled" @click="goRouter('members.add')">
+                    添加人员
+                </Button>
+                <Button icon="toggle-filled" @click="delGroup()">
+                    批量删除
+                </Button>
                 <Button icon="stats-bars">报表输出</Button>
                 <Button :icon="toggleStatus ? 'navicon-round' : 'grid'" @click="changeToggle"></Button>
+                <Button title="重置" @click="resetFilter" icon="loop">重置</Button>
             </Button-group>
         </div>
         <div class="header-line"></div>
@@ -33,9 +44,6 @@
                                 <Option value="3" label="三室一厅"></Option>
                             </Select>
                         </Form-item>
-                        <!--             <Form-item label="出生日期:" :label-width="70" prop="birth">
-              <Date-picker v-model="queryParams.birth" type="daterange" placement="bottom-end" placeholder="选择日期" style="width: 200px"></Date-picker>
-            </Form-item> -->
                         <Form-item label="" :label-width="1">
                             <Button shape="circle" @click="toggleSearch">高级查询
                                 <Icon style="margin-left: 5px;" :type="searchVisible ? 'chevron-up' : 'chevron-down'"></Icon>
@@ -50,7 +58,9 @@
             </div>
             <MchoosePanel :visible="searchVisible"></MchoosePanel>
             <template v-if="toggleStatus">
-                <Table ref="studentTable" :columns="columns" :data="tableData" @on-row-dblclick="dbclick" @on-selection-change="selectionChange" stripe border></Table>
+                <TableScoller>
+                    <Table ref="table" :columns="columns" :data="tableData" @on-row-dblclick="dbclick" @on-selection-change="selectionChange" stripe border></Table>
+                </TableScoller>
                 <div class="pagination">
                     <Page :total="page.total" :current="page.cur" @on-change="getData" :page-size="pageSize" show-elevator show-total></Page>
                 </div>
@@ -86,19 +96,6 @@
             </p>
             <Table ref="studentTable" :columns="columns" :data="familyData" @on-selection-change="selectionChange" stripe border></Table>
         </Modal>
-        <!-- Del Model -->
-        <Modal v-model="modelDel" width="300" @on-cancel="clearDel">
-            <p slot="header" class="del-header">
-                <Icon type="information-circled"></Icon>
-                <span>删除</span>
-            </p>
-            <div class="del-content del-content-center">
-                <p>{{selectedGroupNames}}?</p>
-            </div>
-            <div slot="footer">
-                <Button type="error" long :loading="modalLoading" size="large" @click="del">确认</Button>
-            </div>
-        </Modal>
     </div>
 </template>
 <script>
@@ -107,19 +104,24 @@ export default {
         return {
             searchVisible: false,
             toggleStatus: 1,
-            activeParams: null, // 当前操作行数据
-            selection: [], // 全选数组
-            selectedGroup: [], // 多选中的行
-            selectedGroupNames: [],
-            modelDel: false, // 删除model显示隐藏
-            modalLoading: false, // 加载按钮加载中提示
-            queryParams: { // 表头筛选
-                type: '',
-                birth: '',
-                huxing: '',
-                keyword: ''
+
+
+
+
+
+            activeParams: {}, // 当前选中表格行数据
+            selectedGroup: [], // 表格批量选中行数据
+            selectedGroupNames: [], // 表格批量选中行Names
+            modalLoading: false, // 加载状态
+            queryParams: { // 表格筛选条件
+                keyword: '',
+                org_id: ''
             },
-            tableData: [],
+            dateValue: '', // 日历控件Model
+            dateRangeValue: '', // 日历范围控件Model
+            rangeOptions: this.$store.getters.dateRangeOptions, // 日历控件Options
+            tableData: [], // 表格数据
+            page: {}, // 分页
             cardData: [],
             modelFamily: false,
             familyData: [],
@@ -209,45 +211,31 @@ export default {
                 render: (h, params) => {
                     const row = params.row;
                     const isSuper = row.super == 1;
-                    return h('ButtonGroup', [
-                        h('Button', {
-                            props: {
-                                disabled: isSuper,
-                                type: 'ghost',
-                                icon: 'close',
-                                size: 'small'
-                            },
-                            on: {
-                                click: () => {
-                                    this.selectedGroup = [row];
-                                    this.showDel();
-                                }
-                            }
-                        }),
-                        h('Button', {
-                            props: {
-                                type: 'ghost',
-                                icon: 'edit',
-                                size: 'small'
-                            },
-                            on: {
-                                click: () => {
-                                    this.goEdit(params.row.id);
-                                }
-                            }
-                        })
-                    ]);
+                    return this.$lodash.renderButtonGroup(h, params, [{
+                        icon: 'close',
+                        click: () => {
+                            this.activeParams = params;
+                            this.delData();
+                        }
+                    }, {
+                        icon: 'edit',
+                        click: () => {
+                            this.goEdit(params.row.id);
+                        }
+                    }])
                 }
             }]
         }
     },
     computed: {
-        pageSize() {
+        pageSize() { // 分页大小
             return this.$store.getters.pageSize;
+        },
+        canGroup() { // 当前是否支持批量操作
+            return this.selectedGroup.length > 0;
         }
     },
     mounted() {
-        const curPage = this.$route.query.page || 1;
         this.cardData = this.$lodash.testData({
             house_number: 'B栋411',
             family: [{
@@ -262,16 +250,14 @@ export default {
             }],
             family_count: 3
         });
+
+        // 获取数据
+        const curPage = this.$route.query.page || 1;
         this.getData(curPage);
     },
     methods: {
         toggleSearch() {
             this.searchVisible = !this.searchVisible;
-        },
-        goAdd() {
-            this.$router.push({
-                'name': 'members.add'
-            });
         },
         goEdit(id) {
             this.$router.push({
@@ -283,9 +269,6 @@ export default {
         },
         dbclick(row) {
             this.goEdit(row.id);
-        },
-        handleReset(name) {
-            this.$refs[name].resetFields();
         },
         goFamily() {
             this.modelFamily = true;
@@ -304,99 +287,123 @@ export default {
         changeToggle() {
             this.toggleStatus = this.toggleStatus == 0 ? 1 : 0;
         },
-        getData(page) {
-            this.tableData = this.$lodash.testData({
-                id: '2222',
-                name: '张晓明',
-                house_number: 'B栋410',
-                gender: '男',
-                birth: '1991-04-15',
-                card_id: 430726199104155779,
-                org: '深圳大学',
-                phone: '18664357434',
-                door_status: 'open'
-            });
-            return;
-            let params_ = {
-                page: page || this.page.cur + 1,
-                pagesize: this.pageSize
-            };
-            this.$lodash.assign(params_, this.queryParams);
-            this.$apis.admin(params_).then(res => {
-                let _rdada = res.data.data || [];
-                let page_ = res.data.page;
-                page_.cur *= 1;
-                page_.total *= 1;
-                page_.cur = page_.cur || 1;
-                this.tableData = _rdada;
-                this.page = res.data.page;
-                this.$router.push({
-                    query: {
-                        page: this.page.cur
-                    }
-                });
+        // 跳转到指定ROUTER
+        goRouter(name, params, query) {
+            const params_ = params || {};
+            const query_ = params || {};
+            this.$router.push({
+                name: name,
+                query: query_,
+                params: params_
             });
         },
-        selectionChange(selection, index) { // 全选选中
-            this.selection = selection;
-            this.selectedGroup = selection;
+        // 重置Query
+        resetFilter() {
+            this.isRest = true;
+            this.$lodash.forEach(this.queryParams, (value, key) => {
+                this.queryParams[key] = '';
+            });
+            setTimeout(() => {
+                this.getData(1, true);
+            });
         },
-        showDel() {
-            if (this.selectedGroup.length <= 0) {
-                this.$Message.warning('请选择您要删除用户');
-                return;
-            }
-            this.selectedGroupNames = this.$lodash.map(this.selectedGroup, 'name').join(', ');
-            this.modelDel = true;
+        // 清除日历控件
+        dateClear() {
+            this.daterangeValue = [];
+            this.queryParams.start_time = '';
+            this.queryParams.end_time = '';
+            this.getData(1);
         },
-        clearDel() {
-            this.$refs['studentTable'].selectAll(false);
+        // 日历改变
+        dateChange(dateRange) {
+            const curDateRange = this.$refs.dateRange.formattingDate(this.daterangeValue);
+            this.queryParams.start_time = curDateRange[0];
+            this.queryParams.end_time = curDateRange[1];
+            this.getData(1);
+        },
+        // 清除表格多选
+        clearSelected() {
+            this.$refs['table'].selectAll(false);
             this.selectedGroup = [];
         },
-        del() {
-            const ids = this.$lodash.map(this.selectedGroup, 'id');
-            this.modalLoading = true;
-            this.$apis.adminDelete({
-                id: ids.join(',')
-            }).then(res => {
-                this.$lodash.forEach(ids, (curid) => {
-                    this.$lodash.forEach(this.tableData, (item, index) => {
-                        if (item && item.id == curid) {
-                            this.tableData.splice(index, 1);
-                            --this.page.total;
-                        }
-                    });
-                });
-
-                if (this.tableData.length + 1 == this.pageSize) {
-                    this.getData(this.page.cur);
-                } else if (this.tableData <= 0 && this.page.cur != 1) {
-                    this.getData(this.page.cur - 1);
-                } else {
-                    this.getData(1);
+        // 表格多选
+        selectionChange(selection, index) {
+            this.selectedGroup = this.$lodash.map(selection, 'id');
+            this.selectedGroupNames = this.$lodash.map(selection, 'name');
+        },
+        // 获取表格数据, foceReset
+        // 参数在resetFilter时生效, 阻止由重置query数据而导致的多次GET
+        getData(page, forceReset) {
+            const Promise = this.$lodash.getTableData(this, {
+                methodName: 'members',
+                page: page
+            }, !!forceReset);
+        },
+        // 批量处理状态
+        changeStatus(status) {
+            if (!this.canGroup) {
+                this.$Message.warning('请选择您要改变的数据');
+                return false;
+            }
+            this.$Modal.confirm({
+                title: '批量操作',
+                content: this.selectedGroupNames.join(', '),
+                loading: true,
+                onOk: () => {
+                    const ids = this.selectedGroup.join(',');
+                    setTimeout(() => {
+                        this.$lodash.setTableGroup(this, (item) => {
+                            item.status = 1;
+                        });
+                        this.clearSelected();
+                        this.$Modal.remove();
+                    }, 1000);
                 }
-                this.modalLoading = false;
-                this.modelDel = false;
-                this.$Message.success('删除成功');
             });
+        },
+        // 批量删除Table数据
+        delGroup() {
+            if (!this.canGroup) {
+                this.$Message.warning('请选择您要删除的数据');
+            } else {
+                this.$Modal.confirm({
+                    title: '确认删除?',
+                    content: this.selectedGroupNames.join(', '),
+                    loading: true,
+                    onOk: () => {
+                        const ids = this.selectedGroup.join(',');
+                        this.$lodash.api(this, 'membersDelete', {
+                            ids
+                        }).then((res) => {
+                            this.$lodash.delTableGroup(this);
+                            this.clearSelected();
+                            this.$Modal.remove();
+                        }, 1000);
+                    }
+                });
+            }
+        },
+        // 单个Table删除表格
+        delData() {
+            const row = this.activeParams.row;
+            this.$Modal.confirm({
+                title: '确认删除?',
+                content: row.name,
+                loading: true,
+                onOk: () => {
+                    setTimeout(res => {
+                        this.$lodash.delTableActive(this, '删除成功');
+                        this.$Modal.remove();
+                    }, 1000)
+                }
+            })
         }
     }
 }
 </script>
 <style>
-.ulist .ivu-tag {
-    width: 100%;
-    margin-bottom: 5px;
-}
-
 .familyCard {
     margin-bottom: 15px;
     background-color: #fafafa !important;
 }
-
-
-
-
-/*.ivu-menu-light.ivu-menu-vertical .ivu-menu-item
-*/
 </style>

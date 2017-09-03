@@ -10,7 +10,6 @@ export default {
     return {
       docUrl: this.$store.getters.docUrl,
       uploadData: {
-        id: this.$store.getters.orgId,
         type: 'org',
         crop: 1
       }

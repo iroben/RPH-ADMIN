@@ -112,6 +112,7 @@ export default {
 
 
 
+
 /*layout*/
 
 .layout {
@@ -170,6 +171,7 @@ export default {
 
 
 
+
 /* 分页 */
 
 .pagination {
@@ -194,6 +196,7 @@ export default {
 
 
 
+
 /* tableFuncs */
 
 .tableFuncs {
@@ -201,6 +204,7 @@ export default {
     right: 15px;
     top: 15px;
 }
+
 
 
 
@@ -242,6 +246,7 @@ export default {
     right: 0;
     top: -45px;
 }
+
 
 
 
@@ -324,6 +329,7 @@ export default {
 
 
 
+
 /*font*/
 
 .spe-modal-font {
@@ -359,5 +365,18 @@ export default {
     text-overflow: ellipsis;
     vertical-align: middle;
     border-bottom: 1px solid #e9eaec;
+}
+
+.form-title {
+    color: #495060;
+    font-size: 16px;
+    padding-bottom: 10px;
+}
+
+.form-title .ivu-icon {
+    position: relative;
+    top: 3px;
+    margin-right: 10px;
+    font-size: 24px;
 }
 </style>

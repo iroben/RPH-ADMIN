@@ -1,43 +1,20 @@
 <template>
-    <Menu theme="light" active-name="213" :open-names="['213']" width="auto" :accordion="true">
-        <Submenu class="firstLevel" name="213">
-            <span slot="title" class="stitle">
-                        <Icon type="ios-navigate"></Icon>
-                        <strong>宝安区</strong>
-                    </span>
-            <Menu-item name="1-1">
-                <Menu class="secondLevel" theme="light" width="auto" :accordion="true">
-                    <Submenu name="1">
-                        <template slot="title">
-                            <Icon type="flag"></Icon>
-                            伴山家园
-                        </template>
-                        <Menu-item name="1-1">A栋111</Menu-item>
-                        <Menu-item name="1-2">B栋211</Menu-item>
-                        <Menu-item name="1-3">C栋311</Menu-item>
-                    </Submenu>
-                    <Submenu name="2">
-                        <template slot="title">
-                            <Icon type="flag"></Icon>
-                            青年公寓
-                        </template>
-                        <Menu-item name="1-1">A111</Menu-item>
-                        <Menu-item name="1-2">B211</Menu-item>
-                        <Menu-item name="1-3">C311</Menu-item>
-                    </Submenu>
-                    <Submenu name="2">
-                        <template slot="title">
-                            <Icon type="flag"></Icon>
-                            四海新城
-                        </template>
-                        <Menu-item name="1-1">A栋111</Menu-item>
-                        <Menu-item name="1-2">B栋211</Menu-item>
-                        <Menu-item name="1-3">C栋311</Menu-item>
-                    </Submenu>
-                </Menu>
-            </Menu-item>
-        </Submenu>
-    </Menu>
+    <div> 
+        <div style="margin-top: 20px;">
+            <MchooseLocation class="title-sub" v-model="resource" :max="3" fname="subTree" placement="bottom"></MchooseLocation>
+        </div>
+        <Menu theme="light" @on-select="menusClick" :open-names="['213']" width="auto" :accordion="true">
+            <Menu class="secondLevel" theme="light" width="auto" :accordion="true">
+                <Submenu :name="item.id" v-for="item in menus">
+                    <template slot="title">
+                        <Icon type="flag"></Icon>
+                        {{item.name}}
+                    </template>
+                    <Menu-item :name="item.id + '-' + sub.id" v-for="sub in item.child">{{sub.name}}</Menu-item>
+                </Submenu>
+            </Menu>
+        </Menu>
+    </div>
 </template>
 <script>
 export default {
@@ -65,10 +42,40 @@ export default {
         uri: {
             type: String
         }
+    },
+    data() {
+        return {
+            menus: [],
+            resource: ''
+        }
+    },
+    watch: {
+        resource(id) {
+            this.getMenus(id);
+        }
+    },
+    created() {
+        this.getMenus();
+    },
+    methods: {
+        getMenus(id) {
+            this.$lodash.api(this, 'thirdTee', {
+                id: id || ''
+            }).then(res => {
+                this.menus = res.data;
+            })
+        },
+        menusClick(){
+            alert(1)
+        }
     }
 }
 </script>
 <style>
+.title-sub .mchoose-location-view {
+    width: 100%;
+}
+
 .firstLevel .ivu-menu-item {
     padding: 0 !important;
     border-right: none !important;
