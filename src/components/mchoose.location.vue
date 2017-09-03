@@ -199,6 +199,7 @@ export default {
 .mchoose-location-panel-body {
     padding: 10px 0;
     background-color: #fff;
+    box-shadow: 0 3px 3px 0 rgba(0,0,0,0.2);
 }
 
 .mchoose-location-panel-body span {
