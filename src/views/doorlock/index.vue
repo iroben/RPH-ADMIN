@@ -19,39 +19,7 @@
     <Row :gutter="20" class="left-menu">
       <div class="left-menu-line"></div>
       <Col span="4">
-      <Menu theme="light" :active-name="activeName" :open-names="['1']" width="auto" :accordion="true" @on-select="selectMenu">
-        <div style="padding:10px 24px; font-size:16px; color: #2d8cf0">
-          <Icon type="ios-navigate" style="margin-right: 10px;"></Icon><strong>宝安区</strong></div>
-        <Submenu name="project-1">
-          <template slot="title">
-            <span @click="selectMenu('project-1')">
-            <Icon type="flag"></Icon>
-            伴山家园
-            </span>
-          </template>
-          <Menu-item name="floor-1">A栋111</Menu-item>
-          <Menu-item name="floor-2">B栋211</Menu-item>
-          <Menu-item name="floor-3">C栋311</Menu-item>
-        </Submenu>
-        <Submenu name="project-2">
-          <template slot="title">
-            <Icon type="flag"></Icon>
-            青年公寓
-          </template>
-          <Menu-item name="floor-1">A栋111</Menu-item>
-          <Menu-item name="floor-2">B栋211</Menu-item>
-          <Menu-item name="floor-3">C栋311</Menu-item>
-        </Submenu>
-        <Submenu name="project-3">
-          <template slot="title">
-            <Icon type="flag"></Icon>
-            四海新城
-          </template>
-          <Menu-item name="floor-1">A栋111</Menu-item>
-          <Menu-item name="floor-2">B栋211</Menu-item>
-          <Menu-item name="floor-3">C栋311</Menu-item>
-        </Submenu>
-      </Menu>
+      <OrgMenus></OrgMenus>
       </Col>
       <Col span="20">
       <div class="tableTools" style="border: 0;">
