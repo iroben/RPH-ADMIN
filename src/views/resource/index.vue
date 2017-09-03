@@ -17,7 +17,7 @@
       </Col>
       <Col span="20">
       <Tabs v-model="tabActive" :animated="false" style="margin-top: 10px;">
-        <Button v-show="tabActive == 'projectInfo'" icon="edit" slot="extra" type="ghost" size="small" @click="isEditInfo = !isEditInfo">编辑</Button>
+        <Button icon="edit" shape="circle" slot="extra" type="primary" size="small" @click="goProjectEdit">编辑项目</Button>
         <Tab-pane name="resource" label="房源信息" icon="navicon-round">
           <div class="tableTools" style="border: 0; padding-top: 0; ">
             <Row class="tableTools-inner">
@@ -169,6 +169,7 @@
 export default {
   data() {
     return {
+      projectId: 2,
       searchVisible: false,
       isEditInfo: false,
       isProject: true,
@@ -292,7 +293,11 @@ export default {
       return this.$store.getters.pageSize;
     }
   },
-  mounted() {
+  created() {
+    this.$store.commit('breadcrumb', [{
+      name: '房源管理',
+      href: ''
+    }]);
     const curPage = this.$route.query.page || 1;
     this.cardData = this.$lodash.testData({
       house_number: 'B栋411',
@@ -326,9 +331,17 @@ export default {
     },
     goEdit(id) {
       this.$router.push({
-        'name': 'members.edit',
+        'name': 'project.edit',
         'params': {
           id
+        }
+      });
+    },
+    goProjectEdit(){
+      this.$router.push({
+        'name': 'project.edit',
+        'params': {
+          id: this.projectId
         }
       });
     },

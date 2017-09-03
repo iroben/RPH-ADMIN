@@ -259,6 +259,97 @@ const actions = {
             }
         }
     },
+    projectInfo({ commit }, params) {
+        return {
+            code: 1,
+            data: {
+                name: '伴山家园',
+                number: '321321321',
+                photos: '',
+                intro: '简介',
+                peitao: [1, 2, 3],
+                wy_org: '物业公司',
+                wy_charge: '张生',
+                wy_contact: '186-09093-7411',
+                address: '深圳市人大常委会',
+                location: '1321,1231'
+            }
+        }
+    },
+    projectAdd({ commit }, params) {
+        return {
+            code: 1,
+            msg: '添加成功'
+        }
+    },
+    projectEdit({ commit }, params) {
+        return {
+            code: 1,
+            msg: '编辑成功'
+        }
+    },
+    projectMembers({ commit }, params) {
+        const data = lodash.testData({
+            id: '555',
+            name: '李双',
+            house_number: 'B栋410',
+            relation: '丈夫',
+            status: 1,
+            status_msg: '挂失中',
+            gender: '男',
+            birth: '1991-04-15',
+            card_id: 430726199104155779,
+            org: '深圳大学',
+            phone: '18664357434',
+            door_status: 'open'
+        });
+        return {
+            code: 1,
+            data: {
+                data: data,
+                page: {
+                    total: 100, // (int) 总条100条
+                    page: 1, // (int)当前第1页
+                    pagesize: 10, //  (int)每页显示10条
+                    pages: 10 // (int) 共10页
+                }
+            }
+        }
+    },
+    projectLocks({ commit }, params) {
+        const data = lodash.testData({
+            id: 'box012x-door234',
+            door_number: 'door234',
+            box_number: 'box012x',
+            source_number: 'ssb323',
+            source_name: '伴山家园B323',
+            passwod: '123323',
+            company: 'SKT',
+            avalid_date: '2017-08-09 2019-08-09',
+            open_status: 1,
+            status: 0,
+            power: 80,
+            last_open: '2017-08-09 08:09:52',
+            bind_time: '2017-08-09 08:09:52',
+            last_open_user: '张晓明'
+        });
+        return {
+            code: 1,
+            data: {
+                data: data,
+                page: {
+                    total: 100, // (int) 总条100条
+                    page: 1, // (int)当前第1页
+                    pagesize: 10, //  (int)每页显示10条
+                    pages: 10 // (int) 共10页
+                }
+            }
+        }
+    },
+
+
+
+
 
 };
 

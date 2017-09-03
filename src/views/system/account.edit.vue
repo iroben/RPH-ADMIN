@@ -111,7 +111,14 @@ export default {
       return this.$route.params.adminId;
     }
   },
-  mounted() {
+  created() {
+    this.$store.commit('breadcrumb', [{
+        name: '账户管理',
+        href: 'system/account'
+      },{
+        name: this.isEdit ? '编辑账户' : '新增账户',
+        href: ''
+      }]);
     if (this.isEdit) {
       this.$lodash.assignIn(this.formData, {
         uname: '张晓明测试数据',

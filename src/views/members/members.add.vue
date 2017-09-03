@@ -52,9 +52,9 @@
                     </vue-core-image-upload>
                 </Form-item>
                 <div class="form-title">
-                    <Icon type="ios-navigate"></Icon>所属项目:
+                    <Icon type="ios-navigate"></Icon>房源位置:
                 </div>
-                <Form-item label="项目" prop="location">
+                <Form-item label="位置" prop="location">
                     <MchooseLocation v-model="formData.location" :max="4"></MchooseLocation>
                 </Form-item>
                 </Col>
@@ -113,8 +113,14 @@ export default {
             return ['name', 'relation', 'location', 'gender', 'card_id', 'sugestion', 'birth', 'phone', 'org'];
         }
     },
-    mounted() {
-
+    created() {
+        this.$store.commit('breadcrumb', [{
+          name: '人员管理',
+          href: '/members'
+        },{
+          name: '添加人员',
+          href: ''
+        }]);
     },
     methods: {
         // 返回上一页

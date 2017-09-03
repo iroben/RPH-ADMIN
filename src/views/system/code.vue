@@ -99,6 +99,10 @@ export default {
     }
   },
   mounted() {
+    this.$store.commit('breadcrumb', [{
+      name: '代码管理',
+      href: ''
+    }]);
     this.unit = this.$lodash.testData({
       id: 1,
       edit: false,

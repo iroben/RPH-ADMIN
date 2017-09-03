@@ -3,17 +3,10 @@
         <!--  tableFuncs -->
         <div class="tableFuncs">
             <Button-group shape="circle">
-                <Button type="primary" icon="plus" @click="goAdd()">添加人员</Button>
-                <Button icon="refresh" @click="handleReset('queryForm')">重置查询</Button>
-                <Button icon="close">批量删除</Button>
-            </Button-group>
-        </div>
-        <div class="tableFuncs">
-            <Button-group shape="circle">
                 <Button type="primary" icon="plus-circled" @click="goRouter('members.add')">
                     添加人员
                 </Button>
-                <Button icon="toggle-filled" @click="delGroup()">
+                <Button icon="close" @click="delGroup()">
                     批量删除
                 </Button>
                 <Button icon="stats-bars">报表输出</Button>
@@ -66,26 +59,54 @@
                 </div>
             </template>
             <template v-if="!toggleStatus">
-                <Alert type="info" show-icon>伴山家园&emsp; A栋B11 &emsp; 35套空置 </Alert>
-                <Row :gutter="15">
-                    <Col :span="6" v-for="houseItem in cardData">
-                    <Card class="familyCard">
-                        <div slot="title">
-                            <Icon type="android-pin" style="margin-right:3px"></Icon>
-                            {{houseItem.house_number}}
-                        </div>
-                        <span slot="extra">
-                {{houseItem.family_count}}人
-            </span>
-                        <div class="ulist">
-                            <Tag v-for="family in houseItem.family" type="dot" :color="family.isManager ? 'red' : ''">{{family.name}}&emsp;{{family.isManager ? '(申请人)' : ''}}</Tag>
-                        </div>
-                        <Button type="primary" icon="android-contacts" long @click="goFamily">
-                            <span>管理人员</span>
-                        </Button>
-                    </Card>
-                    </Col>
-                </Row>
+                <Card style="margin-bottom: 20px;">
+                    <p slot="title">
+                        伴山家园&emsp; A栋B11 &emsp; 35套空置
+                    </p>
+                    <Row :gutter="15">
+                        <Col :span="6" v-for="houseItem in cardData">
+                        <Card class="familyCard">
+                            <div slot="title">
+                                <Icon type="android-pin" style="margin-right:3px"></Icon>
+                                {{houseItem.house_number}}
+                            </div>
+                            <span slot="extra">
+                            {{houseItem.family_count}}人
+                        </span>
+                            <div class="ulist">
+                                <Tag v-for="family in houseItem.family" type="dot" :color="family.isManager ? 'red' : ''">{{family.name}}&emsp;{{family.isManager ? '(申请人)' : ''}}</Tag>
+                            </div>
+                            <Button type="primary" icon="android-contacts" long @click="goFamily">
+                                <span>管理人员</span>
+                            </Button>
+                        </Card>
+                        </Col>
+                    </Row>
+                </Card>
+                <Card style="margin-bottom: 20px;">
+                    <p slot="title">
+                        四海新城&emsp; C栋B11 &emsp; 35套空置
+                    </p>
+                    <Row :gutter="15">
+                        <Col :span="6" v-for="houseItem in cardData">
+                        <Card class="familyCard">
+                            <div slot="title">
+                                <Icon type="android-pin" style="margin-right:3px"></Icon>
+                                {{houseItem.house_number}}
+                            </div>
+                            <span slot="extra">
+                            {{houseItem.family_count}}人
+                        </span>
+                            <div class="ulist">
+                                <Tag v-for="family in houseItem.family" type="dot" :color="family.isManager ? 'red' : ''">{{family.name}}&emsp;{{family.isManager ? '(申请人)' : ''}}</Tag>
+                            </div>
+                            <Button type="primary" icon="android-contacts" long @click="goFamily">
+                                <span>管理人员</span>
+                            </Button>
+                        </Card>
+                        </Col>
+                    </Row>
+                </Card>
             </template>
             </Col>
         </Row>
@@ -104,11 +125,6 @@ export default {
         return {
             searchVisible: false,
             toggleStatus: 1,
-
-
-
-
-
             activeParams: {}, // 当前选中表格行数据
             selectedGroup: [], // 表格批量选中行数据
             selectedGroupNames: [], // 表格批量选中行Names
@@ -235,7 +251,7 @@ export default {
             return this.selectedGroup.length > 0;
         }
     },
-    mounted() {
+    created() {
         this.cardData = this.$lodash.testData({
             house_number: 'B栋411',
             family: [{
@@ -250,7 +266,10 @@ export default {
             }],
             family_count: 3
         });
-
+        this.$store.commit('breadcrumb', [{
+            name: '人员管理',
+            href: ''
+        }]);
         // 获取数据
         const curPage = this.$route.query.page || 1;
         this.getData(curPage);

@@ -25,4 +25,15 @@ export default {
 	'membersLocationEdit': 'POST/,info',
 	'membersFamily': 'GET,/info',
 	'membersLockHistory': 'GET,/info',
+
+
+	// 房源管理
+	'projectAdd': 'POST,/add',
+	'projectEdit': 'POST,/Edit',
+	'projectInfo': 'GET,/info',
+	'projectMembers': 'GET,/info',
+	'projectLocks': 'GET,/lock',
+
+
+
 };

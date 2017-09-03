@@ -1,6 +1,6 @@
 <template>
     <div class="mchoose-location">
-        <Button class="mchoose-location-view" @click="togglePanle">{{activeNames}}
+        <Button type="primary" class="mchoose-location-view" @click="togglePanle">{{activeNames}}
             <Icon :type="visible ? 'arrow-up-b' : 'arrow-down-b'" style="margin-left: 8px;"></Icon>
         </Button>
         <div class="mchoose-location-panel" v-show="visible" :style="styles">
@@ -173,7 +173,6 @@ export default {
     padding: 0 15px;
     display: inline-block;
     border: 1px solid #e9eaec;
-    margin-right: 5px;
     height: 30px;
     line-height: 30px;
     cursor: pointer;

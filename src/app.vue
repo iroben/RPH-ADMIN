@@ -10,7 +10,19 @@
                     <Tab-pane :class="tab.name" :closable="tab.name != 'home.index'" v-if="tab" v-for="tab in tabs" :name="tab.name" :label="tab.title"></Tab-pane>
                 </Tabs>
                 <div class="layout-content-main">
-                    <h2 class="layout-title">#&emsp;{{title}}</h2>
+                    <div class="layout-title">
+                        <span class="main-title">
+                            {{title}}
+                        </span>
+                        <Breadcrumb>
+                            <BreadcrumbItem href="/" v-if="routeName != 'home.index'">
+                                <Icon type="ios-home-outline"></Icon> 首页
+                            </BreadcrumbItem>
+                            <BreadcrumbItem v-for="item in breadcrumb" :href="item.href">
+                                {{item.name}}
+                            </BreadcrumbItem>
+                        </Breadcrumb>
+                    </div>
                     <router-view></router-view>
                 </div>
             </div>
@@ -38,6 +50,9 @@ export default {
         }
     },
     computed: {
+        breadcrumb() {
+            return this.$store.getters.breadcrumb;
+        },
         siteName() {
             return this.$store.getters.siteName;
         },
@@ -113,6 +128,9 @@ export default {
 
 
 
+
+
+
 /*layout*/
 
 .layout {
@@ -127,7 +145,7 @@ export default {
 }
 
 .layout-content {
-    padding: 15px;
+    padding: 10px;
 }
 
 .layout-content-main {
@@ -150,6 +168,12 @@ export default {
     margin: 5px 0 14px;
 }
 
+.main-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-right: 10px;
+}
+
 .layout-copy {
     text-align: center;
     padding: 10px 0 20px;
@@ -163,6 +187,9 @@ export default {
 .layout .ivu-col {
     transition: width .2s ease-in-out;
 }
+
+
+
 
 
 
@@ -197,6 +224,9 @@ export default {
 
 
 
+
+
+
 /* tableFuncs */
 
 .tableFuncs {
@@ -204,6 +234,9 @@ export default {
     right: 15px;
     top: 15px;
 }
+
+
+
 
 
 
@@ -246,6 +279,9 @@ export default {
     right: 0;
     top: -45px;
 }
+
+
+
 
 
 
@@ -330,6 +366,9 @@ export default {
 
 
 
+
+
+
 /*font*/
 
 .spe-modal-font {
@@ -370,13 +409,20 @@ export default {
 .form-title {
     color: #495060;
     font-size: 16px;
+    font-weight: 700;
     padding-bottom: 10px;
 }
 
 .form-title .ivu-icon {
     position: relative;
-    top: 3px;
+    top: 2px;
+   color: #2d8cf0;
     margin-right: 10px;
-    font-size: 24px;
+    font-size: 20px;
+}
+
+.ivu-breadcrumb {
+    display: inline-block;
+    margin-left: 5px;
 }
 </style>

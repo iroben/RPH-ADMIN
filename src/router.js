@@ -62,7 +62,7 @@ const resource = [{
   path: '/project/add',
   name: 'project.add',
   meta: { title: '新增项目' },
-  component: (resolve) => require(['./views/resource/project.edit.vue'], resolve)
+  component: (resolve) => require(['./views/resource/project.add.vue'], resolve)
 }, {
   path: '/project/edit/:id',
   name: 'project.edit',

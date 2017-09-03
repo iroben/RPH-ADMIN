@@ -8,7 +8,7 @@
             </Button-group>
         </div>
         <Affix style="float:left">
-            <Menu :active-name="active" @on-select="menuSelect">
+            <Menu :active-name="active" @on-select="menuSelect" style="width: 180px">
                 <MenuGroup :title="'人员:' + editInfor.name">
                     <MenuItem name="info">
                     <Icon type="document-text"></Icon>
@@ -29,10 +29,10 @@
                 </MenuGroup>
             </Menu>
         </Affix>
-        <div style="margin-left: 260px;" v-if="active == 'info'">
+        <div style="margin-left: 200px;" v-if="active == 'info'">
             <Form ref="formData" :model="formData" :rules="ruleValidate" :label-width="100">
                 <Row :gutter="16">
-                    <Col span="12">
+                    <Col span="14">
                     <Form-item label="姓名" prop="name">
                         <Input v-model="formData.name" placeholder="请输入"></Input>
                     </Form-item>
@@ -72,18 +72,18 @@
                         <vue-core-image-upload text="上传头像" cropRatio="1:1" @uploaded="imageUploaded">
                         </vue-core-image-upload>
                     </Form-item> -->
-                    <div class="form-title">
-                        <Icon type="ios-navigate"></Icon>所属项目:
-                    </div>
+                    <Form-item label="">
+                        <Button size="large" type="primary" icon="checkmark-circled" @click="handleSubmit('formData')">提交</Button>
+                        <Button size="large" type="ghost" icon="refresh" @click="handleReset('formData')" style="margin-left: 8px">重置</Button>
+                    </Form-item>
                     </Col>
                 </Row>
                 <Row style="text-align: center; padding: 20px">
-                    <Button size="large" type="primary" icon="checkmark-circled" @click="handleSubmit('formData')">提交</Button>
-                    <Button size="large" type="ghost" icon="refresh" @click="handleReset('formData')" style="margin-left: 8px">重置</Button>
+                    
                 </Row>
             </Form>
         </div>
-        <div style="margin-left: 260px;" v-if="active == 'location'">
+        <div style="margin-left: 200px;" v-if="active == 'location'">
             <div span="12" v-for="item in locations">
                 <Card style="margin-bottom: 15px;">
                     <p slot="title">
@@ -96,16 +96,16 @@
                   </span>
                     <span v-if="item.status == 0">{{item.location_msg}}</span>
                     <MchooseLocation style=" flaot: left;" v-if="item.status == 1" v-model="item.location" :max="4"></MchooseLocation>
-                    <Button v-if="item.status == 1" type="primary" @click="locationEdit(item.location)">保存</Button>
+                    <Button v-if="item.status == 1" type="error" @click="locationEdit(item.location)">编辑位置</Button>
                 </Card>
             </div>
         </div>
-        <div style="margin-left: 260px;" v-if="active == 'family'">
+        <div style="margin-left: 200px;" v-if="active == 'family'">
             <TableScoller>
                 <Table ref="tableA" :columns="columnsA" @on-row-dblclick="goEdit" :data="tableFamily" stripe border></Table>
             </TableScoller>
         </div>
-        <div style="margin-left: 260px;" v-if="active == 'lock'">
+        <div style="margin-left: 200px;" v-if="active == 'lock'">
             <Table ref="tableB" :columns="columnsB" :data="tableLock" stripe border></Table>
         </div>
     </div>
@@ -273,8 +273,15 @@ export default {
             }
         },
     },
-    mounted() {
+    created() {
         this.active = 'info';
+        this.$store.commit('breadcrumb', [{
+          name: '人员管理',
+          href: '/members'
+        },{
+          name: '编辑人员',
+          href: ''
+        }]);
     },
     methods: {
         goEdit(row) {

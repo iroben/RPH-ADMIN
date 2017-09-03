@@ -15,6 +15,7 @@ const debug = process.env.NODE_ENV !== 'production';
 const state = {
   siteName: '房源管理系统',
   metaName: '房源管理系统',
+  breadcrumb: [],
   metaShow: true,
   basicUrl: config.basicUrl,
   docUrl: config.docUrl,
@@ -59,6 +60,7 @@ const getters = {
   siteName: state => state.siteName,
   metaName: state => state.metaName,
   metaShow: state => state.metaShow,
+  breadcrumb: state => state.breadcrumb,
   basicUrl: state => state.basicUrl,
   docUrl: state => state.docUrl,
   userEmail: state => state.userEmail,
@@ -105,6 +107,9 @@ const mutations = {
   },
   metaShow(state, status) {
     state.metaShow = status;
+  },
+  breadcrumb(state, breadcrumb){
+    state.breadcrumb = breadcrumb;
   },
   menus(state, menus) {
     state.menus = menus;

@@ -1,7 +1,7 @@
 <template>
     <Menu :mode="mode" :theme="theme" width="auto" :active-name="$route.name" :open-names="openNames" @on-select="goRouter" accordion :ref="name">
         <a href="#/" class="layout-logo">
-            <img src="../../logo.png">
+            <!-- <img src="../../logo.png"> -->
             <span>公租房管理系统</span>
         </a>
         <div class="layout-nav">
@@ -125,8 +125,9 @@ export default {
 .layout-logo span{
     color: #dadee6;
     position: relative;
-    top: -8px;
-    font-size: 18px;
+    top: 14px;
+    font-size: 22px;
+    font-weight: 700;
 }
 
 .layout-nav {
@@ -151,6 +152,7 @@ export default {
     line-height: 40px;
     text-align: center;
     border-radius: 4px;
+    background-color: rgba(0, 0,0, 0.2);
 }
 
 .layer-account-set-icon:hover{
@@ -159,12 +161,16 @@ export default {
 }
 .ucorg-admin .ivu-menu-dark{
     background-color: #333b50;
+    background: -webkit-linear-gradient(45deg, hsla(238, 54%, 49%, 1) 0%, hsla(238, 54%, 49%, 0) 70%), -webkit-linear-gradient(315deg, hsla(186, 100%, 57%, 1) 10%, hsla(186, 100%, 57%, 0) 80%), -webkit-linear-gradient(225deg, hsla(227, 72%, 48%, 1) 10%, hsla(227, 72%, 48%, 0) 80%), -webkit-linear-gradient(135deg, hsla(224, 73%, 55%, 1) 100%, hsla(224, 73%, 55%, 0) 70%);
+  background: linear-gradient(45deg, hsla(238, 54%, 49%, 1) 0%, hsla(238, 54%, 49%, 0) 70%), linear-gradient(135deg, hsla(186, 100%, 57%, 1) 10%, hsla(186, 100%, 57%, 0) 80%), linear-gradient(225deg, hsla(227, 72%, 48%, 1) 10%, hsla(227, 72%, 48%, 0) 80%), linear-gradient(315deg, hsla(224, 73%, 55%, 1) 100%, hsla(224, 73%, 55%, 0) 70%);
 }
 
 .layer-account.ivu-alert-success{
     border-radius: 3px;
-    border: 1px solid #495165;
+    border: 1px solid #fff;
+    border: none;
     background-color: #495165;
+    background-color: rgba(0, 0,0, 0.2);
     color: #fff;
 }
 </style>

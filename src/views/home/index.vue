@@ -307,7 +307,8 @@ export default {
       this.$refs[name].resetFields();
     }
   },
-  mounted() {
+  created() {
+    this.$store.commit('breadcrumb', []);
     // this.$Notice.warning({
     //   title: '修改部分意见',
     //   desc: '1.移除首页动态与待办事项重复<br>2.首页添加消息通知<br>3.人员&房源管理添加复选框与批量删除操作',

@@ -109,6 +109,10 @@ export default {
     }
   },
   mounted() {
+    this.$store.commit('breadcrumb', [{
+          name: '角色管理',
+          href: ''
+        }]);
     window.onresize = () => {
       return this.screenWidth = document.body.clientWidth;
     };
