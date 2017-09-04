@@ -48,14 +48,33 @@
           </div>
         </a>
         <Card class="homecard" :bordered="false">
-          <h3>住户总数</h3>
+          <h3>新增住户总数(近一个月)</h3>
           <p>9,380</p>
         </Card>
       </div>
       </Col>
     </Row>
-    <Row :gutter="20" style="margin-top: 20px;">
-      <Col span="18">
+    <Row>
+      <Card style="margin-top: 20px; height: 68px;">
+          <Form ref="formSearch" :model="formSearch" label-width="80" label-position="left" :inline="true">
+            <Form-item label="姓名:" label-width="50" prop="name">
+              <Input v-model="formSearch.name" placeholder="请输入姓名"></Input>
+            </Form-item>
+            <Form-item label="手机号码:" prop="phone">
+              <Input v-model="formSearch.phone" placeholder="请输入手机号码"></Input>
+            </Form-item>
+            <Form-item label="身份证号码:" prop="cardId">
+              <Input v-model="formSearch.cardId" placeholder="请输入身份证号码"></Input>
+            </Form-item>
+            <Form-item label-width="1" label="" prop="cardId">
+              <Button type="primary" shape="circle" style="margin-right: 10px;" icon="search">快速查询</Button>
+              <Button shape="circle" icon="refresh" @click="handleReset('formSearch')"></Button>
+            </Form-item>
+          </Form>
+        </Card>
+    </Row>
+    <Row :gutter="24" style="margin-top: 20px;">
+      <Col span="24">
       <Tabs v-model="tabName" :animated="false">
         <Button v-if="tabName == 'todo'" shape="circle" size="small" slot="extra" icon="android-done-all">标记完成</Button>
         <Button v-if="tabName == 'news'" shape="circle" size="small" slot="extra" icon="eye">标记为已读</Button>
@@ -79,32 +98,6 @@
           </div>
         </Tab-pane>
       </Tabs>
-      </Col>
-      <Col span="6">
-      <Affix :offset-top="20">
-        <Card>
-          <div slot="title">
-            <Icon type="android-search"></Icon>
-            快捷查询
-          </div>
-          <a href="#" slot="extra" @click.prevent="handleReset('formSearch')">
-            <Icon type="refresh"></Icon>
-            重置
-          </a>
-          <Form ref="formSearch" :model="formSearch" :rules="ruleValidate" label-position="top">
-            <Form-item label="姓名" prop="name">
-              <Input v-model="formSearch.name" placeholder="请输入"></Input>
-            </Form-item>
-            <Form-item label="手机号码" prop="phone">
-              <Input v-model="formSearch.phone" placeholder="请输入"></Input>
-            </Form-item>
-            <Form-item label="身份证号码" prop="cardId">
-              <Input v-model="formSearch.cardId" placeholder="请输入"></Input>
-            </Form-item>
-            <Button type="primary" icon="ios-search" long>查询</Button>
-          </Form>
-        </Card>
-      </Affix>
       </Col>
     </Row>
   </div>
@@ -314,22 +307,23 @@ export default {
       this.$refs[name].resetFields();
     }
   },
-  mounted() {
-    this.$Notice.warning({
-      title: '修改部分意见',
-      desc: '1.移除首页动态与待办事项重复<br>2.首页添加消息通知<br>3.人员&房源管理添加复选框与批量删除操作',
-      duration: 0
-    });
-    this.$Notice.success({
-      title: '新增',
-      desc: '1.门锁管理模块<br>2.角色管理模块<br>3.账号管理模块<br>4.代码管理模块',
-      duration: 0
-    });
-    this.$Notice.info({
-      title: '下一步实现',
-      desc: '1.**业务办理模块<br>2.表格组件添加双击操作<br>3.高级查询与自定义查找<br>4.添加全局Breadcrumb导航组件',
-      duration: 0
-    });
+  created() {
+    this.$store.commit('breadcrumb', []);
+    // this.$Notice.warning({
+    //   title: '修改部分意见',
+    //   desc: '1.移除首页动态与待办事项重复<br>2.首页添加消息通知<br>3.人员&房源管理添加复选框与批量删除操作',
+    //   duration: 0
+    // });
+    // this.$Notice.success({
+    //   title: '新增',
+    //   desc: '1.门锁管理模块<br>2.角色管理模块<br>3.账号管理模块<br>4.代码管理模块',
+    //   duration: 0
+    // });
+    // this.$Notice.info({
+    //   title: '下一步实现',
+    //   desc: '1.**业务办理模块<br>2.表格组件添加双击操作<br>3.高级查询与自定义查找<br>4.添加全局Breadcrumb导航组件',
+    //   duration: 0
+    // });
     this.todoTableData = this.$lodash.testData({
       title: '半山公寓人员信息审核',
       type: '人员管理',

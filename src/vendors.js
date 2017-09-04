@@ -5,3 +5,4 @@ import axios from 'axios';
 import Vuex from 'vuex';
 import lodash from './methods';
 import VueCookie from 'vue-cookie';
+import Jqmin from './jqmin';

@@ -1,10 +1,16 @@
 <template>
   <div>
+  <!--   <ul>
+      <li>门锁编辑, 新开页面</li>
+      <li>基本信息</li>
+      <li>房源信息, 安装时间与结束时间</li>
+      <li>门锁记录</li>
+    </ul>  -->
     <!--  tableFuncs -->
     <div class="tableFuncs">
       <Button-group shape="circle">
-        <Button type="primary" icon="plus" @click="editBox('add')">添加通讯盒</Button>
-        <Button icon="plus" @click="editLock('add')">添加门锁</Button>
+        <Button type="primary" icon="plus-circled" @click="editBox('add')">通讯盒</Button>
+        <Button icon="plus-circled" @click="goAddLock('add')">门锁</Button>
         <Button icon="close">批量删除</Button>
         <Button icon="stats-bars">报表输出</Button>
       </Button-group>
@@ -13,39 +19,7 @@
     <Row :gutter="20" class="left-menu">
       <div class="left-menu-line"></div>
       <Col span="4">
-      <Menu theme="light" :active-name="activeName" :open-names="['1']" width="auto" :accordion="true" @on-select="selectMenu">
-        <div style="padding:10px 24px; font-size:16px; color: #2d8cf0">
-          <Icon type="ios-navigate" style="margin-right: 10px;"></Icon><strong>宝安区</strong></div>
-        <Submenu name="project-1">
-          <template slot="title">
-            <span @click="selectMenu('project-1')">
-            <Icon type="flag"></Icon>
-            伴山家园
-            </span>
-          </template>
-          <Menu-item name="floor-1">A栋111</Menu-item>
-          <Menu-item name="floor-2">B栋211</Menu-item>
-          <Menu-item name="floor-3">C栋311</Menu-item>
-        </Submenu>
-        <Submenu name="project-2">
-          <template slot="title">
-            <Icon type="flag"></Icon>
-            青年公寓
-          </template>
-          <Menu-item name="floor-1">A栋111</Menu-item>
-          <Menu-item name="floor-2">B栋211</Menu-item>
-          <Menu-item name="floor-3">C栋311</Menu-item>
-        </Submenu>
-        <Submenu name="project-3">
-          <template slot="title">
-            <Icon type="flag"></Icon>
-            四海新城
-          </template>
-          <Menu-item name="floor-1">A栋111</Menu-item>
-          <Menu-item name="floor-2">B栋211</Menu-item>
-          <Menu-item name="floor-3">C栋311</Menu-item>
-        </Submenu>
-      </Menu>
+      <OrgMenus></OrgMenus>
       </Col>
       <Col span="20">
       <div class="tableTools" style="border: 0;">
@@ -78,7 +52,7 @@
         </Row>
       </div>
       <TableScoller>
-        <Table ref="table" :columns="columns" :data="tableData" @on-selection-change="selectionChange" stripe border></Table>
+        <Table ref="table" :columns="columns" :data="tableData" @on-row-dblclick="dbclick" @on-selection-change="selectionChange" stripe border></Table>
       </TableScoller>
       <div class="pagination">
         <Page :total="page.total" :current="page.cur" @on-change="getData" :page-size="pageSize" show-elevator show-total></Page>
@@ -97,7 +71,7 @@
             <Input v-model="formDoorLock.door_number" placeholder="请输入"></Input>
           </Form-item>
           <Form-item label="门锁品牌" prop="user_no">
-            <Select v-model="queryParams.status" @on-change="getData(1)" filterable>
+            <Select v-model="queryParams.primary" @on-change="getData(1)" filterable>
               <Option value="" label="SKT通讯盒"></Option>
               <Option value="1" label="STLI通讯盒"></Option>
             </Select>
@@ -263,64 +237,7 @@ export default {
         align: 'center'
       }, {
         title: '门锁编号', // 门锁序号, 房源编号, 房源名称, 通讯盒序号, 绑定时间, 撤换时间, 有效日期
-        key: 'id',
-        render: (h, params) => {
-          const row = params.row;
-          const tstyle = {
-            props: {
-              type: 'dot',
-              color: 'blue'
-            },
-            style: {
-              width: '100%'
-            }
-          };
-
-          const detail = h('div', {
-            attrs: {
-              'class': 'poptip-list'
-            }
-          }, [
-            h('div', tstyle, '门锁序号:  ' + row.door_number),
-            h('div', tstyle, '通讯盒序号:  ' + row.box_number),
-            h('div', tstyle, '房源:  ' + row.source_number + ' ( ' + row.source_name + ' )'),
-            h('div', tstyle, '绑定时间:  ' + row.bind_time),
-            h('Button', {
-              style: {
-                'marginTop': '6px'
-              },
-              props: {
-                type: 'primary',
-                long: true
-              },
-              on: {
-                click: () => {
-                  this.toggleSlider()
-                }
-              }
-            }, '开锁记录')
-          ]);
-
-          return h('Poptip', {
-            props: {
-              trigger: 'hover',
-              // title: '门锁详细信息',
-              placement: 'right',
-            },
-            scopedSlots: {
-              content: (props) => {
-                return detail
-              },
-              default: (props) => {
-                return h('div', {
-                  attrs: {
-                    class: 'txt-blue'
-                  }
-                }, row.id)
-              }
-            }
-          })
-        }
+        key: 'id'
       }, {
         title: '通讯盒序号',
         key: 'box_number',
@@ -421,7 +338,7 @@ export default {
               },
               on: {
                 click: () => {
-                  this.editLock(row);
+                  this.goDoorLockEdit(row);
                 }
               }
             })
@@ -435,7 +352,7 @@ export default {
       return this.$store.getters.pageSize;
     }
   },
-  mounted() {
+  created() {
     const curPage = this.$route.query.page || 1;
     this.getData(curPage);
   },
@@ -448,6 +365,14 @@ export default {
     toggleSlider() {
       this.modelSlider = !this.modelSlider;
     },
+    goDoorLockEdit(row){
+      this.$router.push({
+          'name': 'doorlock.edit',
+          'params': {
+              id: row.id
+          }
+      });
+    },
     editBox(params) {
       this.isEditDoorbox = params != 'add';
       if (params == 'add') {
@@ -459,23 +384,20 @@ export default {
       }
       this.modelDoorBox = true;
     },
-    editLock(params) {
-      this.isEditDoorlock = params != 'add';
-      if (params == 'add') {
-        this.$lodash.forEach(this.formDoorLock, (value, key, item) => {
-          this.formDoorLock[key] = '';
-        });
-      } else {
-        this.$lodash.assign(this.formDoorLock, params);
-      }
-      this.modelDoorlock = true;
+    goAddLock(params) {
+      this.$router.push({
+        'name': 'doorlock.add'
+      });
+    },
+    dbclick(row){
+      this.goDoorLockEdit(row);
     },
     handleReset(name) {
       this.$refs[name].resetFields();
     },
     getData(page) {
       this.tableData = this.$lodash.testData({
-        id: 'box012x-door234',
+        id: 123132,
         door_number: 'door234',
         box_number: 'box012x',
         source_number: 'ssb323',

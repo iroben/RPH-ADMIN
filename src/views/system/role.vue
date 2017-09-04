@@ -59,6 +59,10 @@
               </Option-group>
             </Select>
           </Form-item>
+          <Form-item label="范围" prop="name">
+          类似京东选择地址
+            <Input v-model="formAddRole.name" placeholder="请输入"></Input>
+          </Form-item>
           <Form-item label="权限全选/清空" prop="phone">
             <i-switch size="large" v-model="switchStatus" @on-change="switchChange">
               <span slot="open">全选</span>
