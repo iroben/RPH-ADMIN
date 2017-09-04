@@ -32,7 +32,7 @@
         <div style="margin-left: 200px;" v-if="active == 'info'">
             <Form ref="formData" :model="formData" :rules="ruleValidate" :label-width="100">
                 <Row :gutter="16">
-                    <Col span="12" offset="6">
+                    <Col span="14" offset="5">
                     <Form-item label="姓名" prop="name">
                         <Input v-model="formData.name" placeholder="请输入"></Input>
                     </Form-item>

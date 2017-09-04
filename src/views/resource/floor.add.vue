@@ -9,7 +9,7 @@
         </div>
         <Form ref="editForm" :model="formData" :rules="ruleValidate" label-position="right" :label-width="90">
             <Row :gutter="16">
-                <Col span="12" offset="6">
+                <Col span="14" offset="5">
                 <div class="form-title">
                     <Icon type="document-text"></Icon>楼栋信息:
                 </div>

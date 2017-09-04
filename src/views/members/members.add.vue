@@ -9,7 +9,7 @@
         </div>
         <Form ref="formData" :model="formData" :rules="ruleValidate" :label-width="100">
             <Row :gutter="16">
-                <Col span="12" offset="6">
+                <Col span="14" offset="5">
                 <div class="form-title">
                     <Icon type="person"></Icon>基本信息:</div>
                 <Form-item label="姓名" prop="name">
