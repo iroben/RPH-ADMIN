@@ -61,7 +61,7 @@
             <template v-if="!toggleStatus">
                 <Card style="margin-bottom: 20px;">
                     <p slot="title">
-                        伴山家园&emsp; A栋B11 &emsp; 35套空置
+                        伴山家园,A栋B11,35套空置
                     </p>
                     <Row :gutter="15">
                         <Col :span="6" v-for="houseItem in cardData">
@@ -85,7 +85,7 @@
                 </Card>
                 <Card style="margin-bottom: 20px;">
                     <p slot="title">
-                        四海新城&emsp; C栋B11 &emsp; 35套空置
+                        四海新城,C栋B11,35套空置
                     </p>
                     <Row :gutter="15">
                         <Col :span="6" v-for="houseItem in cardData">
@@ -265,7 +265,7 @@ export default {
                 'isManager': false,
             }],
             family_count: 3
-        });
+        }, 4);
         // 获取数据
         const curPage = this.$route.query.page || 1;
         this.getData(curPage);

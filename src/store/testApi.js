@@ -377,7 +377,7 @@ const actions = {
                 number: 'k09873-b3',
                 photos: '',
                 intro: '简介',
-                peitao: [1,2],
+                peitao: [1, 2],
                 wy_org: 'XXX物业公司',
                 wy_charge: '张晓明',
                 wy_contact: '18664357411',
@@ -491,7 +491,7 @@ const actions = {
                 name: 'B311房',
                 area: '100',
                 huxing: '1',
-                peitao: [1,2],
+                peitao: [1, 2],
                 status: true,
                 photos: '',
                 intro: '简介',
@@ -532,7 +532,7 @@ const actions = {
             org: '深圳大学',
             phone: '18664357434',
             door_status: 'open'
-        },3);
+        }, 3);
         return {
             code: 1,
             data: {
