@@ -34,21 +34,24 @@ export default {
     'projectMembers': 'GET,/info',
     'projectLocks': 'GET,/lock',
     'projectFloor': 'GET,/floor',
-
+    
+    // 楼栋管理
     'floorAdd': 'POST,/floorAdd',
     'floorEdit': 'POST,/floorEdit',
     'floorInfo': 'POST,/floor',
     'floorSource': 'POST,/floor',
     'floorLocks': 'POST,/floor',
     'floorMembers': 'POST,/floor',
-
+    
+    // 房源管理
     'resourceInfo': 'GET,/add',
     'resourceDelete': 'POST,/123',
     'resourceAdd': 'POST,/add',
     'resourceEdit': 'POST,/Edit',
     'resourceLocks': 'POST,/floor',
     'resourceMembers': 'POST,/floor',
-
+    
+    // 门锁管理
     'doorlockAdd': 'POST,/floor',
     'doorlockEdit': 'POST,/floor',
     'doorlockInfo': 'POST,/floor',
