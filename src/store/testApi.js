@@ -483,6 +483,29 @@ const actions = {
             }
         }
     },
+    resourceInfo({ commit }, params) {
+        return {
+            code: 1,
+            data: {
+                id: 1231,
+                name: 'B311房',
+                area: '100',
+                huxing: '1',
+                peitao: [1,2],
+                status: true,
+                photos: '',
+                intro: '简介',
+                project: '1,1,1,1',
+                floor: 1,
+            }
+        }
+    },
+    resourceDelete({ commit }, params) {
+        return {
+            code: 1,
+            msg: '删除成功'
+        }
+    },
     resourceAdd({ commit }, params) {
         return {
             code: 1,
@@ -494,7 +517,65 @@ const actions = {
             code: 1,
             msg: '编辑成功'
         }
-    }
+    },
+    resourceMembers({ commit }, params) {
+        const data = lodash.testData({
+            id: '555',
+            name: '李双',
+            house_number: 'B栋410',
+            relation: '丈夫',
+            status: 1,
+            status_msg: '挂失中',
+            gender: '男',
+            birth: '1991-04-15',
+            card_id: 430726199104155779,
+            org: '深圳大学',
+            phone: '18664357434',
+            door_status: 'open'
+        },3);
+        return {
+            code: 1,
+            data: {
+                data: data,
+                page: {
+                    total: 100, // (int) 总条100条
+                    page: 1, // (int)当前第1页
+                    pagesize: 10, //  (int)每页显示10条
+                    pages: 10 // (int) 共10页
+                }
+            }
+        }
+    },
+    resourceLocks({ commit }, params) {
+        const data = lodash.testData({
+            id: 'box012x-door234',
+            door_number: 'door234',
+            box_number: 'box012x',
+            source_number: 'ssb323',
+            source_name: '伴山家园B323',
+            passwod: '123323',
+            company: 'SKT',
+            avalid_date: '2017-08-09 2019-08-09',
+            open_status: 1,
+            status: 0,
+            power: 80,
+            last_open: '2017-08-09 08:09:52',
+            bind_time: '2017-08-09 08:09:52',
+            last_open_user: '张晓明'
+        }, 3);
+        return {
+            code: 1,
+            data: {
+                data: data,
+                page: {
+                    total: 100, // (int) 总条100条
+                    page: 1, // (int)当前第1页
+                    pagesize: 10, //  (int)每页显示10条
+                    pages: 10 // (int) 共10页
+                }
+            }
+        }
+    },
 };
 
 // mutations

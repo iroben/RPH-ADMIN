@@ -41,9 +41,13 @@ export default {
 		'floorSource': 'POST,/floor',
 		'floorLocks': 'POST,/floor',
 		'floorMembers': 'POST,/floor',
-
+		
+		'resourceInfo': 'GET,/add',
+		'resourceDelete': 'POST,/123',
     'resourceAdd': 'POST,/add',
     'resourceEdit': 'POST,/Edit',
+    'resourceLocks': 'POST,/floor',
+		'resourceMembers': 'POST,/floor',
 
 
 

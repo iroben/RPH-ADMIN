@@ -326,10 +326,6 @@ export default {
                 }
             }],
             columnsC: [{
-                type: 'selection',
-                width: 60,
-                align: 'center'
-            }, {
                 title: '项目',
                 key: 'project',
                 width: 140
@@ -394,8 +390,8 @@ export default {
                             },
                             on: {
                                 click: () => {
-                                    this.selectedGroup = [row];
-                                    this.showDel();
+                                    this.activeParams = params;
+                                    this.delSource();
                                 }
                             }
                         }),
@@ -452,6 +448,14 @@ export default {
             })
             this.$router.push({
                 'name': 'members.edit',
+                'params': {
+                    id: row.id
+                }
+            });
+        },
+        goSourceEdit(row){
+            this.$router.push({
+                'name': 'resource.edit',
                 'params': {
                     id: row.id
                 }
@@ -545,6 +549,23 @@ export default {
             this.$refs.date.handleClear();
             this.$refs[name].resetFields();
             this.$lodash.assign(this.formData, this.editInfor);
+        },
+        // 单个Table删除表格
+        delSource() {
+            const row = this.activeParams.row;
+            this.$Modal.confirm({
+                title: '确认删除',
+                content: row.project + '-' + row.project + '-' + row.house_number,
+                loading: true,
+                onOk: () => {
+                    this.$lodash.api(this, 'resourceDelete', {
+                        id: row.id
+                    }).then(res => {
+                        this.$Modal.remove();
+                        this.getSource();
+                    }, 1000)
+                }
+            })
         }
     }
 }

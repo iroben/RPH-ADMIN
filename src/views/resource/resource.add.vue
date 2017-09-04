@@ -7,28 +7,9 @@
                 </Button>
             </Button-group>
         </div>
-        <Affix style="float:left">
-            <Menu :active-name="active" @on-select="menuSelect" style="width: 180px;">
-                <MenuGroup :title="'项目:' + editInfor.name">
-                    <MenuItem name="info">
-                    <Icon type="document-text"></Icon>
-                    基本信息
-                    </MenuItem>
-                    <MenuItem name="lock">
-                    <Icon type="clock"></Icon>
-                    门锁信息
-                    </MenuItem>
-                    <MenuItem name="members">
-                    <Icon type="person-stalker"></Icon>
-                    入住人员
-                    </MenuItem>
-                </MenuGroup>
-            </Menu>
-        </Affix>
-        <div style="margin-left: 200px;" v-if="active == 'info'">
-            <Form ref="editForm" :model="formData" :rules="ruleValidate" label-position="right" :label-width="90">
+        <Form ref="editForm" :model="formData" :rules="ruleValidate" label-position="right" :label-width="90">
             <Row :gutter="16">
-                <Col span="14">
+                <Col span="14" offset="5">
                 <div class="form-title">
                     <Icon type="document-text"></Icon>房源信息:
                 </div>
@@ -48,14 +29,14 @@
                 </Form-item>
                 <Form-item label="配套" prop="peito">
                     <Select v-model="formData.peitao" multiple placeholder="请选择">
-                        <Option :value="1">冰箱</Option>
-                        <Option :value="2">洗衣机</Option>
-                        <Option :value="3">台灯</Option>
-                        <Option :value="4">空调</Option>
+                        <Option value="1">冰箱</Option>
+                        <Option value="2">洗衣机</Option>
+                        <Option value="3">台灯</Option>
+                        <Option value="4">空调</Option>
                     </Select>
                 </Form-item>
                 <Form-item label="房源状态">
-                    <i-switch size="large" v-model="formData.status">
+                    <i-switch size="large" v-model="status">
                         <span slot="open">空置</span>
                         <span slot="close">住人</span>
                     </i-switch>
@@ -85,43 +66,16 @@
                 <Button size="large" type="ghost" icon="refresh" @click="handleReset()" style="margin-left: 8px">重置</Button>
             </Row>
         </Form>
-        </div>
-        <div style="margin-left: 200px;" v-if="active == 'location'">
-            <div span="12" v-for="item in locations">
-                <Card style="margin-bottom: 15px;">
-                    <p slot="title">
-                        <Icon type="android-time"></Icon>
-                        入住: {{item.time}}
-                    </p>
-                    <span slot="extra">
-                      <Icon type="location"></Icon>
-                      {{item.status_msg}}
-                  </span>
-                    <span v-if="item.status == 0">{{item.location_msg}}</span>
-                    <MchooseLocation style=" flaot: left;" v-if="item.status == 1" v-model="item.location" :max="4"></MchooseLocation>
-                    <Button v-if="item.status == 1" type="primary" @click="locationEdit(item.location)">保存</Button>
-                </Card>
-            </div>
-        </div>
-        <div style="margin-left: 200px;" v-if="active == 'members'">
-            <TableScoller>
-                <Table ref="tableA" :columns="columnsA" @on-row-dblclick="goEdit" :data="tableMembers" stripe border></Table>
-            </TableScoller>
-        </div>
-        <div style="margin-left: 200px;" v-if="active == 'lock'">
-            <TableScoller>
-                <Table ref="tableB" :columns="columnsB" :data="tableLock" stripe border></Table>
-            </TableScoller>
-        </div>
     </div>
 </template>
 <script>
 export default {
     data() {
         return {
-            active: '0',
-            dateValue: '', // 日历控件
-            editInfor: {}, // 表单详情
+            adminUser: '',
+            editInfor: null,
+            toggleStatus: true,
+            isSuper: false,
             formData: {
                 name: '',
                 area: '',
@@ -155,198 +109,13 @@ export default {
                     required: true,
                     message: '请选择所属楼栋'
                 }]
-            },
-            locations: [],
-            tableFloor: [],
-            tableMembers: [],
-            tableLock: [],
-            columnsA: [{
-                title: '姓名',
-                key: 'name',
-                className: 'avatarImg',
-                width: 100
-            }, {
-                title: '房号',
-                key: 'house_number',
-                align: 'center',
-                className: 'avatarImg',
-                width: 100
-            }, {
-                title: '性别',
-                key: 'gender',
-                align: 'center',
-                width: 80
-            }, {
-                title: '出生日期',
-                key: 'birth',
-                width: 110,
-                align: 'center'
-            }, {
-                title: '身份证号',
-                key: 'card_id',
-                width: 180,
-                align: 'center'
-            }, {
-                title: '工作单位',
-                key: 'org',
-            }, {
-                title: '手机号码',
-                key: 'phone',
-                width: 120,
-            }, {
-                title: '门锁权限',
-                key: 'door_status',
-                align: 'center'
-            }, {
-                title: '操作',
-                key: 'address',
-                width: 100,
-                align: 'center',
-                render: (h, params) => {
-                    const row = params.row;
-                    const isSuper = row.super == 1;
-                    return this.$lodash.renderButtonGroup(h, params, [{
-                        icon: 'edit',
-                        title: '编辑',
-                        click: () => {
-                            this.goEdit(params.row);
-                        }
-                    }])
-                }
-            }],
-            columnsB: [{
-                title: '门锁编号', // 门锁序号, 房源编号, 房源名称, 通讯盒序号, 绑定时间, 撤换时间, 有效日期
-                key: 'id'
-            }, {
-                title: '通讯盒序号',
-                key: 'box_number',
-                align: 'center',
-                className: 'avatarImg',
-                width: 130
-            }, {
-                title: '品牌/厂家',
-                key: 'company',
-                align: 'center',
-                width: 120
-            }, {
-                title: '有效期',
-                key: 'avalid_date',
-                align: 'center'
-            }, {
-                title: '开关状态',
-                key: 'open_status',
-                width: 120,
-                align: 'center',
-                render: (h, params) => {
-                    const row = params.row;
-                    const isopen = row.open_status == 1;
-                    return h('Tag', {
-                        props: {
-                            type: 'border',
-                            color: isopen ? 'green' : 'red'
-                        }
-                    }, isopen ? '开' : '关')
-                }
-            }, {
-                title: '门锁状态',
-                key: 'status',
-                width: 90,
-                align: 'center',
-                render: (h, params) => {
-                    const row = params.row;
-                    const isok = row.status == 1;
-                    return h('Tag', {
-                        props: {
-                            type: 'border',
-                            color: isok ? 'green' : 'red'
-                        }
-                    }, isok ? '正常' : '损坏')
-                }
-            }, {
-                title: '电量',
-                key: 'power',
-                width: 120,
-                align: 'center',
-                render: (h, params) => {
-                    const row = params.row;
-                    return h('i-circle', {
-                        style: {
-                            'marginTop': '5px'
-                        },
-                        props: {
-                            percent: row.power,
-                            'stroke-width': 8,
-                            'stroke-color': '#5cb85c',
-                            size: 36
-                        }
-                    }, row.power)
-                }
-            }, {
-                title: '上次开门',
-                key: 'last_open',
-                align: 'center',
-                width: 160,
-            }, {
-                title: '操作',
-                key: 'address',
-                width: 120,
-                align: 'center',
-                render: (h, params) => {
-                    const row = params.row;
-                    const isSuper = row.super == 1;
-                    return h('ButtonGroup', [
-                        h('Button', {
-                            props: {
-                                disabled: isSuper,
-                                type: 'ghost',
-                                icon: 'close',
-                                size: 'small'
-                            },
-                            on: {
-                                click: () => {
-                                    this.selectedGroup = [row];
-                                    this.showDel();
-                                }
-                            }
-                        }),
-                        h('Button', {
-                            props: {
-                                type: 'ghost',
-                                icon: 'edit',
-                                size: 'small'
-                            },
-                            on: {
-                                click: () => {
-                                    this.editLock(row);
-                                }
-                            }
-                        })
-                    ]);
-                }
-            }]
+            }
         }
     },
     computed: {
-        id() {
-            return this.$route.params.id;
-        },
-        paramsFilter() { // 表单提交字段
-            return ['id', 'name', 'relation', 'resource', 'gender', 'card_id', 'sugestion', 'birth', 'phone', 'org'];
-        }
+
     },
-    watch: {
-        active(name) {
-            if (name == 'info') {
-                this.getInfo();
-            } else if (name == 'members') {
-                this.getMembers();
-            } else if (name == 'lock') {
-                this.getLock();
-            }
-        },
-    },
-    created() {
-        this.active = 'info';
+    mounted() {
         this.$store.commit('breadcrumb', [{
             name: '房源管理',
             href: '/resource'
@@ -356,108 +125,40 @@ export default {
         totalFormat(val) {
             return '第:' + val + '楼';
         },
-        goEdit(row) {
-            this.active == 'info';
-            setTimeout(() => {
-                this.active = 'info';
-            })
-            this.$router.push({
-                'name': 'members.edit',
-                'params': {
-                    id: row.id
-                }
-            });
+        goBack() {
+            this.$router.go(-1);
         },
-        goFloorEdit(row){
-            this.$router.push({
-                'name': 'floor.edit',
-                'params': {
-                    id: row.id
-                }
-            });
-        },
-        menuSelect(name) {
-            this.active = name;
+        imageuploaded(res) {
+            this.formData.new_avatar = res.data.url;
         },
         changeStatus() {
             this.formData.status = this.toggleStatus ? 10 : 20;
         },
-        getInfo() {
-            this.$lodash.api(this, 'resourceInfo', {
-                id: this.id
-            }).then(res => {
-                this.editInfor = res.data;
-                this.$lodash.assign(this.formData, this.editInfor);
-            })
+        editorChange(contents) {
+            this.formData.contents = contents;
         },
-        getMembers() {
-            this.$lodash.api(this, 'resourceMembers', {
-                id: this.id
-            }).then(res => {
-                this.tableMembers = res.data.data || [];
-            })
-        },
-        getLock() {
-            this.$lodash.api(this, 'resourceLocks', {
-                id: this.id
-            }).then(res => {
-                this.tableLock = res.data.data || [];
-            })
-        },
-        locationEdit(location) {
-            this.$lodash.api(this, 'membersLocationEdit', {
-                id: this.id,
-                location
-            }).then(res => {
-                this.$Message.success('编辑成功');
-            })
-        },
-        // 返回上一页
-        goBack() {
-            this.$router.go(-1);
-        },
-        // 提交成功后返回
-        submitBack() {
-            this.$router.push({
-                name: 'resource.index'
-            });
-        },
-        // 图片上传成功
-        imageUploaded(url) {
-            this.formData.avatar = url;
-        },
-        // 清除日历控件
-        dateClear() {
-            this.formData.birth = '';
-        },
-        // 日历改变
-        dateChange(dateRange) {
-            const curDateRange = this.$refs.date.formattingDate(this.dateValue);
-            this.formData.birth = curDateRange;
-        },
-        // 提交表单
-        handleSubmit(name) {
-            // 验证通过
-            this.$refs[name].validate((valid) => {
+        handleSubmit() {
+            this.$refs['editForm'].validate((valid) => {
                 if (valid) {
-                    this.$lodash.api(this, 'projectEdit', this.formData).then(res => {
-                        this.submitBack();
-                        this.$Message.success('编辑成功');
+                    var params = this.$lodash.assign({}, this.formData);
+                    params.project = params.project.replace(/\-/g, ',');
+                    this.$lodash.api(this, 'resourceAdd', params).then(res => {
+                        this.goBack();
+                        this.$Message.success('添加成功!');
                     });
                 }
             })
         },
-        // 重置表单
-        handleReset(name) {
-            this.$refs.date.handleClear();
-            this.$refs[name].resetFields();
-            this.$lodash.assign(this.formData, this.editInfor);
+        handleReset() {
+            this.formData.birth = '';
+            this.$refs['editForm'].resetFields();
         }
     }
 }
 </script>
-<style scoped>
-.ivu-menu-item-group-title {
-    display: none;
+<style>
+.avatar-list .avatarView {
+    float: left;
+    margin-right: 10px;
 }
 </style>
