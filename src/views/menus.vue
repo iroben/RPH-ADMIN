@@ -123,7 +123,7 @@ export default {
     height: 100%;
 }
 .layout-logo span{
-    color: #dadee6;
+    color: #f0f6ff;
     position: relative;
     top: 14px;
     font-size: 22px;
