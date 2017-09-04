@@ -11,15 +11,18 @@
                 </Tabs>
                 <div class="layout-content-main">
                     <div class="layout-title">
-                        <span class="main-title">
+                        <!-- <span class="main-title">
                             {{title}}
-                        </span>
+                        </span> -->
                         <Breadcrumb>
                             <BreadcrumbItem href="/" v-if="routeName != 'home.index'">
                                 <Icon type="ios-home-outline"></Icon> 首页
                             </BreadcrumbItem>
                             <BreadcrumbItem v-for="item in breadcrumb" :href="item.href">
                                 {{item.name}}
+                            </BreadcrumbItem>
+                            <BreadcrumbItem>
+                                {{title}}
                             </BreadcrumbItem>
                         </Breadcrumb>
                     </div>

@@ -117,9 +117,6 @@ export default {
         this.$store.commit('breadcrumb', [{
           name: '人员管理',
           href: '/members'
-        },{
-          name: '添加人员',
-          href: ''
         }]);
     },
     methods: {

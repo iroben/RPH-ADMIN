@@ -33,8 +33,15 @@ export default {
     'projectInfo': 'GET,/info',
     'projectMembers': 'GET,/info',
     'projectLocks': 'GET,/lock',
+    'projectFloor': 'GET,/floor',
+
     'floorAdd': 'POST,/floorAdd',
     'floorEdit': 'POST,/floorEdit',
+		'floorInfo': 'POST,/floor',
+		'floorSource': 'POST,/floor',
+		'floorLocks': 'POST,/floor',
+		'floorMembers': 'POST,/floor',
+
     'resourceAdd': 'POST,/add',
     'resourceEdit': 'POST,/Edit',
 

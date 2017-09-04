@@ -346,6 +346,46 @@ const actions = {
             }
         }
     },
+    projectFloor({ commit }, params) {
+        const data = lodash.testData({
+            id: '555',
+            name: 'B栋',
+            total: '22层',
+            members_count: '123/23',
+            empty: '0',
+            peitao: '电梯, 洗衣机, 冰箱, 空调',
+            create_time: '2017-08-09 08:24'
+        });
+        return {
+            code: 1,
+            data: {
+                data: data,
+                page: {
+                    total: 100, // (int) 总条100条
+                    page: 1, // (int)当前第1页
+                    pagesize: 10, //  (int)每页显示10条
+                    pages: 10 // (int) 共10页
+                }
+            }
+        }
+    },
+    floorInfo({ commit }, params) {
+        return {
+            code: 1,
+            data: {
+                name: 'B3栋',
+                number: 'k09873-b3',
+                photos: '',
+                intro: '简介',
+                peitao: [1,2],
+                wy_org: 'XXX物业公司',
+                wy_charge: '张晓明',
+                wy_contact: '18664357411',
+                address: '深圳市XXX',
+                location: '321321,31321'
+            }
+        }
+    },
     floorAdd({ commit }, params) {
         return {
             code: 1,
@@ -356,6 +396,91 @@ const actions = {
         return {
             code: 1,
             msg: '编辑成功'
+        }
+    },
+    floorMembers({ commit }, params) {
+        const data = lodash.testData({
+            id: '555',
+            name: '李双',
+            house_number: 'B栋410',
+            relation: '丈夫',
+            status: 1,
+            status_msg: '挂失中',
+            gender: '男',
+            birth: '1991-04-15',
+            card_id: 430726199104155779,
+            org: '深圳大学',
+            phone: '18664357434',
+            door_status: 'open'
+        });
+        return {
+            code: 1,
+            data: {
+                data: data,
+                page: {
+                    total: 100, // (int) 总条100条
+                    page: 1, // (int)当前第1页
+                    pagesize: 10, //  (int)每页显示10条
+                    pages: 10 // (int) 共10页
+                }
+            }
+        }
+    },
+    floorLocks({ commit }, params) {
+        const data = lodash.testData({
+            id: 'box012x-door234',
+            door_number: 'door234',
+            box_number: 'box012x',
+            source_number: 'ssb323',
+            source_name: '伴山家园B323',
+            passwod: '123323',
+            company: 'SKT',
+            avalid_date: '2017-08-09 2019-08-09',
+            open_status: 1,
+            status: 0,
+            power: 80,
+            last_open: '2017-08-09 08:09:52',
+            bind_time: '2017-08-09 08:09:52',
+            last_open_user: '张晓明'
+        });
+        return {
+            code: 1,
+            data: {
+                data: data,
+                page: {
+                    total: 100, // (int) 总条100条
+                    page: 1, // (int)当前第1页
+                    pagesize: 10, //  (int)每页显示10条
+                    pages: 10 // (int) 共10页
+                }
+            }
+        }
+    },
+    floorSource({ commit }, params) {
+        const data = lodash.testData({
+            id: '2222',
+            project: '伴山家园',
+            floor: 'b栋',
+            house_number: '410',
+            area: '100平米',
+            house_type: '3室1厅',
+            count: 20,
+            rent_date: '2017-09-11',
+            door_number: 'bx1-3123',
+            door_box_number: 'BXS-sdfsfds',
+            rent_pirce: '3800元'
+        });
+        return {
+            code: 1,
+            data: {
+                data: data,
+                page: {
+                    total: 100, // (int) 总条100条
+                    page: 1, // (int)当前第1页
+                    pagesize: 10, //  (int)每页显示10条
+                    pages: 10 // (int) 共10页
+                }
+            }
         }
     },
     resourceAdd({ commit }, params) {

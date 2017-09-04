@@ -14,6 +14,10 @@
                     <Icon type="document-text"></Icon>
                     基本信息
                     </MenuItem>
+                    <MenuItem name="floor">
+                    <Icon type="map"></Icon>
+                    项目楼栋
+                    </MenuItem>
                     <MenuItem name="lock">
                     <Icon type="clock"></Icon>
                     门锁信息
@@ -113,6 +117,11 @@
                 <Table ref="tableB" :columns="columnsB" :data="tableLock" stripe border></Table>
             </TableScoller>
         </div>
+        <div style="margin-left: 200px;" v-if="active == 'floor'">
+            <TableScoller>
+                <Table ref="tableC" :columns="columnsC" @on-row-dblclick="goFloorEdit" :data="tableFloor" stripe border></Table>
+            </TableScoller>
+        </div>
     </div>
 </template>
 <script>
@@ -149,6 +158,7 @@ export default {
                 }]
             },
             locations: [],
+            tableFloor: [],
             tableMembers: [],
             tableLock: [],
             columnsA: [{
@@ -314,7 +324,70 @@ export default {
                         })
                     ]);
                 }
-            }]
+            }],
+            columnsC: [{
+                title: '楼栋名称',
+                key: 'name'
+            }, {
+                title: '总楼层',
+                key: 'total',
+                align: 'center',
+                width: 100,
+            }, {
+                title: '已入住',
+                key: 'members_count',
+                width: 140,
+                align: 'center',
+                render: (h, params) => {
+                    const row = params.row;
+                    const isEmpty = row.empty > 0;
+                    return h('Tag', {
+                        props: {
+                            type: 'border',
+                            color: 'blue',
+                        }
+                    }, row.members_count + '人')
+                }
+            },{
+                title: '空置',
+                key: 'empty',
+                align: 'center',
+                width: 100,
+                render: (h, params) => {
+                    const row = params.row;
+                    const isEmpty = row.empty > 0;
+                    return h('Tag', {
+                        props: {
+                            // type: 'border',
+                            color: isEmpty ? 'green' : 'red'
+                        }
+                    }, isEmpty ? row.empty : '住满')
+                }
+            }, {
+                title: '创建时间',
+                key: 'create_time',
+                width: 140,
+                align: 'center'
+            }, {
+                title: '配套',
+                key: 'peitao'
+            }, {
+                title: '操作',
+                key: 'address',
+                width: 100,
+                align: 'center',
+                render: (h, params) => {
+                    const row = params.row;
+                    const isSuper = row.super == 1;
+                    return this.$lodash.renderButtonGroup(h, params, [{
+                        icon: 'edit',
+                        title: '编辑',
+                        click: () => {
+                            this.goFloorEdit(params.row);
+                        }
+                    }])
+                }
+            }],
         }
     },
     computed: {
@@ -333,6 +406,8 @@ export default {
                 this.getMembers();
             } else if (name == 'lock') {
                 this.getLock();
+            } else if (name == 'floor') {
+                this.getFloor();
             }
         },
     },
@@ -341,9 +416,6 @@ export default {
         this.$store.commit('breadcrumb', [{
             name: '房源管理',
             href: '/resource'
-        }, {
-            name: '编辑项目',
-            href: ''
         }]);
     },
     methods: {
@@ -354,6 +426,14 @@ export default {
             })
             this.$router.push({
                 'name': 'members.edit',
+                'params': {
+                    id: row.id
+                }
+            });
+        },
+        goFloorEdit(row){
+            this.$router.push({
+                'name': 'floor.edit',
                 'params': {
                     id: row.id
                 }
@@ -382,6 +462,13 @@ export default {
                 uid: this.uid
             }).then(res => {
                 this.tableLock = res.data.data || [];
+            })
+        },
+        getFloor() {
+            this.$lodash.api(this, 'projectFloor', {
+                uid: this.uid
+            }).then(res => {
+                this.tableFloor = res.data.data || [];
             })
         },
         locationEdit(location) {

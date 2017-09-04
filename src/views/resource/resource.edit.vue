@@ -116,7 +116,10 @@ export default {
 
     },
     mounted() {
-
+        this.$store.commit('breadcrumb', [{
+            name: '房源管理',
+            href: '/resource'
+        }]);
     },
     methods: {
         totalFormat(val) {

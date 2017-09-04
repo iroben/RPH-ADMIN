@@ -3,10 +3,10 @@
         <!--  tableFuncs -->
         <div class="tableFuncs">
             <Button-group shape="circle">
-                <Button type="primary" icon="plus" @click="goAdd('project.add')">项目</Button>
-                <Button icon="plus" @click="goAdd('floor.add')">楼栋</Button>
-                <Button icon="plus" @click="goAdd('resource.add')">房源</Button>
-                <Button icon="close">批量删除</Button>
+                <Button type="primary" icon="plus-circled" @click="goAdd('project.add')">项目</Button>
+                <Button icon="plus-circled" @click="goAdd('floor.add')">楼栋</Button>
+                <Button icon="plus-circled" @click="goAdd('resource.add')">房源</Button>
+                <Button icon="close">删除</Button>
                 <Button icon="stats-bars">报表输出</Button>
             </Button-group>
         </div>
@@ -296,10 +296,6 @@ export default {
         }
     },
     created() {
-        this.$store.commit('breadcrumb', [{
-            name: '房源管理',
-            href: ''
-        }]);
         const curPage = this.$route.query.page || 1;
         this.cardData = this.$lodash.testData({
             house_number: 'B栋411',

@@ -4,10 +4,10 @@
         <div class="tableFuncs">
             <Button-group shape="circle">
                 <Button type="primary" icon="plus-circled" @click="goRouter('members.add')">
-                    添加人员
+                    人员
                 </Button>
                 <Button icon="close" @click="delGroup()">
-                    批量删除
+                    删除
                 </Button>
                 <Button icon="stats-bars">报表输出</Button>
                 <Button :icon="toggleStatus ? 'navicon-round' : 'grid'" @click="changeToggle"></Button>
@@ -266,10 +266,6 @@ export default {
             }],
             family_count: 3
         });
-        this.$store.commit('breadcrumb', [{
-            name: '人员管理',
-            href: ''
-        }]);
         // 获取数据
         const curPage = this.$route.query.page || 1;
         this.getData(curPage);

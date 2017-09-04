@@ -410,10 +410,6 @@ export default {
     }
   },
   created() {
-    this.$store.commit('breadcrumb', [{
-      name: '门锁管理',
-      href: ''
-    }]);
     const curPage = this.$route.query.page || 1;
     this.getData(curPage);
   },

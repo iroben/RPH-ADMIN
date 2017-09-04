@@ -79,7 +79,6 @@
                     </Col>
                 </Row>
                 <Row style="text-align: center; padding: 20px">
-                    
                 </Row>
             </Form>
         </div>
@@ -95,7 +94,7 @@
                       {{item.status_msg}}
                   </span>
                     <span v-if="item.status == 0">{{item.location_msg}}</span>
-                    <MchooseLocation style=" flaot: left;" v-if="item.status == 1" v-model="item.location" :max="4"></MchooseLocation>
+                    <MchooseLocation style=" flaot: left; margin-bottom: 10px;" v-if="item.status == 1" v-model="item.location" :max="4"></MchooseLocation>
                     <Button v-if="item.status == 1" type="error" @click="locationEdit(item.location)">编辑位置</Button>
                 </Card>
             </div>
@@ -276,11 +275,8 @@ export default {
     created() {
         this.active = 'info';
         this.$store.commit('breadcrumb', [{
-          name: '人员管理',
-          href: '/members'
-        },{
-          name: '编辑人员',
-          href: ''
+            name: '人员管理',
+            href: '/members'
         }]);
     },
     methods: {
@@ -384,7 +380,7 @@ export default {
 }
 </script>
 <style scoped>
-.ivu-menu-item-group-title{
-  display: none;
+.ivu-menu-item-group-title {
+    display: none;
 }
 </style>

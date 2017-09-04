@@ -168,10 +168,6 @@ export default {
     }
   },
   created() {
-    this.$store.commit('breadcrumb', [{
-      name: '账户管理',
-      href: ''
-    }]);
     const curPage = this.$route.query.page || 1;
     this.getData(curPage);
   },
