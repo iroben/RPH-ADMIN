@@ -63,17 +63,26 @@ const actions = {
                     name: 'A栋',
                     child: [{
                         id: 1,
-                        className: '层',
-                        name: '1层',
+                        className: '房号',
+                        name: 'A311',
                     }, {
                         id: 2,
-                        className: '层',
-                        name: '2层'
+                        className: '房号',
+                        name: 'A312'
                     }]
                 }, {
                     id: 2,
                     className: '楼栋',
-                    name: 'B栋'
+                    name: 'B栋',
+                    child: [{
+                        id: 1,
+                        className: '房号',
+                        name: 'B311',
+                    }, {
+                        id: 2,
+                        className: '房号',
+                        name: 'B312'
+                    }]
                 }]
             }, {
                 className: '项目',
@@ -563,6 +572,91 @@ const actions = {
             bind_time: '2017-08-09 08:09:52',
             last_open_user: '张晓明'
         }, 3);
+        return {
+            code: 1,
+            data: {
+                data: data,
+                page: {
+                    total: 100, // (int) 总条100条
+                    page: 1, // (int)当前第1页
+                    pagesize: 10, //  (int)每页显示10条
+                    pages: 10 // (int) 共10页
+                }
+            }
+        }
+    },
+    doorlockAdd({ commit }, params) {
+        return {
+            code: 1,
+            msg: '添加成功'
+        }
+    },
+    doorlockEdit({ commit }, params) {
+        return {
+            code: 1,
+            msg: '编辑成功'
+        }
+    },
+    doorlockInfo({ commit }, params) {
+        return {
+            code: 1,
+            data: {
+                id: 123321,
+                start_time: '2017-09-01',
+                end_time: '2018-09-01',
+                door_number: 'st213321332',
+                primary: 'SKT',
+                box_number: 1,
+                passwod: '',
+                location: '1,1,1,1'
+            }
+        }
+    },
+    doorlockDelete({ commit }, params) {
+        return {
+            code: 1,
+            msg: '删除成功'
+        }
+    },
+    doorlockSource({ commit }, params) {
+        const data = lodash.testData({
+            id: 123132,
+            door_number: 'door234',
+            box_number: 'box012x',
+            source_number: 'ssb323',
+            source_name: '伴山家园B323',
+            passwod: '123323',
+            company: 'SKT',
+            avalid_date: '2017-08-09 2019-08-09',
+            open_status: 1,
+            status: 0,
+            power: 80,
+            last_open: '2017-08-09 08:09:52',
+            bind_time: '2017-08-09 08:09:52',
+            last_open_user: '张晓明'
+        }, 3);
+        return {
+            code: 1,
+            data: {
+                data: data,
+                page: {
+                    total: 100, // (int) 总条100条
+                    page: 1, // (int)当前第1页
+                    pagesize: 10, //  (int)每页显示10条
+                    pages: 10 // (int) 共10页
+                }
+            }
+        }
+    },
+    doorlockHistory({ commit }, params) {
+        const data = lodash.testData({
+            id: '444',
+            name: '张晓明',
+            open_time: '2017-08-09 08:55',
+            status: 1,
+            status_msg: '开门',
+            way: '指纹开锁'
+        });
         return {
             code: 1,
             data: {

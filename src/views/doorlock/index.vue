@@ -9,8 +9,8 @@
     <!--  tableFuncs -->
     <div class="tableFuncs">
       <Button-group shape="circle">
-        <Button type="primary" icon="plus" @click="editBox('add')">添加通讯盒</Button>
-        <Button icon="plus" @click="editLock('add')">添加门锁</Button>
+        <Button type="primary" icon="plus-circled" @click="editBox('add')">通讯盒</Button>
+        <Button icon="plus-circled" @click="goAddLock('add')">门锁</Button>
         <Button icon="close">批量删除</Button>
         <Button icon="stats-bars">报表输出</Button>
       </Button-group>
@@ -71,7 +71,7 @@
             <Input v-model="formDoorLock.door_number" placeholder="请输入"></Input>
           </Form-item>
           <Form-item label="门锁品牌" prop="user_no">
-            <Select v-model="queryParams.status" @on-change="getData(1)" filterable>
+            <Select v-model="queryParams.primary" @on-change="getData(1)" filterable>
               <Option value="" label="SKT通讯盒"></Option>
               <Option value="1" label="STLI通讯盒"></Option>
             </Select>
@@ -237,64 +237,7 @@ export default {
         align: 'center'
       }, {
         title: '门锁编号', // 门锁序号, 房源编号, 房源名称, 通讯盒序号, 绑定时间, 撤换时间, 有效日期
-        key: 'id',
-        render: (h, params) => {
-          const row = params.row;
-          const tstyle = {
-            props: {
-              type: 'dot',
-              color: 'blue'
-            },
-            style: {
-              width: '100%'
-            }
-          };
-
-          const detail = h('div', {
-            attrs: {
-              'class': 'poptip-list'
-            }
-          }, [
-            h('div', tstyle, '门锁序号:  ' + row.door_number),
-            h('div', tstyle, '通讯盒序号:  ' + row.box_number),
-            h('div', tstyle, '房源:  ' + row.source_number + ' ( ' + row.source_name + ' )'),
-            h('div', tstyle, '绑定时间:  ' + row.bind_time),
-            h('Button', {
-              style: {
-                'marginTop': '6px'
-              },
-              props: {
-                type: 'primary',
-                long: true
-              },
-              on: {
-                click: () => {
-                  this.toggleSlider()
-                }
-              }
-            }, '开锁记录')
-          ]);
-
-          return h('Poptip', {
-            props: {
-              trigger: 'hover',
-              // title: '门锁详细信息',
-              placement: 'right',
-            },
-            scopedSlots: {
-              content: (props) => {
-                return detail
-              },
-              default: (props) => {
-                return h('div', {
-                  attrs: {
-                    class: 'txt-blue'
-                  }
-                }, row.id)
-              }
-            }
-          })
-        }
+        key: 'id'
       }, {
         title: '通讯盒序号',
         key: 'box_number',
@@ -395,7 +338,7 @@ export default {
               },
               on: {
                 click: () => {
-                  this.editLock(row);
+                  this.goDoorLockEdit(row);
                 }
               }
             })
@@ -422,6 +365,14 @@ export default {
     toggleSlider() {
       this.modelSlider = !this.modelSlider;
     },
+    goDoorLockEdit(row){
+      this.$router.push({
+          'name': 'doorlock.edit',
+          'params': {
+              id: row.id
+          }
+      });
+    },
     editBox(params) {
       this.isEditDoorbox = params != 'add';
       if (params == 'add') {
@@ -433,26 +384,20 @@ export default {
       }
       this.modelDoorBox = true;
     },
-    editLock(params) {
-      this.isEditDoorlock = params != 'add';
-      if (params == 'add') {
-        this.$lodash.forEach(this.formDoorLock, (value, key, item) => {
-          this.formDoorLock[key] = '';
-        });
-      } else {
-        this.$lodash.assign(this.formDoorLock, params);
-      }
-      this.modelDoorlock = true;
+    goAddLock(params) {
+      this.$router.push({
+        'name': 'doorlock.add'
+      });
     },
     dbclick(row){
-      this.editLock(row);
+      this.goDoorLockEdit(row);
     },
     handleReset(name) {
       this.$refs[name].resetFields();
     },
     getData(page) {
       this.tableData = this.$lodash.testData({
-        id: 'box012x-door234',
+        id: 123132,
         door_number: 'door234',
         box_number: 'box012x',
         source_number: 'ssb323',

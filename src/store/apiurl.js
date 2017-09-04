@@ -49,6 +49,13 @@ export default {
     'resourceLocks': 'POST,/floor',
     'resourceMembers': 'POST,/floor',
 
+    'doorlockAdd': 'POST,/floor',
+    'doorlockEdit': 'POST,/floor',
+    'doorlockInfo': 'POST,/floor',
+    'doorlockDelete': 'POST,/floor',
+    'doorlockSource': 'POST,/floor',
+    'doorlockHistory': 'POST,/floor',
+
 
 
 };
