@@ -265,7 +265,7 @@ export default {
 
 .tableTools {
     position: relative;
-    border-top: 3px solid #e9eaec;
+    border-top: 2px solid #e9eaec;
     padding: 15px 0;
 }
 
@@ -366,7 +366,7 @@ export default {
 .header-line {
     width: 100%;
     clear: both;
-    height: 3px;
+    height: 2px;
     background-color: #e9eaec;
 }
 
