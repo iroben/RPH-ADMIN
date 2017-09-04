@@ -86,12 +86,12 @@ const doorlock = [{
     name: 'doorlock.index',
     meta: { title: '门锁管理' },
     component: (resolve) => require(['./views/doorlock/index.vue'], resolve)
-},{
+}, {
     path: '/doorlock/add',
     name: 'doorlock.add',
     meta: { title: '添加门锁' },
     component: (resolve) => require(['./views/doorlock/doorlock.add.vue'], resolve)
-},{
+}, {
     path: '/doorlock/:id',
     name: 'doorlock.edit',
     meta: { title: '门锁编辑' },

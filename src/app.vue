@@ -134,6 +134,7 @@ export default {
 
 
 
+
 /*layout*/
 
 .layout {
@@ -168,6 +169,7 @@ export default {
 }
 
 .layout-title {
+    min-height: 26px;
     margin: 5px 0 14px;
 }
 
@@ -190,6 +192,7 @@ export default {
 .layout .ivu-col {
     transition: width .2s ease-in-out;
 }
+
 
 
 
@@ -230,6 +233,7 @@ export default {
 
 
 
+
 /* tableFuncs */
 
 .tableFuncs {
@@ -237,6 +241,7 @@ export default {
     right: 15px;
     top: 15px;
 }
+
 
 
 
@@ -282,6 +287,7 @@ export default {
     right: 0;
     top: -45px;
 }
+
 
 
 
@@ -372,6 +378,7 @@ export default {
 
 
 
+
 /*font*/
 
 .spe-modal-font {
@@ -419,7 +426,7 @@ export default {
 .form-title .ivu-icon {
     position: relative;
     top: 2px;
-   color: #2d8cf0;
+    color: #2d8cf0;
     margin-right: 10px;
     font-size: 20px;
 }

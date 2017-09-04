@@ -28,7 +28,7 @@
         <div style="margin-left: 200px;" v-if="active == 'info'">
             <Form ref="formData" :model="formData" :rules="ruleValidate" :label-width="100">
                 <Row :gutter="16">
-                    <Col span="14" offset="5">
+                    <Col span="12" offset="6">
                     <div class="form-title">
                         <Icon type="locked"></Icon>基本信息:
                     </div>
@@ -121,81 +121,60 @@ export default {
             tableSource: [],
             tableLock: [],
             columnsA: [{
-                title: '门锁编号', // 门锁序号, 房源编号, 房源名称, 通讯盒序号, 绑定时间, 撤换时间, 有效日期
-                key: 'id'
+                type: 'selection',
+                width: 60,
+                align: 'center'
             }, {
-                title: '通讯盒序号',
-                key: 'box_number',
+                title: '项目',
+                key: 'project',
+                width: 140
+            }, {
+                title: '楼栋',
+                key: 'floor',
                 align: 'center',
                 className: 'avatarImg',
                 width: 130
             }, {
-                title: '品牌/厂家',
-                key: 'company',
+                title: '房号',
+                key: 'house_number',
                 align: 'center',
-                width: 120
+                width: 80
             }, {
-                title: '有效期',
-                key: 'avalid_date',
+                title: '面积',
+                key: 'area',
+                width: 110,
                 align: 'center'
             }, {
-                title: '开关状态',
-                key: 'open_status',
+                title: '户型',
+                key: 'house_type',
                 width: 120,
-                align: 'center',
-                render: (h, params) => {
-                    const row = params.row;
-                    const isopen = row.open_status == 1;
-                    return h('Tag', {
-                        props: {
-                            type: 'border',
-                            color: isopen ? 'green' : 'red'
-                        }
-                    }, isopen ? '开' : '关')
-                }
+                align: 'center'
             }, {
-                title: '门锁状态',
-                key: 'status',
+                title: '入住人数',
+                key: 'count',
                 width: 90,
-                align: 'center',
-                render: (h, params) => {
-                    const row = params.row;
-                    const isok = row.status == 1;
-                    return h('Tag', {
-                        props: {
-                            type: 'border',
-                            color: isok ? 'green' : 'red'
-                        }
-                    }, isok ? '正常' : '损坏')
-                }
+                align: 'center'
             }, {
-                title: '电量',
-                key: 'power',
+                title: '租期',
+                key: 'rent_date',
+                align: 'center',
                 width: 120,
-                align: 'center',
-                render: (h, params) => {
-                    const row = params.row;
-                    return h('i-circle', {
-                        style: {
-                            'marginTop': '5px'
-                        },
-                        props: {
-                            percent: row.power,
-                            'stroke-width': 8,
-                            'stroke-color': '#5cb85c',
-                            size: 36
-                        }
-                    }, row.power)
-                }
             }, {
-                title: '上次开门',
-                key: 'last_open',
-                align: 'center',
-                width: 160,
+                title: '门锁编号',
+                key: 'door_number',
+                align: 'center'
+            }, {
+                title: '通信盒编号',
+                key: 'door_box_number',
+                align: 'center'
+            }, {
+                title: '房租',
+                key: 'rent_pirce',
+                align: 'center'
             }, {
                 title: '操作',
                 key: 'address',
-                width: 120,
+                width: 100,
                 align: 'center',
                 render: (h, params) => {
                     const row = params.row;
@@ -209,7 +188,7 @@ export default {
                             },
                             on: {
                                 click: () => {
-                                    this.goDoorLockEdit(row);
+                                    this.goEdit(params.row.id);
                                 }
                             }
                         })

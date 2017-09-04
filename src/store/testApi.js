@@ -620,20 +620,17 @@ const actions = {
     },
     doorlockSource({ commit }, params) {
         const data = lodash.testData({
-            id: 123132,
-            door_number: 'door234',
-            box_number: 'box012x',
-            source_number: 'ssb323',
-            source_name: '伴山家园B323',
-            passwod: '123323',
-            company: 'SKT',
-            avalid_date: '2017-08-09 2019-08-09',
-            open_status: 1,
-            status: 0,
-            power: 80,
-            last_open: '2017-08-09 08:09:52',
-            bind_time: '2017-08-09 08:09:52',
-            last_open_user: '张晓明'
+            id: 222,
+            project: '伴山家园',
+            floor: 'b栋',
+            house_number: '410',
+            area: '100平米',
+            house_type: '3室1厅',
+            count: 20,
+            rent_date: '2017-09-11',
+            door_number: 'bx1-3123',
+            door_box_number: 'BXS-sdfsfds',
+            rent_pirce: '3800元'
         }, 3);
         return {
             code: 1,

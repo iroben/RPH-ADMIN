@@ -28,7 +28,7 @@
         <div style="margin-left: 200px;" v-if="active == 'info'">
             <Form ref="editForm" :model="formData" :rules="ruleValidate" label-position="right" :label-width="90">
                 <Row :gutter="16">
-                    <Col span="14">
+                    <Col span="12" offset="6">
                     <div class="form-title">
                         <Icon type="document-text"></Icon>房源信息:
                     </div>
