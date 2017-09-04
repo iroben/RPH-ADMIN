@@ -162,7 +162,7 @@ export default {
 }
 
 .mchoose-location-view {
-    margin-bottom: 10px;
+    /*margin-bottom: 10px;*/
 }
 
 .mchoose-location-panel-tab {

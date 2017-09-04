@@ -346,11 +346,30 @@ const actions = {
             }
         }
     },
-
-
-
-
-
+    floorAdd({ commit }, params) {
+        return {
+            code: 1,
+            msg: '添加成功'
+        }
+    },
+    floorEdit({ commit }, params) {
+        return {
+            code: 1,
+            msg: '编辑成功'
+        }
+    },
+    resourceAdd({ commit }, params) {
+        return {
+            code: 1,
+            msg: '添加成功'
+        }
+    },
+    resourceEdit({ commit }, params) {
+        return {
+            code: 1,
+            msg: '编辑成功'
+        }
+    }
 };
 
 // mutations

@@ -11,7 +11,7 @@
             <Row :gutter="16">
                 <Col span="14" offset="5">
                 <div class="form-title">
-                    <Icon type="clipboard"></Icon>基础信息:
+                    <Icon type="document-text"></Icon>基础信息:
                 </div>
                 <Form-item label="项目名称" prop="name">
                     <Input v-model="formData.name" placeholder="请输入"></Input>

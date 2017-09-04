@@ -30,7 +30,7 @@
                 <Row :gutter="16">
                     <Col span="15">
                     <div class="form-title">
-                        <Icon type="clipboard"></Icon>基础信息:
+                        <Icon type="document-text"></Icon>基础信息:
                     </div>
                     <Form-item label="项目名称" prop="name">
                         <Input v-model="formData.name" placeholder="请输入"></Input>
@@ -339,11 +339,11 @@ export default {
     created() {
         this.active = 'info';
         this.$store.commit('breadcrumb', [{
-          name: '房源管理',
-          href: '/resource'
-        },{
-          name: '编辑项目',
-          href: ''
+            name: '房源管理',
+            href: '/resource'
+        }, {
+            name: '编辑项目',
+            href: ''
         }]);
     },
     methods: {
