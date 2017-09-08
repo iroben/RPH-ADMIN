@@ -59,6 +59,7 @@ export default {
     'doorlockSource': 'POST,/floor',
     'doorlockHistory': 'POST,/floor',
 
-
+    // common
+    'getHuxing': 'GET,/huxing', // 获取户型
 
 };

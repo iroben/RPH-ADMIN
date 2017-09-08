@@ -11,6 +11,16 @@ const getters = {
 
 // actions
 const actions = {
+    getHuxing({ commit }, params) {
+        return {
+            code: 1,
+            data: {
+                '1': '一室一厅',
+                '2': '两室一厅',
+                '3': '三室一厅',
+            }
+        }
+    },
     members({ commit }, params) {
         const data = lodash.testData({
             id: '33333',
