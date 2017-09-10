@@ -13,6 +13,7 @@ const debug = process.env.NODE_ENV !== 'production';
 
 // states
 const state = {
+  orgId:0,
   siteName: '房源管理系统',
   metaName: '房源管理系统',
   breadcrumb: [],
@@ -122,6 +123,9 @@ const mutations = {
   },
   upError(state, error) {
     state.error = error;
+  },
+  orgId(state, orgId) {
+    state.orgId = orgId;
   }
 };
 

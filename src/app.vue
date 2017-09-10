@@ -96,7 +96,7 @@ export default {
         });
 
         // 如果cookie 不存在UserEmail, 则跳转到登录
-        const uemail_ = this.$cookie.get('uemail') || '' || 'testEami@qq.com';
+        const uemail_ = this.$cookie.get('uemail') || '' ;// || 'testEami@qq.com';
         this.$store.commit('userEmail', uemail_);
         if (this.userEmail) {
             this.$store.dispatch('menus').catch(res => {
@@ -114,6 +114,16 @@ export default {
         },
         changeAffix(status) {
             this.affixMenu = status;
+        },
+        // 跳转到指定ROUTER
+        goRouter(name, params, query) {
+            const params_ = params || {};
+            const query_ = params || {};
+            this.$router.push({
+                name: name,
+                query: query_,
+                params: params_
+            });
         }
     }
 }
