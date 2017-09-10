@@ -98,11 +98,6 @@ export default {
                 this.$store.commit('menus', []);
                 this.$cookie.delete('uemail');
             });
-        },
-        goRouter(name) { // 选中菜单, 跳转到指定路由
-            this.$router.push({
-                name: name
-            })
         }
     }
 }
