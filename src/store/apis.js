@@ -94,7 +94,7 @@ for (let i in apiurl) {
           msg: '获取数据失败'
         });
       }
-
+console.log(response);
       // 如果返回code不为1, 则请求异常 [未登录, 没有权限]
       if (response.data.code != 1) {
         return Promise.reject(response.data);
