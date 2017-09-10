@@ -90,6 +90,7 @@ export default {
                 query: to.query
             };
             console.log(rname)
+            if(rname == 'login' || rname == 'home')return;
             this.tabs[rname] = tab;
             this.tabsAr.push(tab);
             this.tabActive = rname;
@@ -115,15 +116,10 @@ export default {
         changeAffix(status) {
             this.affixMenu = status;
         },
-        // 跳转到指定ROUTER
-        goRouter(name, params, query) {
-            const params_ = params || {};
-            const query_ = params || {};
+        goRouter(name) { // 选中菜单, 跳转到指定路由
             this.$router.push({
-                name: name,
-                query: query_,
-                params: params_
-            });
+                name: name
+            })
         }
     }
 }
