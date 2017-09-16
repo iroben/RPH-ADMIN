@@ -239,18 +239,24 @@ export default {
         title: '门锁编号', // 门锁序号, 房源编号, 房源名称, 通讯盒序号, 绑定时间, 撤换时间, 有效日期
         key: 'id'
       }, {
-        title: '通讯盒序号',
+        title: '门锁品牌',
+        key: 'company',
+        align: 'center',
+        width: 120
+      }, {
+        title: '通讯盒',
         key: 'box_number',
         align: 'center',
         className: 'avatarImg',
         width: 130
       }, {
-        title: '品牌/厂家',
-        key: 'company',
+        title: '门锁号',
+        key: 'box_number',
         align: 'center',
-        width: 120
+        className: 'avatarImg',
+        width: 130
       }, {
-        title: '有效期',
+        title: '有效日期',
         key: 'avalid_date',
         align: 'center'
       }, {

@@ -89,22 +89,35 @@ let methods = {
             page: options.page || contxt.page.cur + 1,
             pagesize: contxt.pageSize
         };
-
+        
         // 合并参数
         const params_ = lodash.assign(defaultParams, contxt.queryParams, options);
-        return this.api(contxt, options.methodName, params_).then(res => {
-            // 设置table值
-            contxt.tableData = res.data.data;
-            contxt.page = res.data.page;
+        return contxt.$apis[options.methodName](params_).then(res => {
+          // 设置table值
+          contxt.tableData = res.data;
+          contxt.page = res.page;
 
-            // 添加location分页
-            contxt.$router.push({
-                query: {
-                    page: contxt.page.cur
-                }
-            });
-            return res;
+          // 添加location分页
+          contxt.$router.push({
+            query: {
+              page: contxt.page ? contxt.page.cur : 1
+            }
+          });
+          return res;
         });
+        // return this.api(contxt, options.methodName, params_).then(res => {
+        //     // 设置table值
+        //     contxt.tableData = res.data.data;
+        //     contxt.page = res.data.page;
+
+        //     // 添加location分页
+        //     contxt.$router.push({
+        //         query: {
+        //             page: contxt.page.cur
+        //         }
+        //     });
+        //     return res;
+        // });
     },
     /**
      * [delTableActive 删除表格activeParams数据]

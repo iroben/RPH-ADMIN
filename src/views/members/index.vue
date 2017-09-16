@@ -11,14 +11,15 @@
         </Button>
         <Button icon="stats-bars">
           <Dropdown placement="bottom">
-            报表输出<Icon style="margin-left: 5px;" type="arrow-down-b"></Icon>
+            报表输出
+            <Icon style="margin-left: 5px;" type="arrow-down-b"></Icon>
             <DropdownMenu slot="list">
-                <DropdownItem>报表1</DropdownItem>
-                <DropdownItem>报表2</DropdownItem>
+              <DropdownItem>报表1</DropdownItem>
+              <DropdownItem>报表2</DropdownItem>
             </DropdownMenu>
-        </Dropdown>
+          </Dropdown>
         </Button>
-        <Button :icon="toggleStatus ? 'navicon-round' : 'grid'" @click="changeToggle"></Button>
+        <Button :icon="toggleStatus ? 'navicon-round' : 'grid'" @click="changeToggle">视图切换</Button>
         <Button title="重置" @click="resetFilter" icon="loop">重置</Button>
       </Button-group>
     </div>
@@ -58,61 +59,44 @@
       <MchoosePanel :visible="searchVisible"></MchoosePanel>
       <template v-if="toggleStatus">
         <TableScoller>
-          <Table ref="table" :columns="columns" :data="tableData" @on-row-dblclick="dbclick" @on-selection-change="selectionChange" stripe border></Table>
+          <Table ref="table" :columns="columns" :data="tableData" @on-row-click="rowClick" @on-row-dblclick="dbclick" @on-selection-change="selectionChange" stripe border></Table>
         </TableScoller>
-        <div class="pagination">
+        <div class="pagination" v-if="page.total">
           <Page :total="page.total" :current="page.cur" @on-change="getData" :page-size="pageSize" show-elevator show-total></Page>
         </div>
       </template>
       <template v-if="!toggleStatus">
-        <Card style="margin-bottom: 20px;">
-          <p slot="title">
-            伴山家园,A栋B11,35套空置
-          </p>
-          <Row :gutter="15">
-            <Col :span="6" v-for="houseItem in cardData">
-            <Card class="familyCard">
-              <div slot="title">
-                <Icon type="android-pin" style="margin-right:3px"></Icon>
-                {{houseItem.house_number}}
-              </div>
-              <span slot="extra">
-                            {{houseItem.family_count}}人
-                        </span>
-              <div class="ulist">
-                <Tag v-for="family in houseItem.family" type="dot" :color="family.isManager ? 'red' : ''">{{family.name}}&emsp;{{family.isManager ? '(申请人)' : ''}}</Tag>
-              </div>
-              <Button type="primary" icon="android-contacts" long @click="goFamily">
-                <span>管理人员</span>
-              </Button>
-            </Card>
-            </Col>
-          </Row>
-        </Card>
-        <Card style="margin-bottom: 20px;">
-          <p slot="title">
-            四海新城,C栋B11,35套空置
-          </p>
-          <Row :gutter="15">
-            <Col :span="6" v-for="houseItem in cardData">
-            <Card class="familyCard">
-              <div slot="title">
-                <Icon type="android-pin" style="margin-right:3px"></Icon>
-                {{houseItem.house_number}}
-              </div>
-              <span slot="extra">
-                            {{houseItem.family_count}}人
-                        </span>
-              <div class="ulist">
-                <Tag v-for="family in houseItem.family" type="dot" :color="family.isManager ? 'red' : ''">{{family.name}}&emsp;{{family.isManager ? '(申请人)' : ''}}</Tag>
-              </div>
-              <Button type="primary" icon="android-contacts" long @click="goFamily">
-                <span>管理人员</span>
-              </Button>
-            </Card>
-            </Col>
-          </Row>
-        </Card>
+        <Tabs type="card" value="all" @on-click="changeCardTab">
+          <TabPane label="全部" name="all">
+          </TabPane>
+          <TabPane v-for="tabItem in cardData.tabs" :label="tabItem.title" :name="tabItem.name">
+          </TabPane>
+        </Tabs>
+        <table class="cardtable" style="width: 100%;">
+            <tr v-for="item in cardData.list">
+              <th width="90" style="font-size:16px;"><Icon type="ios-navigate" style="margin-right: 5px;"></Icon>{{item.floor}}层</th>
+              <td >
+                <div class="houseitem" v-for="houseItem in item.house">
+                  <div class="houseitem-numner" :class="{'houseitem-empty' : houseItem.members.length <= 0}">
+                    <span class="houseitem-numner-l"><Icon type="ios-navigate" style="margin-right: 5px;"></Icon>房号:{{houseItem.number}}</span>
+                    <span class="houseitem-numner-r" v-if="houseItem.members.length > 0">{{houseItem.members.length}}人</span>
+                    <span class="houseitem-numner-r" v-if="houseItem.members.length <= 0">空置</span>
+                  </div>
+                  <div class="houseitem-members">
+                    <Tag v-for="(person, index) in houseItem.members">{{person.name + '' + (index > 0 ? '' : '(房主)')}}</Tag>
+                  </div>
+                  <div class="houseitem-bot">
+                    <Button icon="android-contacts" long @click="goFamily">
+                      <span>管理人员</span>
+                    </Button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </table>
+        <div class="pagination" v-if="page.total">
+          <Page :total="cardPage.total" :current="cardPage.cur" @on-change="getCardData" :page-size="pageSize" show-elevator show-total></Page>
+        </div>
       </template>
       </Col>
     </Row>
@@ -139,12 +123,12 @@ export default {
         huxing: ''
       },
       searchVisible: false,
-      toggleStatus: 1,
+      toggleStatus: 0,
       huxingList: [],
-      tableData: [], // 表格数据
-      page: {}, // 分页
-      cardData: [],
       modelFamily: false,
+      tableData: [], // 表格数据
+      cardData: [],
+      cardPage: {},
       familyData: [],
       page: {
         total: 15,
@@ -229,27 +213,16 @@ export default {
     this.$lodash.api(this, 'getHuxing', {}).then(res => {
       this.huxingList = res.data;
     });
-
-    this.cardData = this.$lodash.testData({
-      house_number: 'B栋411',
-      family: [{
-        'name': '张晓玲',
-        'isManager': true,
-      }, {
-        'name': '张晓明',
-        'isManager': false,
-      }, {
-        'name': '大花',
-        'isManager': false,
-      }],
-      family_count: 3
-    }, 4);
-
+    this.getCardData(1);
     // 获取数据
     const curPage = this.$route.query.page || 1;
     this.getData(curPage);
   },
   methods: {
+    rowClick(params, e) {
+      console.log(params)
+      console.log(e)
+    },
     dbclick(row) {
       this.goEdit(row.id);
     },
@@ -278,8 +251,26 @@ export default {
         door_status: 'open'
       }, 3);
     },
+    getCardData(page){
+      this.$apis.membersByFloor({
+        page: page || this.cardPage.cur,
+        floor: this.cardquery || '',
+      }).then(res => {
+        this.cardData = res.data;
+        this.cardPage = res.page;
+        console.log(this.cardData)
+      })
+    },
+    changeCardTab(name){
+      this.cardquery = name;
+      this.getCardData(1);
+    },
     changeToggle() {
       this.toggleStatus = this.toggleStatus == 0 ? 1 : 0;
+      this.cardquery = '';
+      if(!this.toggleStatus){
+        this.getCardData(1);
+      }
     },
     // 跳转到指定ROUTER
     goRouter(name, params, query) {
@@ -317,7 +308,9 @@ export default {
       const Promise = this.$lodash.getTableData(this, {
         methodName: 'members',
         page: page
-      }, !!forceReset);
+      }, !!forceReset).then(res => {
+        console.log(res)
+      });
     },
     // 批量删除Table数据
     delGroup() {
@@ -364,6 +357,52 @@ export default {
 .familyCard {
   margin-bottom: 15px;
   background-color: #fafafa !important;
+}
+
+.cardtable{
+  border:1px solid #ddd;
+  border-collapse: collapse;
+}
+.cardtable th, .cardtable td{
+border: 1px solid #ddd;
+}
+.houseitem{
+  float: left;
+  width:200px;
+  margin: 5px;
+  background-color: #eee;
+  border-radius: 2px;
+}
+.houseitem-numner{
+  display: block;
+  background-color: #2d8cf0;
+  color: #fff;
+  font-size: 14px;
+  padding: 6px 10px;
+  width:100%;
+  height: 33px;
+}
+
+.houseitem-members{
+  padding: 10px;
+  height: 70px;
+}
+.houseitem-bot{
+  padding: 10px;
+}
+.houseitem-numner-l{
+  float: left;
+  font-weight: 700;
+}
+.houseitem-numner-r{
+  font-size: 12px;
+  background-color: rgba(0,0,0,0.3);
+  border-radius: 10px;
+  float: right;
+  padding: 0 8px;
+}
+.houseitem-empty{
+  background-color: #ed3f14;
 }
 
 </style>
