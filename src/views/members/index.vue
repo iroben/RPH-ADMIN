@@ -365,6 +365,7 @@ export default {
 }
 .cardtable th, .cardtable td{
 border: 1px solid #ddd;
+padding: 5px;
 }
 .houseitem{
   float: left;
@@ -372,6 +373,7 @@ border: 1px solid #ddd;
   margin: 5px;
   background-color: #eee;
   border-radius: 2px;
+  overflow: hidden;
 }
 .houseitem-numner{
   display: block;
