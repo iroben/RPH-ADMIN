@@ -16,6 +16,7 @@ const state = {
   orgId:0,
   siteName: '房源管理系统',
   metaName: '房源管理系统',
+  tabChange: '',
   breadcrumb: [],
   metaShow: true,
   basicUrl: config.basicUrl,
@@ -60,6 +61,7 @@ const state = {
 const getters = {
   siteName: state => state.siteName,
   metaName: state => state.metaName,
+  tabChange: state => state.tabChange,
   metaShow: state => state.metaShow,
   breadcrumb: state => state.breadcrumb,
   basicUrl: state => state.basicUrl,
@@ -108,6 +110,9 @@ const mutations = {
   },
   metaShow(state, status) {
     state.metaShow = status;
+  },
+  tabChange(state, tab){
+    state.tabChange = tab;
   },
   breadcrumb(state, breadcrumb){
     state.breadcrumb = breadcrumb;

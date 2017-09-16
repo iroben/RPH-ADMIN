@@ -302,6 +302,7 @@ export default {
         this.editInfor = res.data;
         this.dateValue = this.editInfor.birth;
         this.$lodash.assign(this.formData, this.editInfor);
+        this.$store.commit('tabChange', {name: this.$route.name, title: '编辑人员:' + this.editInfor.name});
       })
     },
     getLocation() {

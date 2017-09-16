@@ -9,6 +9,7 @@
                 <Tabs class="mainTab" ref="mainTab" v-model="tabActive" type="card" closable :animated="false" @on-tab-remove="handleTabRemove">
                     <Tab-pane :class="tab.name" :closable="tab.name != 'home.index'" v-if="tab" v-for="tab in tabs" :name="tab.name" :label="tab.title"></Tab-pane>
                 </Tabs>
+                <div style="display:none;">{{tabChange}}</div>
                 <div class="layout-content-main">
                     <div class="layout-title">
                         <!-- <span class="main-title">
@@ -70,6 +71,13 @@ export default {
         },
         isLogin() {
             return this.routeName == 'login';
+        },
+        tabChange(){
+            const tabChange = this.$store.getters.tabChange;
+            if(tabChange && this.tabs[tabChange.name]){
+                this.tabs[tabChange.name]['title'] = tabChange.title
+            }
+            return tabChange;
         }
     },
     watch: {
@@ -89,12 +97,15 @@ export default {
                 params: to.params,
                 query: to.query
             };
-            console.log(rname)
             if(rname == 'login' || rname == 'home')return;
             this.tabs[rname] = tab;
             this.tabsAr.push(tab);
             this.tabActive = rname;
         });
+        
+        this.$on('upTabTitle', (text) => {
+            alert(text)
+        })
 
         // 如果cookie 不存在UserEmail, 则跳转到登录
         const uemail_ = this.$cookie.get('uemail') || '' ;// || 'testEami@qq.com';

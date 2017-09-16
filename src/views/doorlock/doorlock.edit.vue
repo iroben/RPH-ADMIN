@@ -32,7 +32,7 @@
                     <div class="form-title">
                         <Icon type="locked"></Icon>基本信息:
                     </div>
-                    <Form-item label="门锁序号" prop="door_number">
+                    <Form-item label="门锁编号" prop="door_number">
                         <Input v-model="formData.door_number" placeholder="请输入"></Input>
                     </Form-item>
                     <Form-item label="门锁品牌" prop="primary">
@@ -284,6 +284,7 @@ export default {
                 this.editInfor = res.data;
                 this.dateRangeValue = [this.editInfor.start_time, this.editInfor.end_time];
                 this.$lodash.assign(this.formData, this.editInfor);
+                this.$store.commit('tabChange', {name: this.$route.name, title: '编辑门锁:' + this.editInfor.door_number});
             })
         },
         goDoorLockEdit(row) {
