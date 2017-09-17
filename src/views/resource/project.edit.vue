@@ -121,7 +121,7 @@
       </TableScoller>
     </div>
     <div style="margin-left: 200px;" v-if="active == 'lock'">
-      <TableScoller>
+      <TableScoller :min="1600">
         <Table ref="tableB" :columns="columnsB" :data="tableLock" stripe border></Table>
       </TableScoller>
     </div>
@@ -179,7 +179,7 @@ export default {
             props: {
               color: row.history == 1 ? '' : 'blue'
             }
-          }, row.history == 1 ? '历史人员' : '入住人员')
+          }, row.history == 1 ? '历史入住' : '当前入住')
         }
       }, {
         title: '姓名',
@@ -236,6 +236,17 @@ export default {
         }
       }],
       columnsB: [{
+        title: '当前绑定',
+        width: 120,
+        render: (h, params) => {
+          const row = params.row;
+          return h('Tag', {
+            props: {
+              color: params.index == 0 ? 'blue' : ''
+            }
+          }, params.index == 0 ? '当前绑定' : '历史绑定')
+        }
+      },{
         title: '门锁编号', // 门锁序号, 房源编号, 房源名称, 通讯盒序号, 绑定时间, 撤换时间, 有效日期
         key: 'id'
       }, {
