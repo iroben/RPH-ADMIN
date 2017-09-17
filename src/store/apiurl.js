@@ -24,7 +24,7 @@ export default {
     'membersInfo': 'GET,/info',
     'membersLocation': 'GET,/info',
     'membersLocationEdit': 'POST,/info',
-    'membersFamily': 'GET,/info',
+    'membersFamily': 'GET,/membersFamily/info',
     'membersLockHistory': 'GET,/info',
 
 

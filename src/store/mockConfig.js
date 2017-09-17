@@ -70,3 +70,84 @@ Mock.mock(aipurl_.membersByFloor, {
     'pages|1-15': 1
   }
 });
+
+Mock.mock(aipurl_.membersFamily, {
+  code: 1,
+  'data|10-15': [{
+    id: '@id',
+    name: '李双',
+    house_number: 'B栋410',
+    relation: '丈夫',
+    status: 1,
+    status_msg: '挂失中',
+    gender: '男',
+    birth: '1991-04-15',
+    card_id: 430726199104155779,
+    org: '深圳大学',
+    phone: '18664357434',
+    door_status: 'open',
+    'history|1': [1,0]
+  }],
+  page: {
+    'total|1-15': 1,
+    'page|1-15': 1,
+    'cur|1-10': 1,
+    pagesize: 3,
+    'pages|1-15': 1
+  }
+});
+
+
+Mock.mock(aipurl_.projectMembers, {
+  code: 1,
+  'data|10-15': [{
+    id: '@id',
+    name: '李双',
+    house_number: 'B栋410',
+    relation: '丈夫',
+    status: 1,
+    status_msg: '挂失中',
+    gender: '男',
+    birth: '1991-04-15',
+    card_id: 430726199104155779,
+    org: '深圳大学',
+    phone: '18664357434',
+    door_status: 'open',
+    'history|1': [1,0]
+  }],
+  page: {
+    'total|1-15': 1,
+    'page|1-15': 1,
+    'cur|1-10': 1,
+    pagesize: 3,
+    'pages|1-15': 1
+  }
+});
+
+Mock.mock(aipurl_.doorlockSource, {
+  code: 1,
+  'data|10-15': [{
+    id: '@id',
+    'project|1': ['伴山家园', '四海新城'],
+    'floor|1': ['A栋', 'B栋', 'C栋'],
+    house_number: '410',
+    area: '100平米',
+    house_type: '3室1厅',
+    'count|10-20': 1,
+    rent_date: '@date',
+    door_number: 'bx1-3123',
+    door_box_number: 'BXS-sdfsfds',
+    rent_pirce: '3800元',
+    'history|1': 1
+  }],
+  page: {
+    'total|1-15': 1,
+    'page|1-15': 1,
+    'cur|1-10': 1,
+    pagesize: 3,
+    'pages|1-15': 1
+  }
+});
+
+
+

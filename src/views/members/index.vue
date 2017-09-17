@@ -123,7 +123,7 @@ export default {
         huxing: ''
       },
       searchVisible: false,
-      toggleStatus: 0,
+      toggleStatus: 1,
       huxingList: [],
       modelFamily: false,
       tableData: [], // 表格数据

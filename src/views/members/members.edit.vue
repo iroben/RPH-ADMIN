@@ -313,10 +313,15 @@ export default {
       })
     },
     getFamily() {
-      this.$lodash.api(this, 'membersFamily', {
+      // this.$lodash.api(this, 'membersFamily', {
+      //   uid: this.uid
+      // }).then(res => {
+      //   this.tableFamily = res.data.data || [];
+      // })
+      this.$apis.membersFamily({
         uid: this.uid
       }).then(res => {
-        this.tableFamily = res.data.data || [];
+        this.tableFamily = res.data || [];
       })
     },
     getLock() {
