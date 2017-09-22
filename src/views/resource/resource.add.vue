@@ -13,6 +13,13 @@
                 <div class="form-title">
                     <Icon type="document-text"></Icon>房源信息:
                 </div>
+                <Form-item label="项目楼栋" prop="project">
+                    <MchooseLocation v-model="formData.project" :max="3" style="margin-bottom: 0"></MchooseLocation>
+                    <Input v-model="formData.project" placeholder="请输入" style="display:none;"></Input>
+                </Form-item>
+                <Form-item label="楼层" prop="floor" v-if="formData.project">
+                    <Slider :max="100" :min="1" v-model="formData.floor" show-input :tip-format="totalFormat"></Slider>
+                </Form-item>
                 <Form-item label="房源名称" prop="name">
                     <Input v-model="formData.name" placeholder="请输入"></Input>
                 </Form-item>
@@ -48,16 +55,6 @@
                 </Form-item>
                 <Form-item label="房源介绍" prop="intro">
                     <Input v-model="formData.intro" type="textarea" placeholder="请输入" :rows="7"></Input>
-                </Form-item>
-                <div class="form-title">
-                    <Icon type="android-compass"></Icon>所属项目:
-                </div>
-                <Form-item label="项目楼栋" prop="project">
-                    <MchooseLocation v-model="formData.project" :max="2" style="margin-bottom: 0"></MchooseLocation>
-                    <Input v-model="formData.project" placeholder="请输入" style="display:none;"></Input>
-                </Form-item>
-                <Form-item label="楼层" prop="floor" v-if="formData.project">
-                    <Slider :max="100" :min="1" v-model="formData.floor" show-input :tip-format="totalFormat"></Slider>
                 </Form-item>
                 </Col>
             </Row>
