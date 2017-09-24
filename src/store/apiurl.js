@@ -11,7 +11,9 @@ export default {
     'config': 'GET,/system/config', // 获取配置信息
     
     'memberSearch': 'GET,/member/search',// 首页查找
+    
 
+    
     // 项目
     'projectTree': 'GET,/gessss', // 获取项目树
     'subTree': 'GET,/subTree', // 获取区
@@ -58,8 +60,10 @@ export default {
     'doorlockEdit': 'POST,/floor',
     'doorlockInfo': 'POST,/floor',
     'doorlockDelete': 'POST,/floor',
-    'doorlockSource': 'POST,/floor',
-    'doorlockHistory': 'POST,/floor',
+    'doorlockSource': 'POST,/floor/source',
+    'doorlockHistory': 'POST,/doorlock/history',
+    'doorlockFloor':  'GET,/doorlock/floor',
+
 
     // common
     'getHuxing': 'GET,/huxing', // 获取户型

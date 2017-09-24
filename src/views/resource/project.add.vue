@@ -50,6 +50,9 @@
                 <div class="form-title">
                     <Icon type="android-compass"></Icon>项目位置:
                 </div>
+                <Form-item label="位置" prop="location">
+                    <MchooseLocation v-model="formData.location" :max="4"></MchooseLocation>
+                  </Form-item>
                 <Form-item label="项目地址" prop="address">
                     <Input v-model="formData.address" placeholder="请输入"></Input>
                 </Form-item>

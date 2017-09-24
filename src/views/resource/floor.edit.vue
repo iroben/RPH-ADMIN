@@ -18,14 +18,6 @@
           <Icon type="android-compass"></Icon>
           房源列表
           </MenuItem>
-          <MenuItem name="lock">
-          <Icon type="clock"></Icon>
-          门锁信息
-          </MenuItem>
-          <MenuItem name="members">
-          <Icon type="person-stalker"></Icon>
-          入住人员
-          </MenuItem>
         </MenuGroup>
       </Menu>
     </Affix>
@@ -90,33 +82,6 @@
         </Row>
       </Form>
     </div>
-    <div style="margin-left: 200px;" v-if="active == 'location'">
-      <div span="12" v-for="item in locations">
-        <Card style="margin-bottom: 15px;">
-          <p slot="title">
-            <Icon type="android-time"></Icon>
-            入住: {{item.time}}
-          </p>
-          <span slot="extra">
-                      <Icon type="location"></Icon>
-                      {{item.status_msg}}
-                  </span>
-          <span v-if="item.status == 0">{{item.location_msg}}</span>
-          <MchooseLocation style=" flaot: left;" v-if="item.status == 1" v-model="item.location" :max="4"></MchooseLocation>
-          <Button v-if="item.status == 1" type="primary" @click="locationEdit(item.location)">保存</Button>
-        </Card>
-      </div>
-    </div>
-    <div style="margin-left: 200px;" v-if="active == 'members'">
-      <TableScoller>
-        <Table ref="tableA" :columns="columnsA" @on-row-dblclick="goEdit" :data="tableMembers" stripe border></Table>
-      </TableScoller>
-    </div>
-    <div style="margin-left: 200px;" v-if="active == 'lock'">
-      <TableScoller>
-        <Table ref="tableB" :columns="columnsB" :data="tableLock" stripe border></Table>
-      </TableScoller>
-    </div>
     <div style="margin-left: 200px;" v-if="active == 'source'">
       <TableScoller>
         <Table ref="tableC" :columns="columnsC" @on-row-dblclick="goSourceEdit" :data="tableFloor" stripe border></Table>
@@ -159,183 +124,6 @@ export default {
       },
       locations: [],
       tableFloor: [],
-      tableMembers: [],
-      tableLock: [],
-      columnsA: [{
-        title: '姓名',
-        key: 'name',
-        className: 'avatarImg',
-        width: 100
-      }, {
-        title: '房号',
-        key: 'house_number',
-        align: 'center',
-        className: 'avatarImg',
-        width: 100
-      }, {
-        title: '性别',
-        key: 'gender',
-        align: 'center',
-        width: 80
-      }, {
-        title: '出生日期',
-        key: 'birth',
-        width: 110,
-        align: 'center'
-      }, {
-        title: '身份证号',
-        key: 'card_id',
-        width: 180,
-        align: 'center'
-      }, {
-        title: '工作单位',
-        key: 'org',
-      }, {
-        title: '手机号码',
-        key: 'phone',
-        width: 120,
-      }, {
-        title: '门锁权限',
-        key: 'door_status',
-        align: 'center'
-      }, {
-        title: '操作',
-        key: 'address',
-        width: 100,
-        align: 'center',
-        render: (h, params) => {
-          const row = params.row;
-          const isSuper = row.super == 1;
-          return this.$lodash.renderButtonGroup(h, params, [{
-            icon: 'edit',
-            title: '编辑',
-            click: () => {
-              this.goEdit(params.row);
-            }
-          }])
-        }
-      }],
-      columnsB: [{
-        title: '当前绑定',
-        width: 120,
-        render: (h, params) => {
-          const row = params.row;
-          return h('Tag', {
-            props: {
-              color: params.index == 0 ? 'blue' : ''
-            }
-          }, params.index == 0 ? '当前绑定' : '历史绑定')
-        }
-      }, {
-        title: '门锁编号', // 门锁序号, 房源编号, 房源名称, 通讯盒序号, 绑定时间, 撤换时间, 有效日期
-        key: 'id'
-      }, {
-        title: '通讯盒序号',
-        key: 'box_number',
-        align: 'center',
-        className: 'avatarImg',
-        width: 130
-      }, {
-        title: '品牌/厂家',
-        key: 'company',
-        align: 'center',
-        width: 120
-      }, {
-        title: '有效期',
-        key: 'avalid_date',
-        align: 'center'
-      }, {
-        title: '开关状态',
-        key: 'open_status',
-        width: 120,
-        align: 'center',
-        render: (h, params) => {
-          const row = params.row;
-          const isopen = row.open_status == 1;
-          return h('Tag', {
-            props: {
-              type: 'border',
-              color: isopen ? 'green' : 'red'
-            }
-          }, isopen ? '开' : '关')
-        }
-      }, {
-        title: '门锁状态',
-        key: 'status',
-        width: 90,
-        align: 'center',
-        render: (h, params) => {
-          const row = params.row;
-          const isok = row.status == 1;
-          return h('Tag', {
-            props: {
-              type: 'border',
-              color: isok ? 'green' : 'red'
-            }
-          }, isok ? '正常' : '损坏')
-        }
-      }, {
-        title: '电量',
-        key: 'power',
-        width: 120,
-        align: 'center',
-        render: (h, params) => {
-          const row = params.row;
-          return h('i-circle', {
-            style: {
-              'marginTop': '5px'
-            },
-            props: {
-              percent: row.power,
-              'stroke-width': 8,
-              'stroke-color': '#5cb85c',
-              size: 36
-            }
-          }, row.power)
-        }
-      }, {
-        title: '上次开门',
-        key: 'last_open',
-        align: 'center',
-        width: 160,
-      }, {
-        title: '操作',
-        key: 'address',
-        width: 120,
-        align: 'center',
-        render: (h, params) => {
-          const row = params.row;
-          const isSuper = row.super == 1;
-          return h('ButtonGroup', [
-            // h('Button', {
-            //     props: {
-            //         disabled: isSuper,
-            //         type: 'ghost',
-            //         icon: 'close',
-            //         size: 'small'
-            //     },
-            //     on: {
-            //         click: () => {
-            //             this.selectedGroup = [row];
-            //             this.showDel();
-            //         }
-            //     }
-            // }),
-            h('Button', {
-              props: {
-                type: 'ghost',
-                icon: 'edit',
-                size: 'small'
-              },
-              on: {
-                click: () => {
-                  this.editLock(row);
-                }
-              }
-            })
-          ]);
-        }
-      }],
       columnsC: [{
         title: '项目',
         key: 'project',
@@ -435,10 +223,6 @@ export default {
     active(name) {
       if (name == 'info') {
         this.getInfo();
-      } else if (name == 'members') {
-        this.getMembers();
-      } else if (name == 'lock') {
-        this.getLock();
       } else if (name == 'source') {
         this.getSource();
       }
@@ -489,20 +273,6 @@ export default {
       }).then(res => {
         this.editInfor = res.data;
         this.$lodash.assign(this.formData, this.editInfor);
-      })
-    },
-    getMembers() {
-      this.$lodash.api(this, 'floorMembers', {
-        id: this.id
-      }).then(res => {
-        this.tableMembers = res.data.data || [];
-      })
-    },
-    getLock() {
-      this.$lodash.api(this, 'floorLocks', {
-        uid: this.uid
-      }).then(res => {
-        this.tableLock = res.data.data || [];
       })
     },
     getSource() {

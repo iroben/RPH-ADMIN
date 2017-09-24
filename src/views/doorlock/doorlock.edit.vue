@@ -47,9 +47,6 @@
           <Form-item label="门锁号" prop="door_number">
             <Input v-model="formData.door_number" placeholder="请输入"></Input>
           </Form-item>
-          <!--       <div class="form-title">
-                        <Icon type="ios-gear"></Icon>门锁设置:
-                    </div> -->
           <Form-item label="有效日期" prop="start_time">
             <Input v-model="formData.start_time" placeholder="请输入" style="display: none"></Input>
             <Date-picker ref="dateRange" v-model="dateRangeValue" type="daterange" format="yyyy-MM-dd" @on-ok="dateChange" @on-clear="dateClear" confirm placement="bottom-start" placeholder="有效时间" style="width: 200px"></Date-picker>
@@ -85,6 +82,17 @@
       </TableScoller>
     </div>
     <div style="margin-left: 200px;" v-if="active == 'lock'">
+      <Form ref="queryParams" :model="queryParams" :label-width="80" label-position="left" :inline="true">
+          <Form-item label="选择时间段:" :label-width="80" prop="name">
+            <Date-picker ref="historyDateRange" v-model="historyDateRangeValue" type="daterange" format="yyyy-MM-dd" @on-ok="historyDateChange" confirm placement="bottom-start" placeholder="选择时间" style="width: 200px"></Date-picker>
+          </Form-item>
+          <Form-item :label-width="60" label="楼栋:" prop="cardId">
+            <Select v-model="queryParams.floor" @on-change="getLock(1)" filterable>
+                <Option value="" label="全部"></Option>
+                <Option v-for="floor in floorDatass" :value="floor.id">{{floor.name}}</Option>
+              </Select>
+          </Form-item>
+        </Form>
       <Table ref="tableB" :columns="columnsB" :data="tableLock" stripe border></Table>
     </div>
   </div>
@@ -96,7 +104,14 @@ export default {
       active: '0',
       resourceTab: 'current',
       dateRangeValue: [], // 日历控件
+      historyDateRangeValue: [], // 日历控件
       editInfor: {}, // 表单详情
+      floorDatass: [],
+      queryParams: {
+        start_time: '',
+        end_time: '',
+        floor: ''
+      },
       formData: {
         id: '',
         door_number: '',
@@ -277,6 +292,7 @@ export default {
       } else if (name == 'source') {
         this.getSource();
       } else if (name == 'lock') {
+        this.getFloor222();
         this.getLock();
       }
     },
@@ -284,8 +300,8 @@ export default {
   created() {
     this.active = 'info';
     this.$store.commit('breadcrumb', [{
-      name: '人员管理',
-      href: '/members'
+      name: '门锁管理',
+      href: '/doorlock'
     }]);
   },
   methods: {
@@ -301,6 +317,11 @@ export default {
       const curDateRange = this.$refs.dateRange.formattingDate(this.dateRangeValue);
       this.formData.start_time = curDateRange[0];
       this.formData.end_time = curDateRange[1];
+    },
+    historyDateChange(dateRange) {
+      const curDateRange = this.$refs.historyDateRange.formattingDate(this.historyDateRangeValue);
+      this.queryParams.start_time = curDateRange[0];
+      this.queryParams.end_time = curDateRange[1];
     },
     menuSelect(name) {
       this.active = name;
@@ -336,11 +357,21 @@ export default {
         this.tableSource_ = res.data || [];
       })
     },
-    getLock() {
-      this.$lodash.api(this, 'doorlockHistory', {
-        uid: this.uid
+    getFloor222(){
+      this.$apis.doorlockFloor({
+        lock: this.editInfor.id
       }).then(res => {
-        this.tableLock = res.data.data || [];
+        this.floorDatass = res.data;
+        console.log(this.floorDatass)
+      })
+    },
+    handleSearch() {
+      this.getLock();
+    },
+    getLock() {
+      this.queryParams.uid =  this.uid;
+      this.$apis.doorlockHistory(this.queryParams).then(res => {
+        this.tableLock = res.data || [];
       })
     },
     locationEdit(location) {

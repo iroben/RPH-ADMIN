@@ -210,3 +210,33 @@ Mock.mock(aipurl_.doorlockSource, {
     'pages|1-15': 1
   }
 });
+
+Mock.mock(aipurl_.doorlockFloor, {
+  code: 1,
+  'data|2-4': [{
+    id: '@id',
+    'name|1': ['A栋311', 'B栋311', 'C栋311']
+  }],
+});
+
+Mock.mock(aipurl_.doorlockHistory, {
+  code: 1,
+  'data|2-4': [{
+    id: '@id',
+    name: '张晓明',
+    open_time: '@datetime',
+    status: 1,
+    status_msg: '开门',
+    way: '指纹开锁'
+  }],
+  page: {
+    'total|1-15': 1,
+    'page|1-15': 1,
+    'cur|1-10': 1,
+    pagesize: 3,
+    'pages|1-15': 1
+  }
+});
+
+
+
