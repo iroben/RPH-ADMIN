@@ -65,16 +65,22 @@
           <Form-item label="审核意见" prop="sugestion">
             <Input v-model="formData.sugestion" type="textarea" :autosize="{minRows: 5,maxRows: 8}" placeholder="请输入..."></Input>
           </Form-item>
-          <!--                <Form-item label="用户头像" class="avatar-list">
-                        <div class="img-long" v-if="formData.avatar">
-                            <img :src="formData.avatar">
-                        </div>
-                        <vue-core-image-upload text="上传头像" cropRatio="1:1" @uploaded="imageUploaded">
-                        </vue-core-image-upload>
-                    </Form-item> -->
+          <Form-item label="用户头像" class="avatar-list">
+            <div class="img-long" v-if="formData.avatar">
+              <img :src="formData.avatar">
+            </div>
+            <vue-core-image-upload text="上传头像" cropRatio="1:1" @uploaded="imageUploaded">
+            </vue-core-image-upload>
+          </Form-item>
+          <div class="form-title">
+            <Icon type="ios-navigate"></Icon>房源位置:
+          </div>
+          <Form-item label="位置" prop="location">
+            <MchooseLocation v-model="formData.location" :max="4"></MchooseLocation>
+          </Form-item>
           <Form-item label="">
-            <Button size="large" type="primary" icon="checkmark-circled" @click="handleSubmit('formData')">提交</Button>
-            <Button size="large" type="ghost" icon="refresh" @click="handleReset('formData')" style="margin-left: 8px">重置</Button>
+            <Button type="primary" icon="checkmark-circled" @click="handleSubmit('formData')">提交</Button>
+            <Button icon="refresh" @click="handleReset('formData')" style="margin-left: 8px">重置</Button>
           </Form-item>
           </Col>
         </Row>
@@ -82,23 +88,28 @@
         </Row>
       </Form>
     </div>
-    <div style="margin-left: 200px;" v-if="active == 'location'">
-      <div span="12" v-for="item in locations">
-        <Card style="margin-bottom: 15px;">
-          <p slot="title">
-            <Icon type="android-time"></Icon>
-            入住: {{item.time}}
-          </p>
-          <span slot="extra">
-                      <Icon type="location"></Icon>
-                      {{item.status_msg}}
-                  </span>
+    <Row :gutter="20" style="margin-left: 200px;" v-if="active == 'location'">
+      <Col span="12" v-for="item in locations">
+      <Card style="margin-bottom: 15px;">
+        <p slot="title">
+          <Icon type="android-time"></Icon>
+          入住时间: {{item.start_time}}&ensp;至&ensp;{{item.end_time}}
+        </p>
+        <span slot="extra">
+              <Icon type="location"></Icon>
+              {{item.status_msg}}
+          </span>
+        <div class="location-show">
           <span v-if="item.status == 0">{{item.location_msg}}</span>
           <MchooseLocation style=" flaot: left; margin-bottom: 10px;" v-if="item.status == 1" v-model="item.location" :max="4"></MchooseLocation>
-          <Button v-if="item.status == 1" type="error" @click="locationEdit(item.location)">编辑位置</Button>
-        </Card>
-      </div>
-    </div>
+        </div>
+        <div>
+          <Button style="margin-right: 8px;" v-if="item.status == 1" type="error" icon="checkmark-circled" @click="locationEdit(item.location)">保存</Button>
+          <Button type="link" icon="eye" @click="goSourceView(item.id)">查看</Button>
+        </div>
+      </Card>
+      </Col>
+    </Row>
     <div style="margin-left: 200px;" v-if="active == 'family'">
       <TableScoller>
         <Table ref="tableA" :columns="columnsA" @on-row-dblclick="goEdit" :data="tableFamily" stripe border></Table>
@@ -148,6 +159,11 @@ export default {
         align: 'center',
         width: 80
       }, {
+        title: '身份',
+        key: 'relation',
+        align: 'center',
+        width: 80
+      }, {
         title: '出生日期',
         key: 'birth',
         width: 110,
@@ -188,6 +204,12 @@ export default {
       columnsB: [{
         title: '姓名',
         key: 'name'
+      }, {
+        title: '房号',
+        key: 'house_number'
+      }, {
+        title: '入住时间',
+        key: 'start_time'
       }, {
         title: '操作时间',
         key: 'open_time'
@@ -292,43 +314,52 @@ export default {
         }
       });
     },
+    goSourceView(id) {
+      this.$router.push({
+        'name': 'project.edit',
+        'params': {
+          id: id
+        }
+      })
+    },
     menuSelect(name) {
       this.active = name;
     },
     getInfo() {
-      this.$lodash.api(this, 'membersInfo', {
+      this.$apis.membersInfo({
         uid: this.uid
       }).then(res => {
         this.editInfor = res.data;
         this.dateValue = this.editInfor.birth;
         this.$lodash.assign(this.formData, this.editInfor);
-        this.$store.commit('tabChange', {name: this.$route.name, title: '编辑人员:' + this.editInfor.name});
+        this.$store.commit('tabChange', { name: this.$route.name, title: '编辑人员:' + this.editInfor.name });
+        setTimeout(() => {
+          this.$store.commit('metaName', '编辑人员-' + this.editInfor.house_number);
+        })
+
       })
     },
     getLocation() {
-      this.$lodash.api(this, 'membersLocation', {
+      this.$apis.membersLocation({
         uid: this.uid
       }).then(res => {
         this.locations = res.data;
       })
     },
     getFamily() {
-      // this.$lodash.api(this, 'membersFamily', {
-      //   uid: this.uid
-      // }).then(res => {
-      //   this.tableFamily = res.data.data || [];
-      // })
       this.$apis.membersFamily({
         uid: this.uid
       }).then(res => {
+        console.log(res)
         this.tableFamily = res.data || [];
       })
     },
     getLock() {
-      this.$lodash.api(this, 'membersLockHistory', {
+      this.$apis.membersLockHistory({
         uid: this.uid
       }).then(res => {
-        this.tableLock = res.data.data || [];
+        console.log(res)
+        this.tableLock = res.data || [];
       })
     },
     locationEdit(location) {
@@ -389,6 +420,15 @@ export default {
 <style scoped>
 .ivu-menu-item-group-title {
   display: none;
+}
+
+.location-show {
+  display: block;
+  height: 42px;
+}
+
+.location-show span {
+  line-height: 42px;
 }
 
 </style>

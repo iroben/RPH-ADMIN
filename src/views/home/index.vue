@@ -54,25 +54,6 @@
       </div>
       </Col>
     </Row>
-    <Row>
-      <Card style="margin-top: 20px; height: 68px;">
-          <Form ref="formSearch" :model="formSearch" label-width="80" label-position="left" :inline="true">
-            <Form-item label="姓名:" label-width="50" prop="name">
-              <Input v-model="formSearch.name" placeholder="请输入姓名"></Input>
-            </Form-item>
-            <Form-item label="手机号码:" prop="phone">
-              <Input v-model="formSearch.phone" placeholder="请输入手机号码"></Input>
-            </Form-item>
-            <Form-item label="身份证号码:" prop="cardId">
-              <Input v-model="formSearch.cardId" placeholder="请输入身份证号码"></Input>
-            </Form-item>
-            <Form-item label-width="1" label="" prop="cardId">
-              <Button type="primary" shape="circle" style="margin-right: 10px;" icon="search">快速查询</Button>
-              <Button shape="circle" icon="refresh" @click="handleReset('formSearch')"></Button>
-            </Form-item>
-          </Form>
-        </Card>
-    </Row>
     <Row :gutter="24" style="margin-top: 20px;">
       <Col span="24">
       <Tabs v-model="tabName" :animated="false">
@@ -96,6 +77,24 @@
           <div class="pagination">
             <Page :total="page.total" :current="page.cur" :page-size="page.pagesize" show-elevator show-total></Page>
           </div>
+        </Tab-pane>
+        <Tab-pane label="快速查找" name="search" icon="search">
+          <Form ref="formSearch" :model="formSearch" label-width="80" label-position="left" :inline="true">
+            <Form-item label="姓名:" label-width="50" prop="name">
+              <Input v-model="formSearch.name" placeholder="请输入姓名"></Input>
+            </Form-item>
+            <Form-item label="手机号码:" prop="phone">
+              <Input v-model="formSearch.phone" placeholder="请输入手机号码"></Input>
+            </Form-item>
+            <Form-item label="身份证号码:" prop="cardId">
+              <Input v-model="formSearch.cardId" placeholder="请输入身份证号码"></Input>
+            </Form-item>
+            <Form-item label-width="1" label="" prop="cardId">
+              <Button type="primary" shape="circle" @click="handleSearch" style="margin-right: 10px;" icon="search">快速查询</Button>
+              <Button shape="circle" icon="refresh" @click="handleReset('formSearch')"></Button>
+            </Form-item>
+          </Form>
+          <Table ref="searchTable" :columns="searchColumns" :data="searchTableData" stripe></Table>
         </Tab-pane>
       </Tabs>
       </Col>
@@ -136,6 +135,7 @@ export default {
       todoTableData: [],
       newsTableData: [],
       filesTableData: [],
+      searchTableData: [],
       todoColumns: [{
         type: 'selection',
         width: 60,
@@ -296,6 +296,63 @@ export default {
             })
           ]);
         }
+      }],
+      searchColumns: [{
+        title: '姓名',
+        key: 'name',
+        className: 'avatarImg',
+        width: 100
+      }, {
+        title: '房号',
+        key: 'house_number',
+        align: 'center',
+        className: 'avatarImg',
+        width: 100
+      }, {
+        title: '性别',
+        key: 'gender',
+        align: 'center',
+        width: 80
+      }, {
+        title: '出生日期',
+        key: 'birth',
+        width: 110,
+        align: 'center'
+      }, {
+        title: '身份证号',
+        key: 'card_id',
+        width: 180,
+        align: 'center'
+      }, {
+        title: '工作单位',
+        key: 'org',
+      }, {
+        title: '手机号码',
+        key: 'phone',
+        width: 120,
+      }, {
+        title: '门锁权限',
+        key: 'door_status',
+        align: 'center'
+      }, {
+        title: '操作',
+        key: 'address',
+        width: 100,
+        align: 'center',
+        render: (h, params) => {
+          const row = params.row;
+          return this.$lodash.renderButtonGroup(h, params, [{
+            icon: 'edit',
+            click: () => {
+              this.$router.push({
+                'name': 'members.edit',
+                'params': {
+                  id: row.id
+                }
+              });
+            }
+          }])
+        }
       }]
     }
   },
@@ -303,27 +360,17 @@ export default {
 
   },
   methods: {
+    handleSearch() {
+      this.$apis.memberSearch(this.formSearch).then(res => {
+        this.searchTableData = res.data;
+      })
+    },
     handleReset(name) {
       this.$refs[name].resetFields();
     }
   },
   created() {
     this.$store.commit('breadcrumb', []);
-    // this.$Notice.warning({
-    //   title: '修改部分意见',
-    //   desc: '1.移除首页动态与待办事项重复<br>2.首页添加消息通知<br>3.人员&房源管理添加复选框与批量删除操作',
-    //   duration: 0
-    // });
-    // this.$Notice.success({
-    //   title: '新增',
-    //   desc: '1.门锁管理模块<br>2.角色管理模块<br>3.账号管理模块<br>4.代码管理模块',
-    //   duration: 0
-    // });
-    // this.$Notice.info({
-    //   title: '下一步实现',
-    //   desc: '1.**业务办理模块<br>2.表格组件添加双击操作<br>3.高级查询与自定义查找<br>4.添加全局Breadcrumb导航组件',
-    //   duration: 0
-    // });
     this.todoTableData = this.$lodash.testData({
       title: '半山公寓人员信息审核',
       type: '人员管理',
@@ -344,6 +391,7 @@ export default {
     })
   }
 }
+
 </script>
 <style type="text/css">
 .card-info {
@@ -410,6 +458,8 @@ export default {
 
 
 
+
+
 /*hover*/
 
 .card-info:hover .homecard {
@@ -426,4 +476,5 @@ export default {
 .card-info-mask {
   transition: all 2s ease-in-out;
 }
+
 </style>

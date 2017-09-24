@@ -23,7 +23,7 @@
                                 {{item.name}}
                             </BreadcrumbItem>
                             <BreadcrumbItem>
-                                {{title}}
+                                {{metaName}}
                             </BreadcrumbItem>
                         </Breadcrumb>
                     </div>
@@ -60,8 +60,8 @@ export default {
         siteName() {
             return this.$store.getters.siteName;
         },
-        title() {
-            return this.$route.meta.title || this.siteName;
+        metaName() {
+            return this.$store.getters.metaName;
         },
         userEmail() {
             return this.$store.getters.userEmail;

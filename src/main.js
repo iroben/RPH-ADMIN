@@ -115,11 +115,13 @@ const siteName = store.getters.siteName;
 // 路由进入与退出
 router.beforeEach((to, from, next) => {
     document.title = siteName + '-' + to.meta.title || siteName;
+
     iView.LoadingBar.start();
     next();
 });
 
-router.afterEach(() => {
+router.afterEach((to) => {
+    store.commit('metaName', to.meta.title || siteName);
     store.commit('breadcrumb', []);
     iView.LoadingBar.finish();
     window.scrollTo(0, 0);

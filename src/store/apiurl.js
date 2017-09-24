@@ -8,8 +8,9 @@ export default {
     'logout': 'POST,/account/logout',
     'menus': 'GET,/system/menu',
     'modifyPasswd': 'POST,/account/modifyPasswd',
-    'searchOrg': 'GET,/system/org/list',
     'config': 'GET,/system/config', // 获取配置信息
+    
+    'memberSearch': 'GET,/member/search',// 首页查找
 
     // 项目
     'projectTree': 'GET,/gessss', // 获取项目树
@@ -21,11 +22,11 @@ export default {
     'membersByFloor': 'GET,/member/byfloor',
     'membersDelete': 'POST,/del',
     'addMembers': 'POST,/test', // 添加人员
-    'membersInfo': 'GET,/info',
-    'membersLocation': 'GET,/info',
+    'membersInfo': 'GET,/member/info',
+    'membersLocation': 'GET,/members/location',
     'membersLocationEdit': 'POST,/info',
     'membersFamily': 'GET,/membersFamily/info',
-    'membersLockHistory': 'GET,/info',
+    'membersLockHistory': 'GET,/members/history',
 
 
     // 房源管理

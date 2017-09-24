@@ -33,9 +33,11 @@
         <Row class="tableTools-inner">
           <Col span="19">
           <Form ref="queryForm" :label-width="70" label-position="left" inline>
-            <Form-item label="房源类别:" :label-width="70" prop="type">
+            <Form-item label="人员类别:" :label-width="70" prop="type">
               <Select v-model="queryParams.type" @on-change="getData(1)" filterable>
                 <Option value="" label="全部"></Option>
+                <Option value="1" label="申请人"></Option>
+                <Option value="2" label="非申请人"></Option>
               </Select>
             </Form-item>
             <Form-item label="户型:" :label-width="40" prop="huxing">
@@ -66,34 +68,29 @@
         </div>
       </template>
       <template v-if="!toggleStatus">
-        <Tabs type="card" value="all" @on-click="changeCardTab">
-          <TabPane label="全部" name="all">
-          </TabPane>
-          <TabPane v-for="tabItem in cardData.tabs" :label="tabItem.title" :name="tabItem.name">
-          </TabPane>
-        </Tabs>
         <table class="cardtable" style="width: 100%;">
-            <tr v-for="item in cardData.list">
-              <th width="90" style="font-size:16px;"><Icon type="ios-navigate" style="margin-right: 5px;"></Icon>{{item.floor}}层</th>
-              <td >
-                <div class="houseitem" v-for="houseItem in item.house">
-                  <div class="houseitem-numner" :class="{'houseitem-empty' : houseItem.members.length <= 0}">
-                    <span class="houseitem-numner-l"><Icon type="ios-navigate" style="margin-right: 5px;"></Icon>房号:{{houseItem.number}}</span>
-                    <span class="houseitem-numner-r" v-if="houseItem.members.length > 0">{{houseItem.members.length}}人</span>
-                    <span class="houseitem-numner-r" v-if="houseItem.members.length <= 0">空置</span>
-                  </div>
-                  <div class="houseitem-members">
-                    <Tag v-for="(person, index) in houseItem.members">{{person.name + '' + (index > 0 ? '' : '(房主)')}}</Tag>
-                  </div>
-                  <div class="houseitem-bot">
-                    <Button icon="android-contacts" long @click="goFamily">
-                      <span>管理人员</span>
-                    </Button>
-                  </div>
+          <tr v-for="item in cardData">
+            <th width="90" style="font-size:16px;">
+              <Icon type="ios-navigate" style="margin-right: 5px;"></Icon>{{item.floor}}层</th>
+            <td>
+              <div class="houseitem" v-for="houseItem in item.house">
+                <div class="houseitem-numner" :class="{'houseitem-empty' : houseItem.members.length <= 0}">
+                  <span class="houseitem-numner-l"><Icon type="ios-navigate" style="margin-right: 5px;"></Icon>房号:{{houseItem.number}}</span>
+                  <span class="houseitem-numner-r" v-if="houseItem.members.length > 0">{{houseItem.members.length}}人</span>
+                  <span class="houseitem-numner-r" v-if="houseItem.members.length <= 0">空置</span>
                 </div>
-              </td>
-            </tr>
-          </table>
+                <div class="houseitem-members">
+                  <Tag type="dot" color="green" v-for="(person, index) in houseItem.members">{{person.name + '' + (index > 0 ? '' : '(房主)')}}</Tag>
+                </div>
+                <div class="houseitem-bot">
+                  <Button icon="android-contacts" long @click="goFamily">
+                    <span>管理人员</span>
+                  </Button>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </table>
         <div class="pagination" v-if="page.total">
           <Page :total="cardPage.total" :current="cardPage.cur" @on-change="getCardData" :page-size="pageSize" show-elevator show-total></Page>
         </div>
@@ -251,7 +248,7 @@ export default {
         door_status: 'open'
       }, 3);
     },
-    getCardData(page){
+    getCardData(page) {
       this.$apis.membersByFloor({
         page: page || this.cardPage.cur,
         floor: this.cardquery || '',
@@ -261,14 +258,14 @@ export default {
         console.log(this.cardData)
       })
     },
-    changeCardTab(name){
+    changeCardTab(name) {
       this.cardquery = name;
       this.getCardData(1);
     },
     changeToggle() {
       this.toggleStatus = this.toggleStatus == 0 ? 1 : 0;
       this.cardquery = '';
-      if(!this.toggleStatus){
+      if (!this.toggleStatus) {
         this.getCardData(1);
       }
     },
@@ -359,51 +356,63 @@ export default {
   background-color: #fafafa !important;
 }
 
-.cardtable{
-  border:1px solid #ddd;
+.cardtable {
+  border: 1px solid #ddd;
   border-collapse: collapse;
 }
-.cardtable th, .cardtable td{
-border: 1px solid #ddd;
-padding: 5px;
+
+.cardtable th,
+.cardtable td {
+  border: 1px solid #ddd;
+  padding: 5px;
 }
-.houseitem{
+
+.houseitem {
   float: left;
-  width:200px;
+  width: 200px;
   margin: 5px;
   background-color: #eee;
   border-radius: 2px;
   overflow: hidden;
 }
-.houseitem-numner{
+
+.houseitem-numner {
   display: block;
   background-color: #2d8cf0;
   color: #fff;
   font-size: 14px;
   padding: 6px 10px;
-  width:100%;
+  width: 100%;
   height: 33px;
 }
 
-.houseitem-members{
+.houseitem-members {
   padding: 10px;
-  height: 70px;
+  height: 50px;
 }
-.houseitem-bot{
+.houseitem-members .ivu-tag{
+  width: 100%;
+  text-align: center;
+}
+
+.houseitem-bot {
   padding: 10px;
 }
-.houseitem-numner-l{
+
+.houseitem-numner-l {
   float: left;
   font-weight: 700;
 }
-.houseitem-numner-r{
+
+.houseitem-numner-r {
   font-size: 12px;
-  background-color: rgba(0,0,0,0.3);
+  background-color: rgba(0, 0, 0, 0.3);
   border-radius: 10px;
   float: right;
   padding: 0 8px;
 }
-.houseitem-empty{
+
+.houseitem-empty {
   background-color: #ed3f14;
 }
 
