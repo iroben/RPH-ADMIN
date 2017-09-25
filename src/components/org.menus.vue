@@ -5,12 +5,12 @@
         </div>
         <Menu theme="light" @on-select="menusClick" :open-names="['213']" width="auto" :accordion="true">
             <Menu class="secondLevel" theme="light" width="auto" :accordion="true">
-                <Submenu :name="item.id" v-for="item in menus">
+                <Submenu :key="item.id" :name="item.id" v-for="item in menus">
                     <template slot="title">
                         <Icon type="flag"></Icon>
                         {{item.name}}
                     </template>
-                    <Menu-item :name="item.id + '-' + sub.id" v-for="sub in item.child">{{sub.name}}</Menu-item>
+                    <Menu-item :key="item.id" :name="item.id + '-' + sub.id" v-for="sub in item.child">{{sub.name}}</Menu-item>
                 </Submenu>
             </Menu>
         </Menu>

@@ -82,7 +82,7 @@
       </Form>
     </div>
     <Row :gutter="20" style="margin-left: 200px;" v-if="active == 'location'">
-      <Col span="12" v-for="item in locations">
+      <Col span="12" :key="item.id" v-for="item in locations">
       <Card style="margin-bottom: 15px;">
         <p slot="title">
           <Icon type="android-time"></Icon>

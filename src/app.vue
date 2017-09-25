@@ -7,7 +7,7 @@
     <div class="layout" v-if="!isLogin">
       <div class="layout-content">
         <Tabs class="mainTab" ref="mainTab" v-model="curActiveTab" type="card" closable :animated="false" @on-tab-remove="handleTabRemove">
-          <Tab-pane :class="tab.name" :closable="tab.name != 'home.index'" v-if="tab" v-for="(tab, index) in mainTabs" :name="tab.name+tab.random" :label="tab.title"></Tab-pane>
+          <Tab-pane :class="tab.name" :key="tab.name+tab.random" :closable="tab.name != 'home.index'" v-if="tab" v-for="(tab, index) in mainTabs" :name="tab.name+tab.random" :label="tab.title"></Tab-pane>
         </Tabs>
         <div style="display:none;">{{activeTabName}}
           <br> {{curActiveTab}}</div>
@@ -20,7 +20,7 @@
               <BreadcrumbItem href="/" v-if="routeName != 'home.index'">
                 <Icon type="ios-home-outline"></Icon> 首页
               </BreadcrumbItem>
-              <BreadcrumbItem v-for="item in breadcrumb" :href="item.href">
+              <BreadcrumbItem :key="item.href" v-for="item in breadcrumb" :href="item.href">
                 {{item.name}}
               </BreadcrumbItem>
               <BreadcrumbItem>

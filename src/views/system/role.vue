@@ -28,7 +28,7 @@
                   <p>暂无权限</p>
                 </div>
                 <div class="role-list" v-if="role.range.length">
-                  <Tag v-if="role.range.length" color="blue" v-for="(item, index) in role.range" @on-close="handleClose(role.range, index)">
+                  <Tag v-if="role.range.length" color="blue" :key="index" v-for="(item, index) in role.range" @on-close="handleClose(role.range, index)">
                     {{roleSelect[item]}}
                   </Tag>
                 </div>

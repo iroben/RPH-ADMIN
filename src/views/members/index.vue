@@ -80,7 +80,7 @@
                   <span class="houseitem-numner-r" v-if="houseItem.members.length <= 0">空置</span>
                 </div>
                 <div class="houseitem-members">
-                  <Tag type="dot" color="green" v-for="(person, index) in houseItem.members">{{person.name + '' + (index > 0 ? '' : '(房主)')}}</Tag>
+                  <Tag type="dot" color="green" key="person.id" v-for="(person, index) in houseItem.members">{{person.name + '' + (index > 0 ? '' : '(房主)')}}</Tag>
                 </div>
                 <div class="houseitem-bot">
                   <Button icon="android-contacts" long @click="goFamily">

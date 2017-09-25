@@ -82,7 +82,7 @@
           <Form-item :label-width="60" label="楼栋:" prop="cardId">
             <Select v-model="queryParams.floor" @on-change="getLock(1)" filterable>
                 <Option value="" label="全部"></Option>
-                <Option v-for="floor in floorDatass" :value="floor.id">{{floor.name}}</Option>
+                <Option :key="floor.id" v-for="floor in floorData" :value="floor.id">{{floor.name}}</Option>
               </Select>
           </Form-item>
         </Form>
@@ -99,7 +99,7 @@ export default {
       dateRangeValue: [], // 日历控件
       historyDateRangeValue: [], // 日历控件
       editInfor: {}, // 表单详情
-      floorDatass: [],
+      floorData: [],
       queryParams: {
         start_time: '',
         end_time: '',
@@ -285,7 +285,7 @@ export default {
       } else if (name == 'source') {
         this.getSource();
       } else if (name == 'lock') {
-        this.getFloor222();
+        this.getFloor();
         this.getLock();
       }
     },
@@ -350,12 +350,11 @@ export default {
         this.tableSource_ = res.data || [];
       })
     },
-    getFloor222(){
+    getFloor(){
       this.$apis.doorlockFloor({
         lock: this.editInfor.id
       }).then(res => {
-        this.floorDatass = res.data;
-        console.log(this.floorDatass)
+        this.floorData = res.data;
       })
     },
     handleSearch() {
