@@ -79,8 +79,8 @@
           </div>
         </Tab-pane>
         <Tab-pane label="快速查找" name="search" icon="search">
-          <Form ref="formSearch" :model="formSearch" label-width="80" label-position="left" :inline="true">
-            <Form-item label="姓名:" label-width="50" prop="name">
+          <Form ref="formSearch" :model="formSearch" :label-width="80" label-position="left" :inline="true">
+            <Form-item label="姓名:" :label-width="50" prop="name">
               <Input v-model="formSearch.name" placeholder="请输入姓名"></Input>
             </Form-item>
             <Form-item label="手机号码:" prop="phone">
@@ -89,7 +89,7 @@
             <Form-item label="身份证号码:" prop="cardId">
               <Input v-model="formSearch.cardId" placeholder="请输入身份证号码"></Input>
             </Form-item>
-            <Form-item label-width="1" label="" prop="cardId">
+            <Form-item :label-width="1" label="" prop="cardId">
               <Button type="primary" shape="circle" @click="handleSearch" style="margin-right: 10px;" icon="search">快速查询</Button>
               <Button shape="circle" icon="refresh" @click="handleReset('formSearch')"></Button>
             </Form-item>
