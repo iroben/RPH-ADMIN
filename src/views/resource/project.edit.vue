@@ -263,7 +263,9 @@ export default {
       }).then(res => {
         this.editInfor = res.data;
         this.$lodash.assign(this.formData, this.editInfor);
-        this.$store.commit('tabChange', { name: this.$route.name, title: '编辑项目/楼栋/房源:' + this.editInfor.name });
+        this.$store.commit('updateActiveTab', {
+          title: '编辑项目/楼栋/房源:' + this.editInfor.name
+        });
       })
     },
     rowClassName(row) {

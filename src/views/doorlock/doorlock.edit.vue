@@ -326,7 +326,9 @@ export default {
         this.editInfor = res.data;
         this.dateRangeValue = [this.editInfor.start_time, this.editInfor.end_time];
         this.$lodash.assign(this.formData, this.editInfor);
-        this.$store.commit('tabChange', { name: this.$route.name, title: '编辑门锁:' + this.editInfor.door_number });
+        this.$store.commit('updateActiveTab', {
+          title: '编辑门锁:' + this.editInfor.door_number
+        });
       })
     },
     goDoorLockEdit(row) {

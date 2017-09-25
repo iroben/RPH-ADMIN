@@ -328,6 +328,10 @@ export default {
         this.$store.commit('tabChange', { name: this.$route.name, title: '编辑人员:' + this.editInfor.name });
         setTimeout(() => {
           this.$store.commit('metaName', '编辑人员-' + this.editInfor.house_number);
+          this.$store.commit('updateActiveTab', {
+            title: '编辑人员-' + this.editInfor.name
+          });
+
         })
 
       })

@@ -119,13 +119,15 @@ const mutations = {
     state.tabChange = tab;
   },
   activeTab(state, name) {
-
     const query = lodash.filter(state.mainTabs, (tab) => {
       return tab.name + tab.random == name;
     });
     if(query && query.length > 0){
       state.activeTab = query[0];
     }
+  },
+  updateActiveTab(state, params){
+    state.activeTab = lodash.assign(state.activeTab, params);
   },
   activeTabByNoRandomName(state, name){
     const query = lodash.filter(state.mainTabs, (tab) => {

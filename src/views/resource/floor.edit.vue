@@ -266,6 +266,9 @@ export default {
       }).then(res => {
         this.editInfor = res.data;
         this.$lodash.assign(this.formData, this.editInfor);
+        this.$store.commit('updateActiveTab', {
+          title: '编辑楼栋:' + this.editInfor.name
+        });
       })
     },
     getSource() {
