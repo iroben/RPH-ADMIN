@@ -1,12 +1,5 @@
 <template>
   <div>
-    <div class="tableFuncs">
-      <Button-group shape="circle">
-        <Button type="ghost" icon="ios-undo" @click="goBack">
-          <span>返回</span>
-        </Button>
-      </Button-group>
-    </div>
     <Affix style="float:left">
       <Menu :active-name="active" @on-select="menuSelect" style="width: 180px;">
         <MenuGroup :title="'项目:' + editInfor.name">

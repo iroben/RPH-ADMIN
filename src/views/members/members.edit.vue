@@ -1,12 +1,5 @@
 <template>
   <div>
-    <div class="tableFuncs">
-      <Button-group shape="circle">
-        <Button type="ghost" icon="ios-undo" @click="goBack">
-          <span>返回</span>
-        </Button>
-      </Button-group>
-    </div>
     <Affix style="float:left">
       <Menu :active-name="active" @on-select="menuSelect" style="width: 180px">
         <MenuGroup :title="'人员:' + editInfor.name">
@@ -369,10 +362,6 @@ export default {
       }).then(res => {
         this.$Message.success('编辑成功');
       })
-    },
-    // 返回上一页
-    goBack() {
-      this.$router.go(-1);
     },
     // 提交成功后返回
     submitBack() {

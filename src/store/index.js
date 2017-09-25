@@ -13,10 +13,12 @@ const debug = process.env.NODE_ENV !== 'production';
 
 // states
 const state = {
-  orgId:0,
+  orgId: 0,
   siteName: '房源管理系统',
   metaName: '房源管理系统',
   tabChange: '',
+  activeTab: { 'title': '首页', 'name': 'home.index', 'random': 0 },
+  mainTabs: [{ 'title': '首页', 'name': 'home.index', 'random': 0 }],
   breadcrumb: [],
   metaShow: true,
   basicUrl: config.basicUrl,
@@ -61,6 +63,8 @@ const state = {
 const getters = {
   siteName: state => state.siteName,
   metaName: state => state.metaName,
+  activeTab: state => state.activeTab,
+  mainTabs: state => state.mainTabs,
   tabChange: state => state.tabChange,
   metaShow: state => state.metaShow,
   breadcrumb: state => state.breadcrumb,
@@ -111,10 +115,48 @@ const mutations = {
   metaShow(state, status) {
     state.metaShow = status;
   },
-  tabChange(state, tab){
+  tabChange(state, tab) {
     state.tabChange = tab;
   },
-  breadcrumb(state, breadcrumb){
+  activeTab(state, name) {
+
+    const query = lodash.filter(state.mainTabs, (tab) => {
+      return tab.name + tab.random == name;
+    });
+    if(query && query.length > 0){
+      state.activeTab = query[0];
+    }
+  },
+  activeTabByNoRandomName(state, name){
+    const query = lodash.filter(state.mainTabs, (tab) => {
+      return tab.name == name;
+    });
+    if(query && query.length > 0){
+      state.activeTab = query[0];
+    }
+  },
+  addMainTab(state, tabObj) {
+    state.mainTabs.push(tabObj);
+    const curTab = state.mainTabs[state.mainTabs.length - 1];
+    state.activeTab = curTab;
+  },
+  removeTab(state, name) {
+    const index = lodash.findIndex(state.mainTabs, (tab) => {
+      return tab.name + tab.random == name;
+    })
+    state.mainTabs.splice(index, 1);
+    const curTab = state.mainTabs[state.mainTabs.length - 1];
+    state.activeTab = curTab;
+  },
+  removeActiveTab(state) {
+    const index = lodash.findIndex(state.mainTabs, (tab) => {
+      return tab.name + tab.random == state.activeTab.name + state.activeTab.random;
+    });
+    state.mainTabs.splice(index, 1);
+    const curTab = state.mainTabs[index - 1];
+    state.activeTab = curTab;
+  },
+  breadcrumb(state, breadcrumb) {
     state.breadcrumb = breadcrumb;
   },
   menus(state, menus) {
@@ -135,7 +177,7 @@ const mutations = {
 };
 
 export default new Vuex.Store({
-  modules: { TestApi},
+  modules: { TestApi },
   state,
   getters,
   actions,

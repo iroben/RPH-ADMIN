@@ -1,12 +1,5 @@
 <template>
     <div>
-        <div class="tableFuncs">
-            <Button-group shape="circle">
-                <Button type="ghost" icon="ios-undo" @click="goBack">
-                    <span>返回</span>
-                </Button>
-            </Button-group>
-        </div>
         <Form ref="editForm" :model="formData" :rules="ruleValidate" label-position="right" :label-width="100">
             <Row :gutter="16">
                 <Col span="14" offset="5">
