@@ -1,92 +1,114 @@
 <template>
-    <div> 
-        <div style="margin-top: 20px;">
-            <MchooseLocation class="title-sub" v-model="resource" :max="3" fname="subTree" placement="bottom"></MchooseLocation>
-        </div>
-        <Menu theme="light" @on-select="menusClick" :open-names="['213']" width="auto" :accordion="true">
-            <Menu class="secondLevel" theme="light" width="auto" :accordion="true">
-                <Submenu :key="item.id" :name="item.id" v-for="item in menus">
-                    <template slot="title">
-                        <Icon type="flag"></Icon>
-                        {{item.name}}
-                    </template>
-                    <Menu-item :key="item.id" :name="item.id + '-' + sub.id" v-for="sub in item.child">{{sub.name}}</Menu-item>
-                </Submenu>
-            </Menu>
-        </Menu>
+  <div>
+    <div style="margin-top: 20px;">
+      <div style="display: none;">{{resultIds}}</div>
+      <MchooseLocation class="title-sub" v-model="resource" :max="3" fname="projectTree" placement="bottom"></MchooseLocation>
     </div>
+    <ProjectMenus style="margin-top: 20px;" v-model="menuActive" :list="menus"></ProjectMenus>
+  </div>
 </template>
 <script>
 export default {
-    props: {
-        trigger: {
-            type: String,
-            default: 'hover'
-        },
-        placement: {
-            type: String,
-            default: 'bottom'
-        },
-        area: {
-            type: Array,
-            default () {
-                return [100, 100]
-            }
-        },
-        viewArea: {
-            type: Array,
-            default () {
-                return [200, 200]
-            }
-        },
-        uri: {
-            type: String
-        }
+  props: {
+    trigger: {
+      type: String,
+      default: 'hover'
     },
-    data() {
-        return {
-            menus: [],
-            resource: ''
-        }
+    placement: {
+      type: String,
+      default: 'bottom'
     },
-    watch: {
-        resource(id) {
-            this.getMenus(id);
-        }
+    area: {
+      type: Array,
+      default () {
+        return [100, 100]
+      }
     },
-    created() {
-        this.getMenus();
+    viewArea: {
+      type: Array,
+      default () {
+        return [200, 200]
+      }
     },
-    methods: {
-        getMenus(id) {
-            this.$lodash.api(this, 'thirdTee', {
-                id: id || ''
-            }).then(res => {
-                this.menus = res.data;
-            })
-        },
-        menusClick(){
-            alert(1)
-        }
+    uri: {
+      type: String
     }
+  },
+  data() {
+    return {
+      menuActive: '',
+      menus: [],
+      resource: ''
+    }
+  },
+  computed: {
+    resultIds() {
+      const locationString = this.resource;
+      const projectString = this.menuActive;
+      let locationIds = [];
+      let projectIds = [];
+      let type = 'basic';
+      if (locationIds) {
+        locationIds = locationString.split('-');
+      }
+      if (projectString) {
+        projectIds = projectString.split('-');
+      }
+      if (locationIds.length < 3 && projectIds.length <= 0) {
+        type = 'basic';
+      } else if (locationIds.length >= 3 && projectIds.length <= 0) {
+        type = 'area';
+      } else if (projectIds.length == 1) {
+        type = 'project';
+      } else if (projectIds.length >= 2) {
+        type = 'floor';
+      }
+      this.$emit('onchange', {
+        ids: this.menuActive ? this.resource + '-' + this.menuActive : this.resource,
+        floor: projectIds.length >= 2 ? projectIds[1] : '',
+        project: projectIds.length >= 1 ? projectIds[0] : '',
+        type: type
+      });
+    }
+  },
+  watch: {
+    resource(id) {
+      this.menuActive = '';
+      this.getMenus(id);
+    }
+  },
+  created() {
+    this.getMenus();
+  },
+  methods: {
+    getMenus(id) {
+      this.$apis.projectSubTree({
+        id: id
+      }).then(res => {
+        this.menus = res.data;
+      })
+    }
+  }
 }
+
 </script>
 <style>
 .title-sub .mchoose-location-view {
-    width: 100%;
+  width: 100%;
 }
 
 .firstLevel .ivu-menu-item {
-    padding: 0 !important;
-    border-right: none !important;
+  padding: 0 !important;
+  border-right: none !important;
 }
 
 .firstLevel .stitle {
-    color: #2d8cf0;
-    font-size: 16px;
+  color: #2d8cf0;
+  font-size: 16px;
 }
 
 .secondLevel .ivu-menu-item {
-    padding: 14px 14px 14px 44px !important;
+  padding: 14px 14px 14px 44px !important;
 }
+
 </style>

@@ -15,6 +15,11 @@ import VueCookie from 'vue-cookie';
 import VueCoreImageUpload from './components/avater.upload.vue';
 import rules from './validateRules';
 
+import BaiduMap from 'vue-baidu-map'
+Vue.use(BaiduMap, {
+  // ak 是在百度地图开发者平台申请的密钥 详见 http://lbsyun.baidu.com/apiconsole/key */
+  ak: 'YOUR_APP_KEY'
+})
 
 // Install Global Module
 Vue.use(VueRouter);
@@ -39,12 +44,14 @@ import TableScoller from './components/table.scoller';
 import MchoosePanel from './components/mchoose.panel';
 import MchooseLocation from './components/mchoose.location';
 import OrgMenus from './components/org.menus.vue';
+import ProjectMenus from './components/project.menus.vue';
 Vue.component('TableScoller', TableScoller);
 Vue.component('AvaterView', AvaterView);
 Vue.component('TxtView', TxtView);
 Vue.component('MchoosePanel', MchoosePanel);
 Vue.component('MchooseLocation', MchooseLocation);
 Vue.component('OrgMenus', OrgMenus);
+Vue.component('ProjectMenus', ProjectMenus);
 Vue.component('VueCoreImageUpload', VueCoreImageUpload);
 
 /**------------------------

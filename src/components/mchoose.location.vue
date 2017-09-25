@@ -84,9 +84,9 @@ export default {
         }
     },
     created() {
-        this.$lodash.api(this, this.fname).then(res => {
-          this.data = res.data;
-          this.formatPanels(this.data);
+        this.$apis[this.fname]().then(res => {
+            this.data = res.data;
+            this.formatPanels(this.data);
         })
         
         const default_ = this.value || '0';
@@ -137,6 +137,9 @@ export default {
             }
         },
         chooseItem(item) {
+            if(item.id == 0){
+                this.visible = false;
+            }
             const ids = item.pid + '-' + item.id;
             this.activeItem = item;
             this.active = ids.replace(/^0\-/, '');

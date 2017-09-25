@@ -211,6 +211,24 @@ Mock.mock(aipurl_.doorlockSource, {
   }
 });
 
+Mock.mock(aipurl_.projectSubTree, {
+  code: 1,
+  'data|2-3': [{
+    'id': '@id',
+    'class': 'project',
+    'className|1': '项目',
+    'name|1': ['伴山家园', '四海新城', '小户人家', '前海公寓'],
+    'child|2-3': [{
+      'id': '@id',
+      'class': 'floor',
+      'className': '楼栋',
+      'name|1': ['A栋', 'B栋', 'C栋', 'D栋']
+    }]
+  }]
+});
+
+
+
 Mock.mock(aipurl_.doorlockFloor, {
   code: 1,
   'data|2-4': [{
@@ -238,5 +256,67 @@ Mock.mock(aipurl_.doorlockHistory, {
   }
 });
 
+Mock.mock(aipurl_.mainTree, {
+  code: 1,
+  'data|2-4': [{
+    id: '@id',
+    name: '张晓明',
+    open_time: '@datetime',
+    status: 1,
+    status_msg: '开门',
+    way: '指纹开锁'
+  }],
+  page: {
+    'total|1-15': 1,
+    'page|1-15': 1,
+    'cur|1-10': 1,
+    pagesize: 3,
+    'pages|1-15': 1
+  }
+});
+
+Mock.mock(aipurl_.projectTree, {
+  code: 1,
+  'data|4': [{
+    'id|+1': [0, 1],
+    'className': '省份',
+    'name|+1': ['全部', '广东省', '广西省'],
+    'child|2': [{
+      'id|+1': [0, 1],
+      'className': '市',
+      'name|+1': ['全部', '深圳市'],
+      'child|2': [{
+        'id|+1': [0, 1],
+        'className': '区',
+        'name|+1': ['全部', '宝安区']
+      }]
+    }],
+  }]
+});
+
+Mock.mock(aipurl_.resourceIndex, {
+  code: 1,
+  'data|10-15': [{
+    'id': '@id',
+    'project|1': ['伴山家园', '四海新城', '小户人家', '前海公寓'],
+    'floor|1': ['A栋', 'B栋', 'C栋'],
+    'house_number': '410',
+    'area': '100平米',
+    'house_type': '3室1厅',
+    'count': 20,
+    'rent_date': '@date',
+    'door_number': 'bx1-3123',
+    'door_box_number': 'BXS-sdfsfds',
+    'rent_pirce': '3800元'
+  }],
+  page: {
+    'total|1-15': 1,
+    'page|1-15': 1,
+    'cur|1-10': 1,
+    'pagesize': 3,
+    'pages|1-15': 1
+  }
+});
 
 
+// resourceIndex

@@ -15,9 +15,11 @@ export default {
 
     
     // 项目
-    'projectTree': 'GET,/gessss', // 获取项目树
-    'subTree': 'GET,/subTree', // 获取区
-    'thirdTee': 'GET,/thirdTee', // 获取项目
+    'projectTree': 'GET,/project/gessss', // 获取项目树
+    'projectSubTree': 'GET,/project/projectSubTree', // 获取项目楼栋
+    'subTree': 'GET,/subTree/subTree', // 获取区
+    'thirdTee': 'GET,/thirdTee/thirdTee', // 获取项目
+    'mainTree': 'GET,/project/mainTree', // 获取主项目
 
     // 人员管理
     'members': 'GET,/members/index',
@@ -48,6 +50,7 @@ export default {
     'floorMembers': 'POST,/floor',
     
     // 房源管理
+    'resourceIndex': 'GET,/resource/index',
     'resourceInfo': 'GET,/add',
     'resourceDelete': 'POST,/123',
     'resourceAdd': 'POST,/add',
