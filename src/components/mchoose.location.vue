@@ -9,9 +9,9 @@
             </div>
             <div class="mchoose-location-panel-body clearfix">
                 <div class="clearfix" v-if="curPanel == key" v-for="(panel, key) in panels">
-                    <span :class="{active: isAcitveItem(item)}" v-for="item in panel.list" @click="chooseItem(item)">
-                          {{item.name}}
-                        </span>
+                    <span :class="{active: isAcitveItem(item)}" v-if="panel.list" v-for="item in panel.list" @click="chooseItem(item)">
+                      {{item.name}}
+                    </span>
                 </div>
             </div>
         </div>

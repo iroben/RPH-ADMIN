@@ -170,7 +170,7 @@
           </div>
         </Tab-pane>
         <Tab-pane v-if="chooseParams.type == 'basic'" name="basic" label="项目地图" icon="clipboard">
-          <div v-if="chooseParams.type == 'basic' && tabActive == 'basic'">
+          <div v-if="tabActive == 'basic'">
             <baidu-map class="map" :center="{lng: 116.404, lat: 39.915}" :zoom="15">
             <bm-geolocation anchor="BMAP_ANCHOR_BOTTOM_RIGHT" :showAddressBar="true" :autoLocation="true"></bm-geolocation>
               <bm-marker style="width: 100%; height: 500px;" :position="{lng: 116.404, lat: 39.915}" :dragging="false">
