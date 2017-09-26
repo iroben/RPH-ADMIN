@@ -613,7 +613,7 @@ const actions = {
         end_time: '2018-09-01',
         door_number: 'st213321332',
         primary: 'SKT',
-        box_number: 1,
+        box_number: 'YYsssdf1231',
         passwod: '',
         location: '1,1,1,1'
       }

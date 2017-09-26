@@ -19,11 +19,8 @@
                     <Input v-model="formData.start_time" placeholder="请输入" style="display: none"></Input>
                     <Date-picker ref="dateRange" v-model="dateRangeValue" type="daterange" format="yyyy-MM-dd" @on-ok="dateChange" @on-clear="dateClear" confirm placement="bottom-start" placeholder="有效时间" style="width: 200px"></Date-picker>
                 </Form-item>
-                <Form-item label="选择通讯盒" prop="box_number">
-                    <Select v-model="formData.box_number" placeholder="请选择身份">
-                        <Option :value="1">盒子1</Option>
-                        <Option :value="2">盒子2</Option>
-                    </Select>
+                <Form-item label="通讯盒" prop="box_number">
+                    <Input v-model="formData.box_number" placeholder="请输入"></Input>
                 </Form-item>
                 <Form-item label="门锁密码" prop="passwod">
                     <Input v-model="formData.passwod" placeholder="请输入"></Input>
