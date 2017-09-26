@@ -3,12 +3,8 @@
     <!--  tableFuncs -->
     <div class="tableFuncs">
       <Button-group shape="circle">
-        <Button type="primary" icon="plus-circled" @click="goRouter('members.add')">
-          人员
-        </Button>
-        <Button icon="close" @click="delGroup()">
-          删除
-        </Button>
+        <Button type="primary" icon="plus-circled" @click="goRouter('members.add')"> 人员 </Button>
+        <Button icon="close" @click="delGroup()"> 删除 </Button>
         <Button icon="stats-bars">
           <Dropdown placement="bottom">
             报表输出
@@ -26,40 +22,40 @@
     <div class="header-line"></div>
     <Row :gutter="20">
       <Col span="4">
-      <OrgMenus></OrgMenus>
+      <OrgMenus @onchange="changeMenus"></OrgMenus>
       </Col>
       <Col span="20">
-      <div class="tableTools" style="border: 0;">
-        <Row class="tableTools-inner">
-          <Col span="19">
-          <Form ref="queryForm" :label-width="70" label-position="left" inline>
-            <Form-item label="人员类别:" :label-width="70" prop="type">
-              <Select v-model="queryParams.type" @on-change="getData(1)" filterable>
-                <Option value="" label="全部"></Option>
-                <Option value="1" label="申请人"></Option>
-                <Option value="2" label="非申请人"></Option>
-              </Select>
-            </Form-item>
-            <Form-item label="户型:" :label-width="40" prop="huxing">
-              <Select v-model="queryParams.huxing" @on-change="getData(1)" filterable>
-                <Option value="" label="全部"></Option>
-                <Option :value="key" v-for="(value, key) in huxingList" :key="key" :label="value"></Option>
-              </Select>
-            </Form-item>
-            <Form-item label="" :label-width="1">
-              <Button shape="circle" @click="toggleSearch">高级查询
-                <Icon style="margin-left: 5px;" :type="searchVisible ? 'chevron-up' : 'chevron-down'"></Icon>
-              </Button>
-            </Form-item>
-          </Form>
-          </Col>
-          <Col span="5">
-          <Input icon="search" prop="keyword" v-model="queryParams.keyword" placeholder="工作单位/手机号/姓名" @on-click="getData(1)" @on-enter="getData(1)"></Input>
-          </Col>
-        </Row>
-      </div>
-      <MchoosePanel :visible="searchVisible"></MchoosePanel>
       <template v-if="toggleStatus">
+        <div class="tableTools" style="border: 0;">
+          <Row class="tableTools-inner">
+            <Col span="19">
+            <Form ref="queryForm" :label-width="70" label-position="left" inline>
+              <Form-item label="人员类别:" :label-width="70" prop="type">
+                <Select v-model="queryParams.type" @on-change="getData(1)" filterable>
+                  <Option value="" label="全部"></Option>
+                  <Option value="1" label="申请人"></Option>
+                  <Option value="2" label="非申请人"></Option>
+                </Select>
+              </Form-item>
+              <Form-item label="户型:" :label-width="40" prop="huxing">
+                <Select v-model="queryParams.huxing" @on-change="getData(1)" filterable>
+                  <Option value="" label="全部"></Option>
+                  <Option :value="key" v-for="(value, key) in huxingList" :key="key" :label="value"></Option>
+                </Select>
+              </Form-item>
+              <Form-item label="" :label-width="1">
+                <Button shape="circle" @click="toggleSearch">高级查询
+                  <Icon style="margin-left: 5px;" :type="searchVisible ? 'chevron-up' : 'chevron-down'"></Icon>
+                </Button>
+              </Form-item>
+            </Form>
+            </Col>
+            <Col span="5">
+            <Input icon="search" prop="keyword" v-model="queryParams.keyword" placeholder="手机号/姓名" @on-click="getData(1)" @on-enter="getData(1)"></Input>
+            </Col>
+          </Row>
+        </div>
+        <MchoosePanel :visible="searchVisible"></MchoosePanel>
         <TableScoller>
           <Table ref="table" :columns="columns" :data="tableData" @on-row-click="rowClick" @on-row-dblclick="dbclick" @on-selection-change="selectionChange" stripe border></Table>
         </TableScoller>
@@ -68,24 +64,23 @@
         </div>
       </template>
       <template v-if="!toggleStatus">
-        <table class="cardtable" style="width: 100%;">
+        <table class="cardtable" style="width: 100%; margin-top: 20px;">
           <tr v-for="item in cardData">
             <th width="90" style="font-size:16px;">
               <Icon type="ios-navigate" style="margin-right: 5px;"></Icon>{{item.floor}}层</th>
             <td>
               <div class="houseitem" v-for="houseItem in item.house">
-                <div class="houseitem-numner" :class="{'houseitem-empty' : houseItem.members.length <= 0}">
+                <div class="houseitem-numner" :class="{'houseitem-empty' : houseItem.total <= 0}">
                   <span class="houseitem-numner-l"><Icon type="ios-navigate" style="margin-right: 5px;"></Icon>房号:{{houseItem.number}}</span>
-                  <span class="houseitem-numner-r" v-if="houseItem.members.length > 0">{{houseItem.members.length}}人</span>
-                  <span class="houseitem-numner-r" v-if="houseItem.members.length <= 0">空置</span>
+                  <span class="houseitem-numner-r" v-if="houseItem.total > 0">{{houseItem.total}}人</span>
+                  <span class="houseitem-numner-r" v-if="houseItem.total <= 0">空置</span>
                 </div>
                 <div class="houseitem-members">
-                  <Tag type="dot" color="green" key="person.id" v-for="(person, index) in houseItem.members">{{person.name + '' + (index > 0 ? '' : '(房主)')}}</Tag>
+                  <Tag v-if="houseItem.total > 0" type="dot" color="green">{{houseItem.owner.name + '(房主)'}}</Tag>
                 </div>
                 <div class="houseitem-bot">
-                  <Button icon="android-contacts" long @click="goFamily">
-                    <span>管理人员</span>
-                  </Button>
+                  <Button icon="android-contacts" v-if="houseItem.total <= 0" long @click="goAddOwner(houseItem.location_ids)"> <span>添加人员</span> </Button>
+                  <Button icon="android-contacts" v-if="houseItem.total > 0" long @click="goFamily(houseItem)"> <span>管理人员</span> </Button>
                 </div>
               </div>
             </td>
@@ -97,11 +92,17 @@
       </template>
       </Col>
     </Row>
-    <Modal v-model="modelFamily" title="普通的Modal对话框标题" width="1100">
-      <p slot="header">
-        <Icon type="information-circled"></Icon>
-        <span>B栋311</span>
+    <Modal v-model="modelFamily" width="1100">
+      <p slot="footer">
       </p>
+      <Row>
+        <Col span="12">
+        <strong style="color: red; font-size: 14px;">房号:{{modelItem.number}}</strong>
+        </Col>
+        <Col span="12" style="text-align: right">
+        <Button icon="android-contacts" type="primary" size="small" style="margin-bottom: 10px;" @click="goAddOwner(modelItem.location_ids)">添加人员</Button>
+        </Col>
+      </Row>
       <Table ref="studentTable" :columns="columns" :data="familyData" @on-selection-change="selectionChange" stripe border></Table>
     </Modal>
   </div>
@@ -119,10 +120,12 @@ export default {
         org_id: '',
         huxing: ''
       },
+      chooseParams: {},
       searchVisible: false,
       toggleStatus: 1,
       huxingList: [],
       modelFamily: false,
+      modelItem: '',
       tableData: [], // 表格数据
       cardData: [],
       cardPage: {},
@@ -205,20 +208,26 @@ export default {
     }
   },
   created() {
-
     // 获取户型
-    this.$lodash.api(this, 'getHuxing', {}).then(res => {
+    this.$apis.getHuxing().then(res => {
       this.huxingList = res.data;
-    });
-    this.getCardData(1);
+    })
     // 获取数据
     const curPage = this.$route.query.page || 1;
     this.getData(curPage);
   },
   methods: {
+    changeMenus(parms) {
+      this.chooseParams = parms;
+      if (this.toggleStatus) {
+        this.getData(1);
+      } else {
+        this.getCardData(1);
+      }
+
+    },
     rowClick(params, e) {
-      console.log(params)
-      console.log(e)
+
     },
     dbclick(row) {
       this.goEdit(row.id);
@@ -234,45 +243,38 @@ export default {
         }
       });
     },
-    goFamily() {
+    goFamily(item) {
       this.modelFamily = true;
-      this.familyData = this.$lodash.testData({
-        id: '2222',
-        name: '张晓玲',
-        house_number: 'B栋410',
-        gender: '女',
-        birth: '1991-04-15',
-        card_id: 430726199104155779,
-        org: '北京大学',
-        phone: '18664357434',
-        door_status: 'open'
-      }, 3);
+      this.modelItem = item;
+      this.$apis.membersFamily({
+        id: item.owner.id
+      }).then(res => {
+        this.familyData = res.data
+      })
+    },
+    goAddOwner(location_ids) {
+      this.goRouter('members.add', {}, {
+        location: location_ids
+      })
     },
     getCardData(page) {
       this.$apis.membersByFloor({
         page: page || this.cardPage.cur,
         floor: this.cardquery || '',
+        ids: this.chooseParams.ids
       }).then(res => {
         this.cardData = res.data;
         this.cardPage = res.page;
-        console.log(this.cardData)
       })
-    },
-    changeCardTab(name) {
-      this.cardquery = name;
-      this.getCardData(1);
     },
     changeToggle() {
       this.toggleStatus = this.toggleStatus == 0 ? 1 : 0;
       this.cardquery = '';
-      if (!this.toggleStatus) {
-        this.getCardData(1);
-      }
     },
     // 跳转到指定ROUTER
     goRouter(name, params, query) {
       const params_ = params || {};
-      const query_ = params || {};
+      const query_ = query || {};
       this.$router.push({
         name: name,
         query: query_,
@@ -304,10 +306,9 @@ export default {
     getData(page, forceReset) {
       const Promise = this.$lodash.getTableData(this, {
         methodName: 'members',
-        page: page
-      }, !!forceReset).then(res => {
-        console.log(res)
-      });
+        page: page,
+        ids: this.chooseParams.ids
+      }, !!forceReset);
     },
     // 批量删除Table数据
     delGroup() {
@@ -320,13 +321,13 @@ export default {
           loading: true,
           onOk: () => {
             const ids = this.selectedGroup.join(',');
-            this.$lodash.api(this, 'membersDelete', {
+            this.$apis.membersDelete({
               ids
             }).then((res) => {
               this.$lodash.delTableGroup(this);
               this.clearSelected();
               this.$Modal.remove();
-            }, 1000);
+            });
           }
         });
       }
@@ -339,10 +340,12 @@ export default {
         content: row.name,
         loading: true,
         onOk: () => {
-          setTimeout(res => {
+          this.$apis.membersDelete({
+            ids: row.id
+          }).then((res) => {
             this.$lodash.delTableActive(this, '删除成功');
             this.$Modal.remove();
-          }, 1000)
+          });
         }
       })
     }
@@ -390,7 +393,8 @@ export default {
   padding: 10px;
   height: 50px;
 }
-.houseitem-members .ivu-tag{
+
+.houseitem-members .ivu-tag {
   width: 100%;
   text-align: center;
 }

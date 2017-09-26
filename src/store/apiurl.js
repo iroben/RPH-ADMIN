@@ -30,7 +30,7 @@ export default {
     'membersInfo': 'GET,/member/info',
     'membersLocation': 'GET,/members/location',
     'membersLocationEdit': 'POST,/info',
-    'membersFamily': 'GET,/membersFamily/info',
+    'membersFamily': 'GET,/membersFamily/list', // 家庭成员
     'membersLockHistory': 'GET,/members/history',
 
 

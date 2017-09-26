@@ -65,13 +65,16 @@ Mock.mock(aipurl_.membersByFloor, {
   code: 1,
   'data|2-10': [{
     id: '@id',
+
     'floor|1-100': 1,
     'house|1-10': [{
+      'location_ids': '1-1-1',
       'number|1-100': 1,
-      'members|0-1': [{
+      'total|+1': [0, 10],
+      'owner': {
         id: '@id',
         'name|1': ['小明', '小红', '小花', '小南']
-      }]
+      }
     }]
   }],
   page: {
@@ -316,6 +319,20 @@ Mock.mock(aipurl_.resourceIndex, {
     'pagesize': 3,
     'pages|1-15': 1
   }
+});
+
+Mock.mock(aipurl_.getHuxing, {
+  code: 1,
+  data: {
+    '1': '一室一厅',
+    '2': '两室一厅',
+    '3': '三室一厅',
+  }
+});
+
+Mock.mock(aipurl_.membersDelete, {
+  code: 1,
+  msg: '删除成功'
 });
 
 

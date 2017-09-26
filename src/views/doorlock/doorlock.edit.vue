@@ -31,11 +31,8 @@
           <Form-item label="门锁品牌" prop="primary">
             <Input v-model="formData.primary" placeholder="请输入"></Input>
           </Form-item>
-          <Form-item label="选择通讯盒" prop="box_number">
-            <Select v-model="formData.box_number" placeholder="请选择身份">
-              <Option :value="1">盒子1</Option>
-              <Option :value="2">盒子2</Option>
-            </Select>
+          <Form-item label="通讯盒" prop="box_number">
+              <Input v-model="formData.box_number" placeholder="请输入"></Input>
           </Form-item>
           <Form-item label="门锁号" prop="door_number">
             <Input v-model="formData.door_number" placeholder="请输入"></Input>

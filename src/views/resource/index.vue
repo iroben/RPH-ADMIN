@@ -366,7 +366,7 @@ export default {
     },
     goEdit(id) {
       this.$router.push({
-        'name': 'project.edit',
+        'name': 'resource.edit',
         'params': {
           id
         }
