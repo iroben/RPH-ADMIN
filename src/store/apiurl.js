@@ -9,6 +9,7 @@ export default {
     'menus': 'GET,/system/menu',
     'modifyPasswd': 'POST,/account/modifyPasswd',
     'config': 'GET,/system/config', // 获取配置信息
+    'searchOrg':'GET,/system/org/list',
     
     'memberSearch': 'GET,/member/search',// 首页查找
     
