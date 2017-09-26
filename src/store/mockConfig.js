@@ -277,7 +277,7 @@ Mock.mock(aipurl_.mainTree, {
 
 Mock.mock(aipurl_.projectTree, {
   code: 1,
-  'data|4': [{
+  'data|2': [{
     'id|+1': [0, 1],
     'className': '省份',
     'name|+1': ['全部', '广东省', '广西省'],
