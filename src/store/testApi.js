@@ -571,6 +571,7 @@ const actions = {
       source_name: '伴山家园B323',
       passwod: '123323',
       company: 'SKT',
+      isHistory: 1,
       avalid_date: '2017-08-09 2019-08-09',
       open_status: 1,
       status: 0,
@@ -578,7 +579,7 @@ const actions = {
       last_open: '2017-08-09 08:09:52',
       bind_time: '2017-08-09 08:09:52',
       last_open_user: '张晓明'
-    }, 3);
+    }, 1);
     return {
       code: 1,
       data: {
