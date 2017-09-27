@@ -9,8 +9,8 @@
     <!--  tableFuncs -->
     <div class="tableFuncs">
       <Button-group shape="circle">
-        <Button type="primary" icon="plus-circled" @click="editBox('add')">通讯盒</Button>
-        <Button icon="plus-circled" @click="goAddLock('add')">门锁</Button>
+        <!-- <Button type="primary" icon="plus-circled" @click="editBox('add')">通讯盒</Button> -->
+        <Button type="primary" icon="plus-circled" @click="goAddLock('add')">门锁</Button>
         <Button icon="close">批量删除</Button>
         <Button icon="stats-bars">报表输出</Button>
       </Button-group>
