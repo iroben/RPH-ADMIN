@@ -4,11 +4,12 @@
   </avatarUpload>
 </template>
 <script>
+import uploadUrl from '../store/apiurl.js';
 import avatarUpload from 'vue-core-image-upload';
 export default {
   data() {
     return {
-      docUrl: this.$store.getters.docUrl,
+      docUrl: uploadUrl.upload,
       uploadData: {
         type: 'org',
         crop: 1

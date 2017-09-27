@@ -14,6 +14,15 @@ const url = lodash.forEach(aipurl, (item, key) => {
 // 静态变量
 const CUR_DATE = Mock.mock('@date');
 
+
+// 上传
+Mock.mock(aipurl_.upload, {
+  code: 1,
+  'data': {
+    'url|1': ['https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2729669462,3505178923&fm=27&gp=0.jpg', 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=4036019110,69628737&fm=27&gp=0.jpg', 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=493129893,3752275036&fm=27&gp=0.jpg']
+  }
+});
+
 // 首页查找
 Mock.mock(aipurl_.memberSearch, {
   code: 1,

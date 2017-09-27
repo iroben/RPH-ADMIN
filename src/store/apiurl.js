@@ -11,6 +11,7 @@ export default {
     'config': 'GET,/system/config', // 获取配置信息
     
     'memberSearch': 'GET,/member/search',// 首页查找
+    'upload': 'POST,/upload/file', // 上传
     
 
     
