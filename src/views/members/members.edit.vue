@@ -394,7 +394,7 @@ export default {
           let params = this.$lodash.filterValue(this.formData, this.paramsFilter);
           params.resource = params.resource.replace(/\-/g, ',');
           this.$lodash.api(this, 'addMembers', params).then(res => {
-            this.submitBack();
+            // this.submitBack();
             this.$Message.success('编辑成功');
           });
         }

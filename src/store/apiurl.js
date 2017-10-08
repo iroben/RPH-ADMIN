@@ -12,6 +12,7 @@ export default {
     'searchOrg':'GET,/system/org/list',
     
     'memberSearch': 'GET,/member/search',// 首页查找
+    'upload': 'POST,/upload/file', // 上传
     
 
     

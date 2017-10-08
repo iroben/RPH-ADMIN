@@ -1,16 +1,10 @@
 <template>
   <div>
-  <!--   <ul>
-      <li>门锁编辑, 新开页面</li>
-      <li>基本信息</li>
-      <li>房源信息, 安装时间与结束时间</li>
-      <li>门锁记录</li>
-    </ul>  -->
     <!--  tableFuncs -->
     <div class="tableFuncs">
       <Button-group shape="circle">
-        <Button type="primary" icon="plus-circled" @click="editBox('add')">通讯盒</Button>
-        <Button icon="plus-circled" @click="goAddLock('add')">门锁</Button>
+        <!-- <Button type="primary" icon="plus-circled" @click="editBox('add')">通讯盒</Button> -->
+        <Button type="primary" icon="plus-circled" @click="goAddLock('add')">门锁</Button>
         <Button icon="close">批量删除</Button>
         <Button icon="stats-bars">报表输出</Button>
       </Button-group>
