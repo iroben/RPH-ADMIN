@@ -25,7 +25,7 @@
                 <Icon type="ios-cog" size="24"></Icon>
             </div>
             <Dropdown-menu slot="list">
-                <Dropdown-item name="home">首页</Dropdown-item>
+                <Dropdown-item name="home.index">首页</Dropdown-item>
                 <Dropdown-item name="modify.passwd">修改密码</Dropdown-item>
                 <Dropdown-item name="logout">退出系统</Dropdown-item>
             </Dropdown-menu>

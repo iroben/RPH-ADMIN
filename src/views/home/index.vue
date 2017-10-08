@@ -10,7 +10,7 @@
         </a>
         <Card class="homecard" :bordered="false">
           <h3>房源数</h3>
-          <p>9,380</p>
+          <p>{{statisticsData.houseTotal}}</p>
         </Card>
       </div>
       </Col>
@@ -23,7 +23,7 @@
         </a>
         <Card class="homecard" :bordered="false">
           <h3>空置房源数</h3>
-          <p>2,211</p>
+          <p>{{statisticsData.vacantHouse}}</p>
         </Card>
       </div>
       </Col>
@@ -36,7 +36,7 @@
         </a>
         <Card class="homecard" :bordered="false">
           <h3>住户总数</h3>
-          <p>18,210</p>
+          <p>{{statisticsData.total}}</p>
         </Card>
       </div>
       </Col>
@@ -49,7 +49,7 @@
         </a>
         <Card class="homecard" :bordered="false">
           <h3>新增住户总数(近一个月)</h3>
-          <p>9,380</p>
+          <p>{{statisticsData.addByNearlyMonth}}</p>
         </Card>
       </div>
       </Col>
@@ -106,6 +106,12 @@ export default {
   data() {
     return {
       tabName: 'todo',
+      statisticsData:{
+        houseTotal:0,
+        vacantHouse:0,
+        total:0,
+        addByNearlyMonth:0
+      },
       formSearch: {
         name: '',
         phone: '',
@@ -129,7 +135,6 @@ export default {
       page: {
         total: 15,
         cur: 1,
-        pagesize: 15,
         pagesize: 15
       },
       todoTableData: [],
@@ -357,11 +362,14 @@ export default {
     }
   },
   computed: {
-
+      
   },
   methods: {
     handleSearch() {
-      this.$apis.memberSearch(this.formSearch).then(res => {
+      const ps = this.formSearch;
+      ps.page = this.page.cur;
+      ps.rows = this.page.pagesize;
+      this.$apis.quickQuery(ps).then(res => {
         this.searchTableData = res.data;
       })
     },
@@ -371,7 +379,19 @@ export default {
   },
   created() {
     this.$store.commit('breadcrumb', []);
-    this.todoTableData = this.$lodash.testData({
+    this.$lodash.api(this,'statistics').then(res => {
+      this.statisticsData = res.data;
+    });
+    this.$lodash.api(this,'toDoList',{page:this.page.cur,rows:this.page.pagesize}).then(res => {
+        this.todoTableData = res.data;
+    });
+    this.$lodash.api(this,'msgList',{page:this.page.cur,rows:this.page.pagesize}).then(res => {
+        this.newsTableData = res.data;
+    });
+    this.$lodash.api(this,'docList',{page:this.page.cur,rows:this.page.pagesize}).then(res => {
+        this.filesTableData = res.data;
+    });
+    /*this.todoTableData = this.$lodash.testData({
       title: '半山公寓人员信息审核',
       type: '人员管理',
       created_time: '2017-08-09 08:50'
@@ -389,6 +409,7 @@ export default {
       size: '10MB',
       created_time: '2017-08-09 08:50'
     })
+    */
   }
 }
 

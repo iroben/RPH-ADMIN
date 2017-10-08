@@ -4,17 +4,23 @@
  */
 export default {
     // Common
+    'searchOrg':'GET,/system/org/list',
     'login': 'POST,/account/execLogin',
     'logout': 'POST,/account/logout',
+    
     'menus': 'GET,/system/menu',
     'modifyPasswd': 'POST,/account/modifyPasswd',
     'config': 'GET,/system/config', // 获取配置信息
-    'searchOrg':'GET,/system/org/list',
     
-    'memberSearch': 'GET,/member/search',// 首页查找
-    'upload': 'POST,/upload/file', // 上传
     
+    // 首页
+    'statistics':'GET,/front/statistics',// 统计
+    'toDoList': 'POST,/front/toDoList',// 待办任务
+    'msgList': 'POST,/front/msgList',// 消息通知
+    'docList': 'POST,/front/docList',// 文档管理
+    'quickQuery': 'POST,/front/quickQuery',// 快速查找
 
+    'upload': 'POST,/upload/file', // 上传
     
     // 项目
     'projectTree': 'GET,/project/gessss', // 获取项目树

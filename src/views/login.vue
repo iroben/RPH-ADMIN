@@ -122,7 +122,7 @@ export default {
 
             // 跳转到首页
             this.$router.push({
-              name: 'home'
+              name: 'home.index'
             });
             this.$Message.success('登录成功!');
           });

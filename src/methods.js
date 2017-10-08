@@ -65,7 +65,6 @@ let methods = {
         } else {
             return contxt.$apis[fname](params);
         }
-
     },
     /**
      * [getTableData 获取表格数据]
