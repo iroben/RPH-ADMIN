@@ -11,27 +11,22 @@ const getters = {
 
 // actions
 const actions = {
-  getHuxing({ commit }, params) {
-    return {
-      code: 1,
-      data: {
-        '1': '一室一厅',
-        '2': '两室一厅',
-        '3': '三室一厅',
+  statistics({ commit }, params) {
+      return {
+        code: 1,
+        data: {
+          houseTotal:900,
+          vacantHouse:10,
+          total:1000,
+          addByNearlyMonth:50
+        }
       }
-    }
   },
-  members({ commit }, params) {
+  toDoList({ commit }, params) {
     const data = lodash.testData({
-      id: '33333',
-      name: '张晓明',
-      house_number: 'B栋410',
-      gender: '男',
-      birth: '1991-04-15',
-      card_id: 430726199104155779,
-      org: '深圳大学',
-      phone: '18664357434',
-      door_status: 'open'
+      title: '半山公寓人员信息审核',
+      type: '人员管理',
+      created_time: '2017-08-09 08:50'
     });
     return {
       code: 1,
@@ -46,16 +41,97 @@ const actions = {
       }
     }
   },
-  membersDelete({ commit }, params) {
+  msgList({ commit }, params) {
+    const data = lodash.testData({
+      title: '半山公寓-B322-张晓明添加了家庭成员',
+      type: '添加成员',
+      created_time: '2017-08-11 09:50'
+    });
     return {
       code: 1,
-      msg: '删除成功'
+      data: {
+        data: data,
+        page: {
+          total: 100, // (int) 总条100条
+          page: 1, // (int)当前第1页
+          pagesize: 10, //  (int)每页显示10条
+          pages: 10 // (int) 共10页
+        }
+      }
     }
   },
-  addMembers({ commit }, params) {
+  docList({ commit }, params) {
+    const data = lodash.testData({
+      title: '冰海新城B栋公寓人员表',
+      type: '.excel',
+      size: '10MB',
+      created_time: '2017-08-09 08:50'
+    });
     return {
       code: 1,
-      msg: '添加成功'
+      data: {
+        data: data,
+        page: {
+          total: 100, // (int) 总条100条
+          page: 1, // (int)当前第1页
+          pagesize: 10, //  (int)每页显示10条
+          pages: 10 // (int) 共10页
+        }
+      }
+    }
+  },
+  getHuxing({ commit }, params) {
+    return {
+      code: 1,
+      data: {
+        '1': '一室一厅',
+        '2': '两室一厅',
+        '3': '三室一厅',
+      }
+    }
+  },
+
+  orgTree({ commit }, params) {
+    const data = [{
+      id: 1,
+      className: '省份',
+      name: '广东省',
+      child: [{
+        id: 1,
+        className: '市',
+        name: '深圳市',
+        child: [{
+          id: 1,
+          className: '区',
+          name: '福田区'
+        }, {
+          id: 2,
+          className: '区',
+          name: '宝安区'
+        }]
+      }],
+    }, {
+      id: 2,
+      className: '省份',
+      name: '湖南省',
+      child: [{
+        id: 1,
+        className: '市',
+        name: '长沙市',
+        child: [{
+          id: 1,
+          className: '区',
+          name: '雨花区'
+        }, {
+          id: 2,
+          className: '区',
+          name: '天心区'
+        }]
+      }],
+    }]
+    return {
+      code: 1,
+      data: data
     }
   },
   projectTree({ commit }, params) {
@@ -118,60 +194,20 @@ const actions = {
       data: data
     }
   },
-  subTree({ commit }, params) {
+  projectSubTree({ commit }, params) {
     const data = [{
       id: 1,
-      className: '省份',
-      name: '广东省',
-      child: [{
-        id: 1,
-        className: '市',
-        name: '深圳市',
-        child: [{
-          id: 1,
-          className: '区',
-          name: '福田区'
-        }, {
-          id: 2,
-          className: '区',
-          name: '宝安区'
-        }]
-      }],
-    }, {
-      id: 2,
-      className: '省份',
-      name: '湖南省',
-      child: [{
-        id: 1,
-        className: '市',
-        name: '长沙市',
-        child: [{
-          id: 1,
-          className: '区',
-          name: '雨花区'
-        }, {
-          id: 2,
-          className: '区',
-          name: '天心区'
-        }]
-      }],
-    }]
-    return {
-      code: 1,
-      data: data
-    }
-  },
-  thirdTee({ commit }, params) {
-    const data = [{
-      id: 1,
+      classNo:1,
       className: '项目',
       name: '半山家园',
       child: [{
         id: 1,
+        classNo:2,
         className: '楼栋',
         name: 'A栋'
       }, {
         id: 2,
+        classNo:2,
         className: '楼栋',
         name: 'B栋'
       }]
@@ -181,7 +217,45 @@ const actions = {
       data: data
     }
   },
-  membersInfo({ commit }, params) {
+
+  members({ commit }, params) {
+    const data = lodash.testData({
+      id: '33333',
+      name: '张晓明',
+      house_number: 'B栋410',
+      gender: '男',
+      birth: '1991-04-15',
+      card_id: 430726199104155779,
+      org: '深圳大学',
+      phone: '18664357434',
+      door_status: 'open'
+    });
+    return {
+      code: 1,
+      data: {
+        data: data,
+        page: {
+          total: 100, // (int) 总条100条
+          page: 1, // (int)当前第1页
+          pagesize: 10, //  (int)每页显示10条
+          pages: 10 // (int) 共10页
+        }
+      }
+    }
+  },
+  deleteMembers({ commit }, params) {
+    return {
+      code: 1,
+      msg: '删除成功'
+    }
+  },
+  addMember({ commit }, params) {
+    return {
+      code: 1,
+      msg: '添加成功'
+    }
+  },
+  memberInfo({ commit }, params) {
     return {
       code: 1,
       data: {
@@ -198,7 +272,7 @@ const actions = {
       }
     }
   },
-  membersLocation({ commit }, params) {
+  memberHistorys({ commit }, params) {
     return {
       code: 1,
       data: [{
@@ -222,7 +296,7 @@ const actions = {
       }]
     }
   },
-  membersFamily({ commit }, params) {
+  memberFamilys({ commit }, params) {
     const data = lodash.testData({
       id: '555',
       name: '李双',
@@ -250,34 +324,13 @@ const actions = {
       }
     }
   },
-  membersLocationEdit({ commit }, params) {
+  memberLocationEdit({ commit }, params) {
     return {
       code: 1,
       msg: '编辑成功'
     }
   },
-  membersLockHistory({ commit }, params) {
-    const data = lodash.testData({
-      id: '444',
-      name: '张晓明',
-      open_time: '2017-08-09 08:55',
-      status: 1,
-      status_msg: '开门',
-      way: '指纹开锁'
-    });
-    return {
-      code: 1,
-      data: {
-        data: data,
-        page: {
-          total: 100, // (int) 总条100条
-          page: 1, // (int)当前第1页
-          pagesize: 10, //  (int)每页显示10条
-          pages: 10 // (int) 共10页
-        }
-      }
-    }
-  },
+
   projectInfo({ commit }, params) {
     return {
       code: 1,
@@ -295,7 +348,7 @@ const actions = {
       }
     }
   },
-  projectAdd({ commit }, params) {
+  addProject({ commit }, params) {
     return {
       code: 1,
       msg: '添加成功'
@@ -365,7 +418,7 @@ const actions = {
       }
     }
   },
-  projectFloor({ commit }, params) {
+  projectFloors({ commit }, params) {
     const data = lodash.testData({
       id: '555',
       name: 'B栋',
@@ -402,13 +455,13 @@ const actions = {
       }
     }
   },
-  floorAdd({ commit }, params) {
+  addFloor({ commit }, params) {
     return {
       code: 1,
       msg: '添加成功'
     }
   },
-  floorEdit({ commit }, params) {
+  editFloor({ commit }, params) {
     return {
       code: 1,
       msg: '编辑成功'
@@ -472,7 +525,7 @@ const actions = {
       }
     }
   },
-  floorSource({ commit }, params) {
+  floorResources({ commit }, params) {
     const data = lodash.testData({
       id: '2222',
       project: '伴山家园',
@@ -516,19 +569,19 @@ const actions = {
       }
     }
   },
-  resourceDelete({ commit }, params) {
+  delResources({ commit }, params) {
     return {
       code: 1,
       msg: '删除成功'
     }
   },
-  resourceAdd({ commit }, params) {
+  addResource({ commit }, params) {
     return {
       code: 1,
       msg: '添加成功'
     }
   },
-  resourceEdit({ commit }, params) {
+  editResource({ commit }, params) {
     return {
       code: 1,
       msg: '编辑成功'
@@ -593,13 +646,13 @@ const actions = {
       }
     }
   },
-  doorlockAdd({ commit }, params) {
+  addDoorlock({ commit }, params) {
     return {
       code: 1,
       msg: '添加成功'
     }
   },
-  doorlockEdit({ commit }, params) {
+  editDoorlock({ commit }, params) {
     return {
       code: 1,
       msg: '编辑成功'
@@ -620,13 +673,13 @@ const actions = {
       }
     }
   },
-  doorlockDelete({ commit }, params) {
+  delDoorlocks({ commit }, params) {
     return {
       code: 1,
       msg: '删除成功'
     }
   },
-  doorlockSource({ commit }, params) {
+  lockResources({ commit }, params) {
     const data = lodash.testData({
       id: 222,
       project: '伴山家园',
@@ -653,6 +706,31 @@ const actions = {
       }
     }
   },
+
+  // 房源开门记录
+  openRecord({ commit }, params) {
+    const data = lodash.testData({
+      id: '444',
+      name: '张晓明',
+      open_time: '2017-08-09 08:55',
+      status: 1,
+      status_msg: '开门',
+      way: '指纹开锁'
+    });
+    return {
+      code: 1,
+      data: {
+        data: data,
+        page: {
+          total: 100, // (int) 总条100条
+          page: 1, // (int)当前第1页
+          pagesize: 10, //  (int)每页显示10条
+          pages: 10 // (int) 共10页
+        }
+      }
+    }
+  },
+  // 门锁开门记录
   doorlockHistory({ commit }, params) {
     const data = lodash.testData({
       id: '444',

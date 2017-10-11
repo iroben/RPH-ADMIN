@@ -337,7 +337,7 @@ export default {
       })
     },
     getLocation() {
-      this.$apis.membersLocation({
+      this.$apis.membersHistory({
         uid: this.uid
       }).then(res => {
         this.locations = res.data;

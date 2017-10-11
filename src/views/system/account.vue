@@ -204,7 +204,7 @@ export default {
         pagesize: this.pageSize
       };
       this.$lodash.assign(params_, this.queryParams);
-      this.$apis.admin(params_).then(res => {
+      this.$apis.userList(params_).then(res => {
         let _rdada = res.data.data || [];
         let page_ = res.data.page;
         page_.cur *= 1;
@@ -238,7 +238,7 @@ export default {
     del() {
       const ids = this.$lodash.map(this.selectedGroup, 'id');
       this.modalLoading = true;
-      this.$apis.adminDelete({
+      this.$apis.delUser({
         id: ids.join(',')
       }).then(res => {
         this.$lodash.forEach(ids, (curid) => {

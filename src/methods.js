@@ -58,6 +58,7 @@ let methods = {
      ----------------------------------------------------*/
     api(contxt, fname, params) {
         if (istestApi) {
+            console.log("method:" + fname);
             console.log(params);
         }
         if (istestApi) {
@@ -86,7 +87,7 @@ let methods = {
         // 默认参数
         let defaultParams = {
             page: options.page || contxt.page.cur + 1,
-            pagesize: contxt.pageSize
+            rows: contxt.pageSize
         };
         
         // 合并参数

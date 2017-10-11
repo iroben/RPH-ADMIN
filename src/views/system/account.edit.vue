@@ -119,7 +119,7 @@ export default {
             })
         }
         return false;
-        this.$apis.adminInfo({
+        this.$apis.userInfo({
             id: this.adminId || 0
         }).then(res => {
             let result = res.data;
@@ -169,7 +169,7 @@ export default {
             });
             this.$refs[name].validate((valid) => {
                 if (valid) {
-                    this.$apis.adminEdit({
+                    this.$apis.editUser({
                         id: this.adminId || 0,
                         email: this.formData.email,
                         status: this.toggleStatus ? 1 : 0,

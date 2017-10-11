@@ -101,7 +101,7 @@ export default {
           this.$apis.modifyPasswd(this.formData).then(res => {
             this.changeStaus = 0;
             this.deleteRemember();
-            this.$Message.success('密码修改成功!');
+            this.$Message.success(res.msg);
             this.$refs[name].resetFields();
           }).catch(res => {
             this.changeStaus = 0;

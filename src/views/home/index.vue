@@ -382,14 +382,14 @@ export default {
     this.$lodash.api(this,'statistics').then(res => {
       this.statisticsData = res.data;
     });
-    this.$lodash.api(this,'toDoList',{page:this.page.cur,rows:this.page.pagesize}).then(res => {
-        this.todoTableData = res.data;
+    this.$lodash.api(this,'toDoList',{page:this.page.cur + 1,rows:this.page.pagesize}).then(res => {
+        this.todoTableData = res.data.data;
     });
-    this.$lodash.api(this,'msgList',{page:this.page.cur,rows:this.page.pagesize}).then(res => {
-        this.newsTableData = res.data;
+    this.$lodash.api(this,'msgList',{page:this.page.cur + 1,rows:this.page.pagesize}).then(res => {
+        this.newsTableData = res.data.data;
     });
-    this.$lodash.api(this,'docList',{page:this.page.cur,rows:this.page.pagesize}).then(res => {
-        this.filesTableData = res.data;
+    this.$lodash.api(this,'docList',{page:this.page.cur + 1,rows:this.page.pagesize}).then(res => {
+        this.filesTableData = res.data.data;
     });
     /*this.todoTableData = this.$lodash.testData({
       title: '半山公寓人员信息审核',

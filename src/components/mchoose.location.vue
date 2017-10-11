@@ -25,7 +25,7 @@ export default {
         },
         fname: {
             type: String,
-            default: 'projectTree'
+            default: 'areaTree'
         },
         max: {
             type: Number

@@ -157,9 +157,8 @@ router.afterEach((to) => {
     const query = lodash.filter(store.getters.mainTabs, (tab) => {
       return to.name == tab.name;
     });
-    const name = query[0].name;
     if (query.length > 0 && query[0].name) {
-      store.commit('activeTabByNoRandomName', name)
+      store.commit('activeTabByNoRandomName', query[0].name);
     }
   }
   iView.LoadingBar.finish();

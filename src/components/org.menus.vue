@@ -2,7 +2,7 @@
   <div>
     <div style="margin-top: 20px;">
       <div style="display: none;">{{resultIds}}</div>
-      <MchooseLocation class="title-sub" v-model="resource" :max="3" fname="projectTree" placement="bottom"></MchooseLocation>
+      <MchooseLocation class="title-sub" v-model="resource" :max="3" fname="orgTree" placement="bottom"></MchooseLocation>
     </div>
     <ProjectMenus style="margin-top: 20px;" v-model="menuActive" :list="menus"></ProjectMenus>
   </div>
@@ -47,7 +47,7 @@ export default {
       const projectString = this.menuActive;
       let locationIds = [];
       let projectIds = [];
-      let type = 'basic';
+      let type = '3';//basic';
       if (locationIds) {
         locationIds = locationString.split('-');
       }
@@ -55,13 +55,13 @@ export default {
         projectIds = projectString.split('-');
       }
       if (locationIds.length < 3 && projectIds.length <= 0) {
-        type = 'basic';
+        type = '3';//basic';
       } else if (locationIds.length >= 3 && projectIds.length <= 0) {
-        type = 'area';
+        type = '0';//'area';
       } else if (projectIds.length == 1) {
-        type = 'project';
+        type = '1';//'project';
       } else if (projectIds.length >= 2) {
-        type = 'floor';
+        type = '2';//'floor';
       }
       this.$emit('onchange', {
         ids: this.menuActive ? this.resource + '-' + this.menuActive : this.resource,

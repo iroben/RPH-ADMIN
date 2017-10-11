@@ -7,7 +7,6 @@ import lodash from 'lodash'
 let aipurl_ = {};
 const url = lodash.forEach(aipurl, (item, key) => {
   let orgUrl = item.split(',')[1];
-  let orgUrlAr = orgUrl.split('/');
   aipurl_[key] = RegExp(orgUrl);
 });
 
@@ -23,8 +22,27 @@ Mock.mock(aipurl_.upload, {
   }
 });
 
+// 登陆
+Mock.mock(aipurl_.searchOrg, {
+  code: 1,
+  'data': [
+    {
+      'id':'@id',
+      'code':'D4E014',
+      'name':'广东省-深圳市-宝安区'
+    } 
+  ]
+});
+Mock.mock(aipurl_.login, {
+  code: 1,
+  'msg': '登陆成功'
+});
+Mock.mock(aipurl_.logout, {
+  code: 1,
+  'msg': '退出成功'
+});
 // 首页查找
-Mock.mock(aipurl_.memberSearch, {
+Mock.mock(aipurl_.quickQuery, {
   code: 1,
   'data|1-3': [{
     'id': '@id',
@@ -39,7 +57,45 @@ Mock.mock(aipurl_.memberSearch, {
     'card_id': '430726199104155779',
     'org|1': ['深圳大学', '北京大学'],
     'phone|1': ['18664357415', '13975646645'],
-    'door_status|1': ['开', '关'],
+    'door_status|1': ['开', '关']
+  }]
+});
+// 区域选择
+Mock.mock(aipurl_.orgTree, {
+  code: 1,
+  'data|2': [{
+    'id|+1': [0, 1],
+    'classNo': '0',
+    'className': '省份',
+    'name|+1': ['全部', '广东省', '广西省'],
+    'child|2': [{
+      'id|+1': [0, 1],
+      'classNo': '1',
+      'className': '市',
+      'name|+1': ['全部', '深圳市'],
+      'child|2': [{
+        'id|+1': [0, 1],
+        'classNo': '2',
+        'className': '区',
+        'name|+1': ['全部', '宝安区']
+      }]
+    }],
+  }]
+});
+// 项目选择
+Mock.mock(aipurl_.projectSubTree, {
+  code: 1,
+  'data|2-3': [{
+    'id': '@id',
+    'class': 'project',
+    'className|1': '项目',
+    'name|1': ['伴山家园', '四海新城', '小户人家', '前海公寓'],
+    'child|2-3': [{
+      'id': '@id',
+      'class': 'floor',
+      'className': '楼栋',
+      'name|1': ['A栋', 'B栋', 'C栋', 'D栋']
+    }]
   }]
 });
 
@@ -70,7 +126,7 @@ Mock.mock(aipurl_.members, {
   }
 });
 
-Mock.mock(aipurl_.membersByFloor, {
+Mock.mock(aipurl_.floorMembers, {
   code: 1,
   'data|2-10': [{
     id: '@id',
@@ -95,7 +151,7 @@ Mock.mock(aipurl_.membersByFloor, {
   }
 });
 
-Mock.mock(aipurl_.membersLocation, {
+Mock.mock(aipurl_.memberHistorys, {
   code: 1,
   'data|2': [{
     id: '@id',
@@ -108,7 +164,7 @@ Mock.mock(aipurl_.membersLocation, {
   }]
 });
 
-Mock.mock(aipurl_.membersFamily, {
+Mock.mock(aipurl_.memberFamilys, {
   code: 1,
   'data|4': [{
     id: '@id',
@@ -134,7 +190,7 @@ Mock.mock(aipurl_.membersFamily, {
   }
 });
 
-Mock.mock(aipurl_.membersInfo, {
+Mock.mock(aipurl_.memberInfo, {
   code: 1,
   data: {
     id: '1',
@@ -151,7 +207,7 @@ Mock.mock(aipurl_.membersInfo, {
   }
 });
 
-Mock.mock(aipurl_.membersLockHistory, {
+Mock.mock(aipurl_.openRecord, {
   code: 1,
   'data|4': [{
     id: '@id',
@@ -198,7 +254,7 @@ Mock.mock(aipurl_.projectMembers, {
   }
 });
 
-Mock.mock(aipurl_.doorlockSource, {
+Mock.mock(aipurl_.resourceLocks, {
   code: 1,
   'data|10-15': [{
     id: '@id',
@@ -223,25 +279,7 @@ Mock.mock(aipurl_.doorlockSource, {
   }
 });
 
-Mock.mock(aipurl_.projectSubTree, {
-  code: 1,
-  'data|2-3': [{
-    'id': '@id',
-    'class': 'project',
-    'className|1': '项目',
-    'name|1': ['伴山家园', '四海新城', '小户人家', '前海公寓'],
-    'child|2-3': [{
-      'id': '@id',
-      'class': 'floor',
-      'className': '楼栋',
-      'name|1': ['A栋', 'B栋', 'C栋', 'D栋']
-    }]
-  }]
-});
-
-
-
-Mock.mock(aipurl_.doorlockFloor, {
+Mock.mock(aipurl_.floorLocks, {
   code: 1,
   'data|2-4': [{
     id: '@id',
@@ -249,64 +287,7 @@ Mock.mock(aipurl_.doorlockFloor, {
   }],
 });
 
-Mock.mock(aipurl_.doorlockHistory, {
-  code: 1,
-  'data|2-4': [{
-    id: '@id',
-    name: '张晓明',
-    open_time: '@datetime',
-    status: 1,
-    status_msg: '开门',
-    way: '指纹开锁'
-  }],
-  page: {
-    'total|1-15': 1,
-    'page|1-15': 1,
-    'cur|1-10': 1,
-    pagesize: 3,
-    'pages|1-15': 1
-  }
-});
-
-Mock.mock(aipurl_.mainTree, {
-  code: 1,
-  'data|2-4': [{
-    id: '@id',
-    name: '张晓明',
-    open_time: '@datetime',
-    status: 1,
-    status_msg: '开门',
-    way: '指纹开锁'
-  }],
-  page: {
-    'total|1-15': 1,
-    'page|1-15': 1,
-    'cur|1-10': 1,
-    pagesize: 3,
-    'pages|1-15': 1
-  }
-});
-
-Mock.mock(aipurl_.projectTree, {
-  code: 1,
-  'data|2': [{
-    'id|+1': [0, 1],
-    'className': '省份',
-    'name|+1': ['全部', '广东省', '广西省'],
-    'child|2': [{
-      'id|+1': [0, 1],
-      'className': '市',
-      'name|+1': ['全部', '深圳市'],
-      'child|2': [{
-        'id|+1': [0, 1],
-        'className': '区',
-        'name|+1': ['全部', '宝安区']
-      }]
-    }],
-  }]
-});
-
-Mock.mock(aipurl_.resourceIndex, {
+Mock.mock(aipurl_.resources, {
   code: 1,
   'data|10-15': [{
     'id': '@id',
@@ -339,7 +320,7 @@ Mock.mock(aipurl_.getHuxing, {
   }
 });
 
-Mock.mock(aipurl_.membersDelete, {
+Mock.mock(aipurl_.delMembers, {
   code: 1,
   msg: '删除成功'
 });
