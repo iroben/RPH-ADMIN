@@ -379,37 +379,35 @@ export default {
   },
   created() {
     this.$store.commit('breadcrumb', []);
-    this.$lodash.api(this,'statistics').then(res => {
+
+    // 获取首页统计
+    this.$apis.statistics().then(res => {
       this.statisticsData = res.data;
     });
-    this.$lodash.api(this,'toDoList',{page:this.page.cur + 1,rows:this.page.pagesize}).then(res => {
-        this.todoTableData = res.data.data;
-    });
-    this.$lodash.api(this,'msgList',{page:this.page.cur + 1,rows:this.page.pagesize}).then(res => {
-        this.newsTableData = res.data.data;
-    });
-    this.$lodash.api(this,'docList',{page:this.page.cur + 1,rows:this.page.pagesize}).then(res => {
-        this.filesTableData = res.data.data;
-    });
-    /*this.todoTableData = this.$lodash.testData({
-      title: '半山公寓人员信息审核',
-      type: '人员管理',
-      created_time: '2017-08-09 08:50'
+    
+    // 获取代办事项
+    this.$apis.toDoList({
+      page:this.page.cur + 1,
+      rows:this.page.pagesize
+    }).then(res => {
+      this.todoTableData = res.data.data;
     })
 
-    this.newsTableData = this.$lodash.testData({
-      title: '半山公寓-B322-张晓明添加了家庭成员',
-      type: '添加成员',
-      created_time: '2017-08-11 09:50'
-    })
+    // 获取消息通知
+    this.$apis.msgList({
+      page:this.page.cur + 1,
+      rows:this.page.pagesize
+    }).then(res => {
+      this.newsTableData = res.data.data;
+    });
 
-    this.filesTableData = this.$lodash.testData({
-      title: '冰海新城B栋公寓人员表',
-      type: '.excel',
-      size: '10MB',
-      created_time: '2017-08-09 08:50'
-    })
-    */
+    // 获取消息通知
+    this.$apis.docList({
+      page:this.page.cur + 1,
+      rows:this.page.pagesize
+    }).then(res => {
+      this.filesTableData = res.data.data;
+    });
   }
 }
 

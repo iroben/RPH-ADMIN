@@ -325,5 +325,73 @@ Mock.mock(aipurl_.delMembers, {
   msg: '删除成功'
 });
 
+Mock.mock(aipurl_.statistics, {
+  code: 1,
+  data: {
+    houseTotal:900,
+    vacantHouse:10,
+    total:1000,
+    addByNearlyMonth:50
+  }
+});
+
+Mock.mock(aipurl_.toDoList, {
+  code: 1,
+  data: {
+    'data|10': [{
+      id: '@id',
+      title: '半山公寓人员信息审核',
+      'type|1': ['人员管理', '门锁管理'],
+      created_time: '@datetime',
+    }],
+    page: {
+      'total|1-15': 1,
+      'page|1-15': 1,
+      'cur|1-10': 1,
+      pagesize: 3,
+      'pages|1-15': 1
+    }
+  }
+});
+
+Mock.mock(aipurl_.msgList, {
+  code: 1,
+  data: {
+    'data|10': [{
+      id: '@id',
+      title: '半山公寓-B322-张晓明添加了家庭成员',
+      'type|1': ['添加成员', '成员审核', '物业管理'],
+      created_time: '@datetime'
+    }],
+    page: {
+      'total|1-15': 1,
+      'page|1-15': 1,
+      'cur|1-10': 1,
+      pagesize: 3,
+      'pages|1-15': 1
+    }
+  }
+});
+
+Mock.mock(aipurl_.docList, {
+  code: 1,
+  data: {
+    'data|10': [{
+      id: '@id',
+      'title|1': ['冰海新城B栋公寓人员表', '物业管理表', '人员申请表'],
+      'type|1': ['.excel', '.doc', '.ppt'],
+      'size|1': ['10MB', '1MB', '600KB'],
+      created_time: '@datetime'
+    }],
+    page: {
+      'total|1-15': 1,
+      'page|1-15': 1,
+      'cur|1-10': 1,
+      pagesize: 3,
+      'pages|1-15': 1
+    }
+  }
+});
+
 
 // resourceIndex
