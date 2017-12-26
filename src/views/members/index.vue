@@ -209,7 +209,7 @@ export default {
   },
   created() {
     // 获取户型
-    this.$lodash.api(this,'getHuxing').then(res => {
+    this.$apis.getHuxing().then(res => {
       this.huxingList = res.data;
     })
     // 获取数据

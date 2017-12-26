@@ -393,5 +393,36 @@ Mock.mock(aipurl_.docList, {
   }
 });
 
+Mock.mock(aipurl_.membersByFloor, {
+  code: 1,
+  'data|10': [{
+    'floor|1-100': 1,
+    'house|1-5': [{
+      'total|0-3': 1,
+      'number|1': [310, 311, 312],
+      location_ids: '@id',
+      owner: {
+        id: '@id',
+        'name|1': ['张晓明', '小花', '小红']
+      }
+    }]
+  }],
+  page: {
+    'total|1-15': 1,
+    'page|1-15': 1,
+    'cur|1-10': 1,
+    pagesize: 3,
+    'pages|1-15': 1
+  }
+});
+
+Mock.mock(aipurl_.membersDelete, {
+  code: 1,
+  msg: '删除成功'
+});
+
+
+
+
 
 // resourceIndex

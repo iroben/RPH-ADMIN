@@ -69,6 +69,7 @@ export default {
     // 人员管理
     'members': 'POST,/member/list',
     'membersByFloor': 'GET,/member/byfloor', // 按楼层分组
+    'membersDelete': 'POST,/member/delete', 
 
     'addMember': 'POST,/member/add', // 添加人员
     'delMembers': 'DELETE,/member/del',
